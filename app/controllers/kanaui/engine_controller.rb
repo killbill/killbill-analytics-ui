@@ -1,5 +1,5 @@
 module Kanaui
-  class EngineController < ActionController::Base
+  class EngineController < ApplicationController
 
     #layout :get_layout
 
