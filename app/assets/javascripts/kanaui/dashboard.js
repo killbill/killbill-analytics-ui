@@ -1,4 +1,7 @@
 $(document).ready(function() {
+
+    setupDebugLog();
+
     var reports = new Reports();
     reports.init();
 
@@ -179,6 +182,16 @@ $(document).ready(function() {
 //
 // Utils
 //
+
+function setupDebugLog() {
+    // Setup the debug logs
+    var consoleAppender = new log4javascript.BrowserConsoleAppender();
+    consoleAppender.setThreshold(log4javascript.Level.INFO);
+    var layout = new log4javascript.PatternLayout("%d [%-5p] %m{5}");
+    consoleAppender.setLayout(layout);
+    window.log = log4javascript.getLogger();
+    window.log.addAppender(consoleAppender);
+}
 
 function dateFromDatepicker(datepicker) {
     if (datepicker && datepicker.dates.length > 0) {
