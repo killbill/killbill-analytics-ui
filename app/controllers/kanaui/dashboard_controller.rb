@@ -1,28 +1,18 @@
 module Kanaui
   class DashboardController < Kanaui::EngineController
 
+    #
+    # Load the dashboard by rendering the view and executing the javascript that will call
+    # the reports and available_reports endpoints below.
+    #
     def index
+      # Activate the redirection mechanics if the user is not logged in
+      current_tenant_user
       render
-=begin
-      puts "+++++++++++++   Kanaui::DashboardController INDEX"
-
-
-      user = current_tenant_user
-
-      options = {
-          :username => user[:username],
-          :password => user[:password],
-          :session_id => user[:session_id],
-          :api_key => user[:api_key],
-          :api_secret => user[:api_secret]
-      }
-
-      @raw_html  = Kanaui::DashboardHelper::DashboardApi.get_dashboard(nil, nil, nil, options)
-=end
     end
 
+    # Proxy the call to the Kill Bill analytics plugin to retrieve all available reports
     def available_reports
-
       user = current_tenant_user
       options = {
           :username => user[:username],
@@ -33,22 +23,11 @@ module Kanaui
       }
 
       available_reports = Kanaui::DashboardHelper::DashboardApi.available_reports(options)
-      puts "available_reports = #{available_reports}"
-
       render json: available_reports
     end
 
+    # Proxy the call to the Kill Bill analytics plugin to retrieve the json data for each report
     def reports
-=begin
-    url += '?format=' + (format ? format : 'json')
-    url += '&startDate=' + this.startDate;
-    url += '&endDate=' + this.endDate;
-    url += '&name=' + this.reports[position].join('&name=');
-    if (this.smoothingFunctions[position]) {
-        url += '&smooth=' + this.smoothingFunctions[position]
-    }
-=end
-
       user = current_tenant_user
       options = {
           :username => user[:username],
@@ -58,12 +37,8 @@ module Kanaui
           :api_secret => user[:api_secret]
       }
 
-      reports = Kanaui::DashboardHelper::DashboardApi.reports(nil, nil, nil, nil, options)
-      puts "reports = #{reports}"
-      reports
-
+      reports = Kanaui::DashboardHelper::DashboardApi.reports(params['startDate'], params['endDate'], params['name'], params['smooth'], options)
       render json: reports
-
     end
 
   end
