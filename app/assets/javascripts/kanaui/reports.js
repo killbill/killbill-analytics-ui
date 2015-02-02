@@ -8,8 +8,8 @@ function Reports() {
     this.port = 8080;
     this.basePath = '/plugins/killbill-analytics/static/analytics.html';
 
-    this.startDate = '2012-11-08';
-    this.endDate = '2012-11-15';
+    this.startDate = moment().subtract('months', 3).format('YYYY[-]MM[-]DD');
+    this.endDate = moment().format('YYYY[-]MM[-]DD');
     // Map position -> report names
     this.reports = {};
     // Map position -> smoothing function
@@ -18,11 +18,19 @@ function Reports() {
     // Standard sets of reports
     this.ANALYTICS_REPORTS = {
         reports: {
-            1: ['new_accounts_per_day']
+            1: ['trial_starts_count_daily'],
+            2: ['cancellations_count_daily'],
+            3: ['active_by_product_term_monthly'],
+            4: ['invoices_balance_daily']
         }
     };
     this.SYSTEM_REPORTS = {
         reports: {
+            1: ['system_report_payments_per_day'],
+            2: ['system_report_notifications_per_queue_name'],
+            3: ['system_report_notifications_per_queue_name_late'],
+            4: ['system_report_payments'],
+            5: ['system_report_control_tag_no_test']
         }
     };
 
