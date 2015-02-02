@@ -3,8 +3,8 @@ function ReportsDataTables(reports) {
 }
 
 ReportsDataTables.prototype.build = function(data, id, wrapper) {
-    //log.debug('Building dataTable for id ' + id);
-    //log.trace(data);
+    log.debug('Building dataTable for id ' + id);
+    log.trace(data);
 
     var dataTableWrapper = $('<div class="dataTableWrapper" id="dataTableWrapper-' + id + '"><h3>' + data['name'] + '</h3></div>');
     wrapper.append(dataTableWrapper);

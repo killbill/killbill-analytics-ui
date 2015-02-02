@@ -2,8 +2,6 @@ $(document).ready(function() {
     var reports = new Reports();
     reports.init();
 
-    console.log("READY TO GO.........")
-
     // https://github.com/twbs/bootstrap/issues/2097
     $('.dropdown-menu').on('click', function(e){
         if ($(this).hasClass('dropdown-menu-form')){
@@ -19,8 +17,6 @@ $(document).ready(function() {
     });
     $('#start-date').datepicker('setDate', reports.startDate);
     $('#end-date').datepicker('setDate', reports.endDate);
-
-    console.log("Calling  $(document).ready....")
 
     // Populate the dashboard builder drop down with the available reports
     reports.availableReports(function(allReports) {

@@ -53,8 +53,8 @@ ReportsGraphs.prototype.doDrawAll = function(input) {
         var curData = curInput.data;
         var curTitle = this.getTitle(curInput.title, i + 1);
 
-        //log.debug("Drawing '" + curTitle + "'");
-        //log.trace(curData);
+        log.debug("Drawing '" + curTitle + "'");
+        log.trace(curData);
 
         // Add the xAxis tick first for ordering purpose.
         var nextTranslateY = curTranslateY + canvasHeigthGraph;

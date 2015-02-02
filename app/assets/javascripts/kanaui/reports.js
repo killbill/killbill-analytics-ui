@@ -122,11 +122,11 @@ Reports.prototype.getDataForReports = function(callback) {
         // Fetch the data
         var future = this.getDataForReport(position, function(zePosition, reportsData) {
             if (!(reportsData instanceof Array) || reportsData.length == 0 || reportsData[0].data.length == 0) {
-                //log.debug('Report at position ' + (zePosition - 1) + ' has not data')
+                log.debug('Report at position ' + (zePosition - 1) + ' has not data')
                 // Skip, to avoid confusing the graphing library
             } else {
-                //log.debug('Got data for report at position ' + (zePosition - 1));
-                //log.trace(reportsData);
+                log.debug('Got data for report at position ' + (zePosition - 1));
+                log.trace(reportsData);
                 futuresData[zePosition - 1] = reportsData[0];
             }
         });
