@@ -1,9 +1,12 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
-
 Bundler.require(*Rails.groups)
 require "kanaui"
+
+require "jquery-rails"
+require "twitter-bootstrap-rails"
+require "d3_rails"
 
 module Dummy
   class Application < Rails::Application
