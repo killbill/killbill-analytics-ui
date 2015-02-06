@@ -14,14 +14,6 @@ $(document).ready(function() {
 
     initializeDatePicker(reports);
 
-    // Populate the dashboard builder drop down with the available reports
-    reports.availableReports(function(allReports) {
-        $.each(allReports, function(i, report) {
-
-
-        });
-    });
-
     // Configure the refresh button callback
     $('#refresh-graphs').click(function() {
       $(location).attr('href', reports.buildRefreshURL());
