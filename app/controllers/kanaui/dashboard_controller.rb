@@ -6,12 +6,26 @@ module Kanaui
     # the reports and available_reports endpoints below.
     #
     def index
-      # Activate the redirection mechanics if the user is not logged in
-      current_tenant_user
+
+      user = current_tenant_user
+      options = {
+          :username => user[:username],
+          :password => user[:password],
+          :session_id => user[:session_id],
+          :api_key => user[:api_key],
+          :api_secret => user[:api_secret]
+      }
+
+      raw_reports = Kanaui::DashboardHelper::DashboardApi.available_reports(options)
+
+      @startDate = params['startDate'] || (Date.today << 3).to_s
+      @endDate = params['endDate'] || Date.today.to_s
+
+      @reports = JSON.parse(raw_reports)
       render
     end
 
-    # Proxy the call to the Kill Bill analytics plugin to retrieve all available reports
+    # Not used anymore as reports are pulled from index
     def available_reports
       user = current_tenant_user
       options = {
@@ -26,7 +40,6 @@ module Kanaui
       render json: available_reports
     end
 
-    # Proxy the call to the Kill Bill analytics plugin to retrieve the json data for each report
     def reports
       user = current_tenant_user
       options = {
@@ -37,7 +50,8 @@ module Kanaui
           :api_secret => user[:api_secret]
       }
 
-      reports = Kanaui::DashboardHelper::DashboardApi.reports(params['startDate'], params['endDate'], params['name'], params['smooth'], options)
+      format = params['format'] || 'json'
+      reports = Kanaui::DashboardHelper::DashboardApi.reports(params['startDate'], params['endDate'], params['name'], params['smooth'], format, options)
       render json: reports
     end
 

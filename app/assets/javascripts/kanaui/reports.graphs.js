@@ -108,6 +108,7 @@ ReportsGraphs.prototype.addSubtitle = function(input, data, i, yOffset, curType)
     var csvLink = $('<a/>').attr('href', csvURL).text('Download data (CSV)');
     subtitle.append(csvLink);
 
+    /*
     subtitle.append("&nbsp;/&nbsp;");
 
     // Add DataTables link
@@ -136,6 +137,7 @@ ReportsGraphs.prototype.addSubtitle = function(input, data, i, yOffset, curType)
         $('#dataTablesModalWrapper-' + i).modal('toggle');
     });
     subtitle.append(dataTablesLink);
+     */
 
     subtitle.append("&nbsp;|&nbsp;");
 
@@ -183,6 +185,6 @@ ReportsGraphs.prototype.addSubtitle = function(input, data, i, yOffset, curType)
 }
 
 ReportsGraphs.prototype.drawAll = function(dataForAllReports) {
-    var input = new killbillGraph.KBInputGraphs(800, 400, 80, 80, 80, 80, 160, dataForAllReports);
+    var input = new killbillGraph.KBInputGraphs(750, 400, 80, 180, 80, 80, 160, dataForAllReports);
     this.doDrawAll(input);
 }

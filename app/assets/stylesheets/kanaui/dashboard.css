@@ -3,6 +3,13 @@ body {
   padding-bottom: 20px;
 }
 
+.top-buffer { margin-top:300px; }
+
+.truncate-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .navbar {
   margin-bottom: 20px;
 }

@@ -29,12 +29,8 @@
      */
     killbillGraph.KBInputGraphs = function (canvasWidth, canvasHeigth, topMargin, rightMargin, bottomMargin, leftMargin, betweenGraphMargin, graphData) {
 
-        // We add some extra value here to make sure we have space to display the legend on the right and also to ensure that latest point in line/layers graph
-        // can be displayed; obviously this is a hack, and if user wants to control that exactly, he can set it to 0 and specify the exact rightMargin required.
-        this.rightMarginOffset = 300;
-
         this.topMargin = topMargin;
-        this.rightMargin = rightMargin + this.rightMarginOffset;
+        this.rightMargin = rightMargin;
         this.bottomMargin = bottomMargin;
         this.leftMargin = leftMargin;
 
@@ -678,7 +674,11 @@
                 })
                 .text(function (d, i) {
                     var text = d.name;
-                    return text;
+                    var displayText = text;
+                    if (text.length > 25) {
+                       displayText = text.substring(0,25) + "...";
+                    }
+                    return displayText;
                 });
         }
 
@@ -1083,10 +1083,18 @@
          * Create initial canvas on which to draw all graphs
          */
         this.createCanvas = function (m, w, h) {
+
+            // See http://tutorials.jenkov.com/svg/svg-viewport-view-box.html
+            var canvasViewBoxWidth = w + m[1] + m[3];
+            var canvasViewPortWidth =  canvasViewBoxWidth;
+            var canvasHeight = h + m[0] + m[2];
+
             return d3.select("#chartId")
                 .append("svg:svg")
-                .attr("width", w + m[1] + m[3])
-                .attr("height", h + m[0] + m[2]);
+                .attr("width", canvasViewPortWidth)
+                .attr("height", canvasHeight)
+                .attr("viewBox", "0 0 " + canvasViewBoxWidth + " " + canvasHeight)
+                .attr("preserveAspectRatio", "xMinYMin meet");
         }
 
 

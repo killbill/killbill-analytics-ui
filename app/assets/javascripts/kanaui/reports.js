@@ -152,29 +152,14 @@ Reports.prototype.buildRefreshURLForNewSmooth = function(position, newSmooth) {
     return newReports.buildRefreshURL();
 }
 
-Reports.prototype.buildRefreshURL = function(newReports, newStartDate, newEndDate) {
-    if (!newReports) {
-        newReports = this.reports;
-    }
+Reports.prototype.buildRefreshURL = function() {
 
-    // Make sure to respect the current ordering if there is no change in reports
-    var currentReportsSet = [];
-    $.each(this.reports, function(position, reportName) {
-        currentReportsSet = currentReportsSet.concat(reportName);
-    });
-    var newReportsSet = [];
-    $.each(newReports, function(position, reportName) {
-        newReportsSet = newReportsSet.concat(reportName);
-    });
+    console.log("buildRefreshURL  : StartDate =  " + this.startDate + "EndDate =  " + this.endDate);
 
-    if ($(currentReportsSet).not(newReportsSet).length == 0 && $(newReportsSet).not(currentReportsSet).length == 0) {
-        // Same set of reports
-        newReports = this.reports;
-    }
-
+    var newReports = this.reports;
     var url = !this.loadFromFilePath ? this.buildBaseURL(this.basePath) : this.basePath;
-    url += '?startDate=' + (newStartDate ? newStartDate : this.startDate);
-    url += '&endDate=' + (newEndDate ? newEndDate : this.endDate);
+    url += '?startDate=' + this.startDate;
+    url += '&endDate=' + this.endDate;
 
     for (var position in newReports) {
         var joinKey = '&report' + position + '=';
