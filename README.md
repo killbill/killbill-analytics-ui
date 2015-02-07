@@ -4,7 +4,7 @@ Overview
 
 `Kanaui` stands for Kill Bill Analytics UI. This is a mountable rails engine which allows to view the analytics dashboard. In order to work correctly:
 * Kill Bill must be running somewhere with the analytics plugin
-* Kanaui can be started locally or can be mounted in the main Kill Bill UI
+* Kanaui can be started locally or can be mounted in a rails APP.
 
 
 Getting Started
@@ -17,7 +17,7 @@ to provide the tenant apiKey and apiSecret.
 
 
 Kanaui Configuration
--------------
+--------------------
 
 Specify your Kill Bill server url, api key and secret in ```test/dummy/config/initializers/killbill_client.rb```:
 
