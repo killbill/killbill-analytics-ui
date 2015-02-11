@@ -1,7 +1,3 @@
-
-var KANAUI_AVAILABLE_REPORTS = "/kanaui/dashboard/available_reports";
-var KANAUI_REPORTS = "/kanaui/dashboard/reports";
-
 function Reports() {
     this.protocol = 'http';
     this.host = '127.0.0.1';
@@ -88,7 +84,8 @@ Reports.prototype.hasReport = function(val) {
 }
 
 Reports.prototype.availableReports = function(callback) {
-    var url = this.buildBaseURL(KANAUI_AVAILABLE_REPORTS);
+    var available_report_path = Routes.kanaui_engine_available_reports_path({format: "json"});
+    var url = this.buildBaseURL(available_report_path);
     this.doGet(url, function(allReports) { callback(allReports); });
 }
 
@@ -173,7 +170,8 @@ Reports.prototype.buildRefreshURL = function() {
 };
 
 Reports.prototype.buildDataURL = function(position, format) {
-    var url = this.buildBaseURL(KANAUI_REPORTS);
+    var reports_path = Routes.kanaui_engine_reports_path({format: "json"});
+    var url = this.buildBaseURL(reports_path);
     url += '?format=' + (format ? format : 'json')
     url += '&startDate=' + this.startDate;
     url += '&endDate=' + this.endDate;
