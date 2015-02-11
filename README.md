@@ -25,15 +25,17 @@ Specify your Kill Bill server url, api key and secret in ```test/dummy/config/in
 KillBillClient.url = 'http://127.0.0.1:8080/'
 KillBillClient.api_key = 'bob'
 KillBillClient.api_secret = 'lazar'
+```
 
 Running Kanaui
 --------------
 
 You can run Kanaui locally by using the test/dummy app provided:
+
 ```
-> bundle install
-> cd test/dummy
-> export RAILS_ENV=development
-> bundle install
-> rails server
+bundle install
+cd test/dummy
+export RAILS_ENV=development
+bundle install
+rails server
 ```
