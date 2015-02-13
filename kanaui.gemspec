@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.summary     = 'Killbill Analytics UI mountable engine'
   s.description = "Rails UI plugin for Killbill analytics."
 
-  s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
+  s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.md"]
   s.test_files = Dir["test/**/*"]
 
   s.add_dependency "rails", "~> 3.2.14"
@@ -32,5 +32,13 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rake', '>= 0.8.7'
   s.add_development_dependency 'simplecov'
 
-  s.add_development_dependency "sqlite3"
+  if defined?(JRUBY_VERSION)
+    s.add_development_dependency 'activerecord-jdbc-adapter', '~> 1.3.9'
+    s.add_development_dependency 'activerecord-jdbcmysql-adapter', '~> 1.3.9'
+    s.add_development_dependency 'activerecord-jdbcsqlite3-adapter', '~> 1.3.9'
+    s.add_development_dependency 'jdbc-mysql', '~> 5.1.25'
+  else
+    s.add_development_dependency 'sqlite3'
+    s.add_development_dependency 'mysql2'
+  end
 end
