@@ -8,7 +8,7 @@ PATH
       devise (~> 3.0.2)
       jquery-rails (~> 3.0.4)
       js-routes (~> 1.0.0)
-      killbill-client (~> 0.10.4)
+      killbill-client (~> 0.10.6)
       money-rails (~> 0.8.1)
       rails (~> 3.2.14)
       symmetric-encryption (~> 3.6.0)
@@ -80,7 +80,7 @@ GEM
       railties (>= 3.2)
       sprockets-rails
     json (1.8.2)
-    killbill-client (0.10.4)
+    killbill-client (0.10.6)
       json (>= 1.2.0)
     mail (2.5.4)
       mime-types (~> 1.16)
