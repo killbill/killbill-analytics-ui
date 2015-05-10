@@ -1,14 +1,14 @@
 PATH
   remote: .
   specs:
-    kanaui (0.0.4)
+    kanaui (0.1.0)
       cancan (~> 1.6.10)
       carmen-rails (~> 1.0.0)
       d3_rails (~> 3.2.8)
       devise (~> 3.0.2)
       jquery-rails (~> 3.0.4)
       js-routes (~> 1.0.0)
-      killbill-client (~> 0.10.7)
+      killbill-client (~> 0.13.0)
       money-rails (~> 0.8.1)
       rails (~> 3.2.14)
       symmetric-encryption (~> 3.6.0)
@@ -84,7 +84,7 @@ GEM
       sprockets-rails
     json (1.8.2)
     json (1.8.2-java)
-    killbill-client (0.10.7)
+    killbill-client (0.13.0)
       json (>= 1.2.0)
     mail (2.5.4)
       mime-types (~> 1.16)
