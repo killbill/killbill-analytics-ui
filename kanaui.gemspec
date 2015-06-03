@@ -16,10 +16,10 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.md"]
   s.test_files = Dir["test/**/*"]
 
-  s.add_dependency "rails", "~> 3.2.14"
+  s.add_dependency "rails", "~> 4.2.1"
   s.add_dependency "js-routes", "~> 1.0.0"
   s.add_dependency 'jquery-rails', '~> 3.0.4'
-  s.add_dependency 'money-rails', '~> 0.8.1'
+  s.add_dependency 'money-rails', '~> 1.4.1'
   s.add_dependency 'd3_rails', '~> 3.2.8'
   s.add_dependency 'twitter-bootstrap-rails', '~> 2.2.8'
   s.add_dependency 'killbill-client', '~> 0.13.0'

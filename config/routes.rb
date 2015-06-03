@@ -1,5 +1,6 @@
 Kanaui::Engine.routes.draw do
 
+  root to: 'dashboard#index'
   resources :dashboard, :only => [ :index ]
   scope "/dashboard" do
     match "/available_reports" => "dashboard#available_reports", :via => :get, :as => "available_reports"
