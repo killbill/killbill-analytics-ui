@@ -19,20 +19,20 @@
     </div>
   </div>
 </div>
-<div class="container-fluid">
+<div class="container">
   <%- # :alert used by devise -%>
   <% [:error, :alert].each do |key| %>
       <% if flash[key] %>
-          <div class="row-fluid">
-            <div class="span10 offset2">
+          <div class="row">
+            <div class="col-md-10 col-md-offset-2">
               <div class="alert alert-error"><%= flash[key] %></div>
             </div>
           </div>
       <% end %>
   <% end %>
   <% if flash[:notice] %>
-      <div class="row-fluid">
-        <div class="span10 offset2">
+      <div class="row">
+        <div class="col-md-10 col-md-offset-2">
           <div class="alert alert-info"><%= flash[:notice] %></div>
         </div>
       </div>

@@ -224,7 +224,7 @@
         this.getDisplayValue = function (value) {
             var total = this.totalValue();
             var minDisplayRatio = this.minDisplayRatio;
-            return (value / total > minDisplayRatio) ? "inline" : "none";
+            return (value / total > minDisplayRatio) ? "list-inline" : "none";
         }
 
         this.addValues = function (arcs, arc) {
@@ -339,7 +339,7 @@
                         otherArcValues[i].attr("display", "none");
                     }
 
-                    arcValue.attr("display", "inline");
+                    arcValue.attr("display", "list-inline");
                     myPieLegendRect.attr("width", 15)
                         .attr("height", 15)
                         .attr('transform', 'translate(-3,-3)');

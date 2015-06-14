@@ -1,6 +1,6 @@
-<div class="row-fluid">
+<div class="row">
   <!--             MENU        -->
-  <div class="span2">
+  <div class="col-md-2">
     <h4>Available Reports:</h4>
     <ul class="nav nav-tabs nav-stacked">
       <% @reports.each do |r| %>
@@ -10,20 +10,20 @@
   </div>
 
   <!--             DASHBOARD        -->
-  <div class="span7">
-    <div class="row-fluid">
+  <div class="col-md-7">
+    <div class="row">
       <div id='loading-spinner'></div>
       <div id="chartAnchor"></div>
     </div>
   </div>
-  <div class="span3">
-    <div class="row-fluid">
+  <div class="col-md-3">
+    <div class="row">
       <form class="form-horizontal">
         <div class="control-group">
           <label class="control-label" for="start-date">Start date</label>
 
           <div class="controls">
-            <input type="text" class="input-small" id="start-date"
+            <input type="text" class="input-sm" id="start-date"
                    data-date-format="yyyy-mm-dd">
           </div>
         </div>
@@ -31,14 +31,14 @@
           <label class="control-label" for="end-date">End date</label>
 
           <div class="controls">
-            <input type="text" class="input-small" id="end-date"
+            <input type="text" class="input-sm" id="end-date"
                    data-date-format="yyyy-mm-dd">
           </div>
         </div>
         <div class="control-group">
           <div class="controls">
             <button type="button" class="btn btn-default btn-sm" id="refresh-graphs">
-              <span class="icon-refresh"></span>
+              <span class="glyphicon glyphicon-refresh"></span>
             </button>
           </div>
         </div>
