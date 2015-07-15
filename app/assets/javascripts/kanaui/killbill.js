@@ -1085,7 +1085,7 @@
         this.createCanvas = function (m, w, h) {
 
             // See http://tutorials.jenkov.com/svg/svg-viewport-view-box.html
-            var canvasViewBoxWidth = w + m[1] + m[3];
+            var canvasViewBoxWidth = $('#chartAnchor').width();
             var canvasViewPortWidth =  canvasViewBoxWidth;
             var canvasHeight = h + m[0] + m[2];
 
@@ -1093,7 +1093,7 @@
                 .append("svg:svg")
                 .attr("width", canvasViewPortWidth)
                 .attr("height", canvasHeight)
-                .attr("viewBox", "0 0 " + canvasViewBoxWidth + " " + canvasHeight)
+                .attr("viewBox", m[3] + " 0 " + canvasViewBoxWidth + " " + canvasHeight)
                 .attr("preserveAspectRatio", "xMinYMin meet");
         }
 
@@ -1104,7 +1104,7 @@
         this.createCanvasGroup = function (canvas, translateX, translateY) {
             return canvas
                 .append("svg:g")
-                .attr("transform", "translate(" + translateX + "," + translateY + ")");
+                .attr("transform", "translate(0," + translateY + ")");
 
         }
     };
