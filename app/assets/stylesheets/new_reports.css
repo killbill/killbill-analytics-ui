@@ -32,3 +32,19 @@ body {
   overflow-y: scroll;
   max-height: 90vh;
 }
+
+.overlay {
+  fill: none;
+  pointer-events: all;
+}
+
+.focus circle {
+  fill: steelblue;
+  stroke: blue;
+}
+
+@media (max-width: 1000px){
+  .reports-options{
+    max-height: 20vh;
+  }
+}
