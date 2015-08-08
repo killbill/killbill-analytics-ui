@@ -11,7 +11,8 @@ var Kiddo = function(selector){
   var parseDate = d3.time.format("%Y-%m-%d").parse,
     bisectDate = d3.bisector(function(d) { return d.x; }).left,
     formatValue = d3.format(",.2f"),
-    formatCurrency = function(d) { return "$" + formatValue(d); };
+    formatCurrency = function(d) { return "$" + formatValue(d); },
+    formatValueDisplay = function(d) { return d.date + ": " + formatCurrency(d.y); };
 
   // Set the ranges
   var x = d3.time.scale().range([0, widthWithoutMargins - margin.right]);
@@ -43,6 +44,7 @@ var Kiddo = function(selector){
   return {
     lineChart: function(title, data){
       data.forEach(function(d) {
+        d.date = d.x;
         d.x = parseDate(d.x);
         d.y = +d.y;
       });
@@ -80,28 +82,31 @@ var Kiddo = function(selector){
 
       // add mouseover
       focus.append("circle")
-          .attr("r", 4.5);
+        .attr("r", 4.5)
+        .attr("transform", "translate(" + margin.left + ",0)");
 
       focus.append("text")
-          .attr("x", 9)
-          .attr("dy", ".35em");
+        .attr("y", -20)
+        .attr("dy", ".35em")
+        .attr("class", "chart_values");
 
       svg.append("rect")
-          .attr("class", "overlay")
-          .attr("width", width)
-          .attr("height", height)
-          .on("mouseover", function() { focus.style("display", null); })
-          .on("mouseout", function() { focus.style("display", "none"); })
-          .on("mousemove", mousemove);
+        .attr("class", "overlay")
+        .attr("width", widthWithoutMargins - margin.right)
+        .attr("height", heightWithoutMargins)
+        .attr('transform', 'translate(' + margin.left + ',0)')
+        .on("mouseover", function() { focus.style("display", null); })
+        .on("mouseout", function() { focus.style("display", "none"); })
+        .on("mousemove", mousemove);
 
       function mousemove() {
         var x0 = x.invert(d3.mouse(this)[0]),
           i = bisectDate(data, x0, 1),
           d0 = data[i - 1],
           d1 = data[i],
-          d = x0 - d0.date > d1.date - x0 ? d1 : d0;
+          d = x0 - d0.x > d1.x - x0 ? d1 : d0;
         focus.attr("transform", "translate(" + x(d.x) + "," + y(d.y) + ")");
-        focus.select("text").text(formatCurrency(d.y));
+        focus.select("text").text(formatValueDisplay(d));
       }
     }
   };

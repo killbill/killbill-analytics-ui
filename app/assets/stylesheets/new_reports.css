@@ -48,3 +48,7 @@ body {
     max-height: 20vh;
   }
 }
+
+.chart_values{
+  font-size: 14px;
+}
