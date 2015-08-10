@@ -4,7 +4,7 @@
       if(error){ throw error };
 
       var data = json[0].data[0].values;
-      var chartRenderer = new Kiddo('#chartAnchor');
+      var chartRenderer = new Kiddo.Renderer('#chartAnchor');
 
       try{
         chartRenderer.lineChart(json[0].title, data);

@@ -11,5 +11,4 @@
 //= require bootstrap-datepicker
 //= require bootstrap
 //= require_tree ./new_reports/kiddo
-//= require ./new_reports/kiddo
 //= require ./new_reports/initialize
