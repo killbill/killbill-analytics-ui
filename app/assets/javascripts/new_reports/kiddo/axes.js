@@ -31,5 +31,5 @@
           .text(yTitle);
       }
     };
-  }
+  };
 })(window.Kiddo = window.Kiddo || {}, d3)
