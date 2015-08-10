@@ -16,6 +16,11 @@
       lineChart: function(title, data){
         var chart = Kiddo.LineChart.apply(settings);
         chart.render(svg, title, data);
+      },
+
+      pieChart: function(title, data){
+        var chart = Kiddo.PieChart.apply(settings);
+        chart.render(svg, title, data);
       }
     };
   };
