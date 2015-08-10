@@ -5,7 +5,12 @@
 
       var data = json[0].data[0].values;
       var chartRenderer = new Kiddo('#chartAnchor');
-      chartRenderer.lineChart(json[0].title, data);
+
+      try{
+        chartRenderer.lineChart(json[0].title, data);
+      }catch(e){
+        console.error(e);
+      }
     });
   });
 })(d3, jQuery, window, document);

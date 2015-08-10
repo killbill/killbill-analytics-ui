@@ -10,5 +10,6 @@
 //= require twitter/bootstrap
 //= require bootstrap-datepicker
 //= require bootstrap
-//= require ./new_reports/initialize
+//= require_tree ./new_reports/kiddo
 //= require ./new_reports/kiddo
+//= require ./new_reports/initialize

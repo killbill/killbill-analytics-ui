@@ -18,21 +18,12 @@ var Kiddo = function(selector){
   var x = d3.time.scale().range([0, widthWithoutMargins - margin.right]);
   var y = d3.scale.linear().range([heightWithoutMargins, 0]);
 
-  // Define the axes
-  var xAxis = d3.svg.axis()
-    .scale(x)
-    .orient("bottom")
-    .ticks(20);
-
-  var yAxis = d3.svg.axis()
-    .scale(y)
-    .orient("left")
-    .ticks(20);
-
   // Define the line
   var valueline = d3.svg.line()
     .x(function(d) { return x(d.x); })
     .y(function(d) { return y(d.y); });
+
+  var axes = new KiddoAxes(x, y);
 
   var svg = this.element
     .append('svg')
@@ -58,23 +49,7 @@ var Kiddo = function(selector){
         .attr('d', valueline(data))
         .attr("transform", "translate(" + margin.left + ",0)");
 
-      // Add the X Axis
-      svg.append("g")
-        .attr("class", "x axis")
-        .attr("transform", "translate(0," + heightWithoutMargins + ")")
-        .call(xAxis);
-
-      // Add the Y Axis
-      svg.append("g")
-        .attr("class", "y axis")
-        .attr("transform", "translate(" + margin.left + ",0)")
-        .call(yAxis)
-      .append("text")
-        .attr("transform", "rotate(-90)")
-        .attr("y", 6)
-        .attr("dy", ".71em")
-        .style("text-anchor", "end")
-        .text(title);
+      axes.render(svg, widthWithoutMargins, margin.left, title);
 
       var focus = svg.append("g")
           .attr("class", "focus")
