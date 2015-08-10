@@ -1,6 +1,6 @@
 ;(function(Kiddo, d3){
   Kiddo.Settings = function(){
-    var margin_top =  20,
+    var margin_top =  30,
       margin_bottom = 20,
       margin_left = 20,
       margin_right = 60

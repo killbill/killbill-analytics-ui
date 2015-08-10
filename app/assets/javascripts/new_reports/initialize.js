@@ -5,18 +5,27 @@
 
       var renderer = new Kiddo.Renderer('#chartAnchor');
 
-      switch(json[0].type){
-        case 'COUNTERS':
-          var data = json[0].data;
-          renderer.pieChart(json[0].title, data)
-          break;
-        case 'TIMELINE':
-          var data = json[0].data[0].values;
-          renderer.lineChart(json[0].title, data);
-          break;
-        default:
-          console.log('No such type implemented: ' + json.type);
+      var render = function(type){
+        switch(type){
+          case 'COUNTERS':
+            var data = json[0].data;
+            renderer.pieChart(json[0].title, data)
+            break;
+          case 'TIMELINE':
+            var data = json[0].data[0].values;
+            renderer.lineChart(json[0].title, data);
+            break;
+          default:
+            console.log('No such type implemented: ' + json.type);
+        }
+      };
+
+      try{
+        render(json[0].type);
+      }catch(ex){
+        renderer.noData();
       }
+
     });
   });
 })(d3, jQuery, window, document);

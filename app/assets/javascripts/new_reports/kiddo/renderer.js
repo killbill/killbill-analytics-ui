@@ -21,6 +21,13 @@
       pieChart: function(title, data){
         var chart = Kiddo.PieChart.apply(settings);
         chart.render(svg, title, data);
+      },
+
+      noData: function(){
+        svg.append('text')
+          .attr('class', 'chart-info')
+          .attr('transform', 'translate(' + settings.width / 2 + ',' + settings.height / 2 + ')')
+          .text('No data to display.');
       }
     };
   };
