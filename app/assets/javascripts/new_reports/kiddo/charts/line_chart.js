@@ -12,6 +12,8 @@
     var axes = Kiddo.Axes(x, y);
     var helper = new Kiddo.Helper();
 
+    var color = d3.scale.category10();
+
     return {
       render: function(svg, title, data){
         data.forEach(function(d) {
@@ -29,40 +31,10 @@
           .attr('d', valueline(data))
           .attr("transform", "translate(" + self.margin_left + ",0)");
 
+        self.data = data;
+
         axes.render(svg, self.height, self.margin_left, title);
-
-        var focus = svg.append("g")
-            .attr("class", "focus")
-            .style("display", "none");
-
-        // add mouseover
-        focus.append("circle")
-          .attr("r", 4.5)
-          .attr("transform", "translate(" + self.margin_left + ",0)");
-
-        focus.append("text")
-          .attr("y", -20)
-          .attr("dy", ".35em")
-          .attr("class", "chart_values");
-
-        svg.append("rect")
-          .attr("class", "overlay")
-          .attr("width", self.width)
-          .attr("height", self.height)
-          .attr('transform', 'translate(' + self.margin_left + ',0)')
-          .on("mouseover", function() { focus.style("display", null); })
-          .on("mouseout", function() { focus.style("display", "none"); })
-          .on("mousemove", mousemove);
-
-        function mousemove() {
-          var x0 = x.invert(d3.mouse(this)[0]),
-            i = helper.bisectDate(data, x0, 1),
-            d0 = data[i - 1],
-            d1 = data[i],
-            d = x0 - d0.x > d1.x - x0 ? d1 : d0;
-          focus.attr("transform", "translate(" + x(d.x) + "," + y(d.y) + ")");
-          focus.select("text").text(helper.formatValueDisplay(d));
-        }
+        Kiddo.Utils.MouseOver.apply(self).render(svg, x, y);
       }
     }
   };
