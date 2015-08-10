@@ -53,3 +53,12 @@ body {
   font-size: 14px;
   font-weight: bold;
 }
+
+.chart-title{
+  padding: 20px;
+  text-indent: 30px;
+}
+
+.nav-element.current{
+  background-color: rgba(100,100,200,0.2);
+}

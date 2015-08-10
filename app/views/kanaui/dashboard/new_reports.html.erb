@@ -15,7 +15,8 @@
           <h4>Available Reports:</h4>
           <ul class="nav nav-tabs nav-stacked">
             <% @reports.each do |r| %>
-              <li><%= link_to r['reportName'], kanaui_engine.new_reports_path(:params => {'startDate' => @startDate, 'endDate' => @endDate, 'report1' => r['reportName']}), :class => "truncate-text" %></li>
+              <% link = kanaui_engine.new_reports_path(:params => {'startDate' => @startDate, 'endDate' => @endDate, 'report1' => r['reportName']}) %>
+              <li class="nav-element <%= current_page?(link) ? 'current' : '' %>"><%= link_to r['reportName'], link, :class => "truncate-text" %></li>
             <% end %>
           </ul>
         </div>
@@ -23,6 +24,9 @@
         <!--             DASHBOARD        -->
         <div class="col-md-10">
           <div class="row">
+            <% if params['report1'] %>
+              <h2 class="chart-title"><%= params['report1'].titleize %></h2>
+            <% end %>
             <div id='loading-spinner'></div>
             <div id="chartAnchor" data-reports-path="<%= kanaui_engine.reports_path(params.merge!(name: params['report1'])) %>"></div>
           </div>
