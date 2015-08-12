@@ -3,40 +3,46 @@
 <% end %>
 <div class="row">
 <!--             MENU        -->
-<div class="col-md-2 reports-options">
-  <% if params['report1'] %>
-    <h4>Filter by date:</h4>
-    <%= form_tag kanaui_engine.dashboard_index_path(params), method: :get, class: 'form-horizontal' do %>
-      <input name="report1" type="hidden" value="<%= params['report1'] %>">
-      <div class="control-group">
-        <label class="control-label">Start date</label>
-        <div class="controls">
-          <input name="startDate" type="date" value="<%= params['startDate'] %>">
-        </div>
-        <label class="control-label">End date</label>
-        <div class="controls">
-          <input name="endDate" type="date" value="<%= params['endDate'] %>">
-        </div>
-        <br>
-        <div class="controls">
-          <%= submit_tag 'Refresh' %>
-        </div>
+<div class="col-md-3 col-sm-12 col-lg-4 reports-options">
+  <div class="row">
+    <% if params['report1'] %>
+      <div class="col-md-12 col-sm-4">
+        <h4>Filter by date:</h4>
+        <%= form_tag kanaui_engine.dashboard_index_path(params), method: :get, class: 'form-horizontal' do %>
+          <input name="report1" type="hidden" value="<%= params['report1'] %>">
+          <div class="control-group">
+            <label class="control-label">Start date</label>
+            <div class="controls">
+              <input name="startDate" type="date" value="<%= params['startDate'] %>">
+            </div>
+            <label class="control-label">End date</label>
+            <div class="controls">
+              <input name="endDate" type="date" value="<%= params['endDate'] %>">
+            </div>
+            <br>
+            <div class="controls">
+              <%= submit_tag 'Refresh' %>
+            </div>
+          </div>
+        <% end %>
       </div>
     <% end %>
-  <% end %>
-  <h4>Available Reports:</h4>
-  <ul class="nav nav-tabs nav-stacked">
-    <% @reports.each do |r| %>
-      <% link = kanaui_engine.dashboard_index_path(:params => {'startDate' => @startDate, 'endDate' => @endDate, 'report1' => r['reportName']}) %>
-      <li class="nav-element <%= current_page?(link) ? 'current' : '' %>">
-        <%= link_to r['reportName'], link, :class => "truncate-text", title: r['reportName'].titleize %>
-      </li>
-    <% end %>
-  </ul>
+    <div class="col-md-12 col-sm-8">
+      <h4>Available Reports:</h4>
+        <ul class="nav nav-tabs nav-stacked">
+        <% @reports.each do |r| %>
+          <% link = kanaui_engine.dashboard_index_path(:params => {'startDate' => @startDate, 'endDate' => @endDate, 'report1' => r['reportName']}) %>
+          <li class="nav-element <%= params['report1'] == r['reportName'] ? 'current' : '' %>">
+            <%= link_to r['reportName'], link, :class => "truncate-text", title: r['reportName'].titleize %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
 </div>
 
 <!--             DASHBOARD        -->
-<div class="col-md-10">
+<div class="col-md-9 col-sm-12 col-lg-8">
   <div class="row">
     <% if params['report1'] %>
       <h2 class="chart-title"><%= params['report1'].titleize %></h2>
