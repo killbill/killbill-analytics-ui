@@ -1,7 +1,10 @@
 ;(function(d3, $, window, document, undefined){
   $(document).ready(function(){
+    if($('#chartAnchor').length == 0) { return; }
+
     d3.json($('#chartAnchor').data('reports-path'), function(error, json){
       if(error){ throw error };
+      $('#loading-spinner').remove();
 
       var renderer = new Kiddo.Renderer('#chartAnchor');
 

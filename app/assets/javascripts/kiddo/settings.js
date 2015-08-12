@@ -1,7 +1,7 @@
 ;(function(Kiddo, d3){
   Kiddo.Settings = function(){
     var margin_top =  30,
-      margin_bottom = 20,
+      margin_bottom = 40,
       margin_left = 20,
       margin_right = 60
       raw_width = parseInt(this.element.node().getBoundingClientRect().width, 10),

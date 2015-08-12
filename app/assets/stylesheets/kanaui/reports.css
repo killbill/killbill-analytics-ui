@@ -1,16 +1,3 @@
-/*
- * This is a manifest file that'll automatically include all the stylesheets available in this directory
- * and any sub-directories. You're free to add application-wide styles to this file and they'll appear at
- * the top of the compiled file, but it's generally better to create a new file per style scope.
- *= require_self
- *= require datepicker
- *= require_tree .
-*/
-
-body {
-  font: 10px sans-serif;
-}
-
 .axis path,
 .axis line {
   fill: none;
@@ -31,6 +18,12 @@ body {
 .reports-options{
   overflow-y: scroll;
   max-height: 90vh;
+}
+
+.nav-element{
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  padding-left: 0;
 }
 
 .overlay {

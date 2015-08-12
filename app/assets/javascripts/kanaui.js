@@ -5,10 +5,16 @@
 // the compiled file.
 //
 //= require js-routes
+//= require log4javascript
+//= require moment.min
+//= require spin.min
 //= require jquery
 //= require jquery_ujs
 //= require twitter/bootstrap
 //= require bootstrap-datepicker
 //= require bootstrap
-//= require_tree ./new_reports/kiddo
-//= require ./new_reports/initialize
+//= require jquery.dataTables.min
+//= require jquery.spin
+//= require_tree ./kanaui
+//= require_tree ./kiddo
+//= require ./kiddo_initialize

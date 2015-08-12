@@ -2,8 +2,9 @@
 <html>
 <head>
   <title>Kanaui</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>
+  <%= yield :scripts %>
+  <%= stylesheet_link_tag    "kanaui", :media => "all" %>
+  <%= javascript_include_tag "kanaui" %>
   <%= csrf_meta_tags %>
 </head>
 <div class="navbar navbar-inverse">

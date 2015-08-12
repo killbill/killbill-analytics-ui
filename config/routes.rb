@@ -5,7 +5,6 @@ Kanaui::Engine.routes.draw do
   scope "/dashboard" do
     match "/available_reports" => "dashboard#available_reports", :via => :get, :as => "available_reports"
     match "/reports" => "dashboard#reports", :via => :get, :as => "reports"
-    get '/new_reports' => 'dashboard#new_reports', as: :new_reports
   end
 
 end
