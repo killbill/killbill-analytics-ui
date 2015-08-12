@@ -8,7 +8,9 @@
       bisectDate: d3.bisector(function(d) { return d.x; }).left,
       formatCurrency: formatCurrency,
       formatValue: formatValue,
-      formatValueDisplay: function(d) { return d.date + ": " + formatCurrency(d.y); }
+      formatValueDisplay: function(d) {
+        return d.date + ": " + formatValue(d.y); // Add currency boolean on backend later -- formatCurrency(d.y); }
+      }
     }
   };
 })(window.Kiddo = window.Kiddo || {}, d3)
