@@ -25,25 +25,6 @@ module Kanaui
       render
     end
 
-    def new_reports
-      user = current_tenant_user
-      options = {
-          :username => user[:username],
-          :password => user[:password],
-          :session_id => user[:session_id],
-          :api_key => user[:api_key],
-          :api_secret => user[:api_secret]
-      }
-
-      raw_reports = Kanaui::DashboardHelper::DashboardApi.available_reports(options)
-
-      @startDate = params['startDate'] || (Date.today << 3).to_s
-      @endDate = params['endDate'] || Date.today.to_s
-
-      @reports = JSON.parse(raw_reports)
-      render(layout: false)
-    end
-
     # Not used anymore as reports are pulled from index
     def available_reports
       user = current_tenant_user
