@@ -51,8 +51,19 @@ module Kanaui
       }
 
       format = params['format'] || 'json'
-      reports = Kanaui::DashboardHelper::DashboardApi.reports(params['startDate'], params['endDate'], params['name'], params['smooth'], format, options)
+      reports = fetch_reports(format, options)
       render json: reports
+    end
+
+    private
+
+    def fetch_reports(format, options)
+      if params['fake']
+        type = params.fetch('type', 'pie')
+        File.read(Kanaui::Engine.root.join('lib', 'sample_data', "#{type}.json"))
+      else
+        Kanaui::DashboardHelper::DashboardApi.reports(params['startDate'], params['endDate'], params['name'], params['smooth'], format, options)
+      end
     end
 
   end
