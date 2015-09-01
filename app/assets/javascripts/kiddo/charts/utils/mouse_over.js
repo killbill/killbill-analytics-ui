@@ -11,15 +11,25 @@
             .attr("class", "focus")
             .style("display", "none");
 
+        var canvas = svg.append("g");
+
         // add mouseover
         focus.append("circle")
           .attr("r", 4.5)
           .attr("transform", "translate(" + self.margin_left + ",0)");
 
-        focus.append("text")
+        var info = canvas.append("rect")
+          .attr("class", "information")
+          .attr("width", self.width / 2)
+          .attr("height", self.height / 3)
+          .attr("transform", "translate(200,0)");
+
+        canvas.append("text")
           .attr("y", -20)
+          .attr("cx", 20)
           .attr("dy", ".35em")
-          .attr("class", "chart_values");
+          .attr("class", "chart_values")
+          .attr("transform", "translate(230,30)");
 
         svg.append("rect")
           .attr("class", "overlay")
@@ -37,7 +47,7 @@
             d1 = self.data[i],
             d = x0 - d0.x > d1.x - x0 ? d1 : d0;
           focus.attr("transform", "translate(" + x(d.x) + "," + y(d.y) + ")");
-          focus.select("text").text(helper.formatValueDisplay(d));
+          canvas.select("text").text(helper.formatValueDisplay(d));
         }
       }
     };

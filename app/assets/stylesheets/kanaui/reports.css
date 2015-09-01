@@ -44,7 +44,7 @@
 }
 
 .chart_values{
-  font-size: 14px;
+  font-size: 16px;
   font-weight: bold;
 }
 
@@ -55,4 +55,8 @@
 
 .nav-element.current{
   background-color: rgba(100,100,200,0.2);
+}
+
+.information{
+  fill: rgba(0,0,120,0.2);
 }
