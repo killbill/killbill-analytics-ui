@@ -30,14 +30,6 @@
           .attr("d", arc)
           .style("fill", function(d) { return color(d.data.value); });
 
-        svg.append("text")
-          .attr("transform", "translate(" + -self.width / 2.5 + "," + -self.height / 3 + ")")
-          .attr("dy", ".35em")
-          .style("text-anchor", "start")
-          .text(title)
-          .attr("style", "font-size: 18px;")
-          .attr("class", "chart_values");
-
         g.append("text")
           .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
           .attr("dy", ".35em")

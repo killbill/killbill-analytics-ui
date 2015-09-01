@@ -11,13 +11,9 @@
         <%= form_tag kanaui_engine.dashboard_index_path(params), method: :get, class: 'form-horizontal' do %>
           <input name="report1" type="hidden" value="<%= params['report1'] %>">
           <div class="control-group">
-            <label class="control-label">Start date</label>
-            <div class="controls">
-              <input name="startDate" type="date" value="<%= params['startDate'] %>">
-            </div>
             <label class="control-label">End date</label>
             <div class="controls">
-              <input name="endDate" type="date" value="<%= params['endDate'] %>">
+              <input name="endDate" type="date" value="<%= @endDate %>">
             </div>
             <br>
             <div class="controls">
@@ -54,8 +50,15 @@
   <div class="row">
     <% if params['report1'] %>
       <h2 class="chart-title"><%= params['report1'].titleize %></h2>
-      <div id='loading-spinner'></div>
+      <div id="loading-spinner"></div>
       <div id="chartAnchor" data-reports-path="<%= kanaui_engine.reports_path(params.merge!(name: params['report1'])) %>"></div>
+      <div id="date-controls">
+        <ul class="nav nav-pills nav-justified">
+          <% @available_start_dates.each do |key, value| %>
+            <li><%= link_to key, kanaui_engine.dashboard_index_path(params.merge!(startDate: value)) %></li>
+          <% end %>
+        </ul>
+      </div>
     <% end %>
   </div>
 </div>
