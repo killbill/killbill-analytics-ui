@@ -19,6 +19,23 @@
         var title = json.title,
           datasets = json.data;
 
+        // Scale the range of the data before rendering axes
+        var x_domain = d3.extent(datasets.reduce(function(self, other){
+          return self.values.concat(other.values);
+        }), function(d){
+          return new Date(d.x);
+        });
+
+        x.domain(x_domain);
+
+        var y_domain = [0, d3.max(datasets, function(datum){
+          return d3.max(datum.values, function(d){
+            return d.y;
+          });
+        })];
+
+        y.domain(y_domain);
+
         axes.render(svg, self.height, self.margin_left, title);
 
         color.domain(d3.keys(datasets));
@@ -33,20 +50,16 @@
             d.y = +d.y;
           });
 
-          // Scale the range of the data
-          x.domain(d3.extent(data, function(d) { return d.x; }));
-          y.domain([0, d3.max(data, function(d) { return d.y; })]);
-
           svg.append('path')
             .attr('class', 'line')
             .attr('d', valueline(data))
             .attr("transform", "translate(" + self.margin_left + ",0)")
             .style("stroke", function() { return color(name); });
 
-          self.data = data;
-
-          Kiddo.Utils.MouseOver.apply(self).render(svg, x, y);
         });
+
+        self.datasets = datasets;
+        Kiddo.Utils.MouseOver.apply(self).render(svg, x, y);
       }
     }
   };
