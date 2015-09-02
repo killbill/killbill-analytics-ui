@@ -49,7 +49,9 @@
 <div class="col-md-9 col-sm-12 col-lg-8">
   <div class="row">
     <% if params['report1'] %>
-      <h2 class="chart-title"><%= params['report1'].titleize %></h2>
+      <h2 class="chart-title">
+        <%= params['report1'].titleize %>
+      </h2>
       <div id="loading-spinner"></div>
       <div id="chartAnchor" data-reports-path="<%= kanaui_engine.reports_path(params.merge!(name: params['report1'])) %>"></div>
       <div id="date-controls">
@@ -58,6 +60,10 @@
             <li><%= link_to key, kanaui_engine.dashboard_index_path(params.merge!(startDate: value)) %></li>
           <% end %>
         </ul>
+      </div>
+      <hr>
+      <div class="pull-right">
+        <%= link_to 'Download raw data', kanaui_engine.reports_path(params.merge!(name: params['report1'])), class: 'btn btn-default' %>
       </div>
     <% end %>
   </div>
