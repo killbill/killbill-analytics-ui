@@ -4,6 +4,9 @@
 
     d3.json($('#chartAnchor').data('reports-path'), function(error, json){
       if(error){ throw error };
+
+      var data = json[0];
+
       $('#loading-spinner').remove();
 
       var renderer = new Kiddo.Renderer('#chartAnchor');
@@ -11,21 +14,21 @@
       var render = function(type){
         switch(type){
           case 'COUNTERS':
-            var data = json[0].data;
-            renderer.pieChart(json[0].title, data)
+            renderer.pieChart(data)
             break;
           case 'TIMELINE':
-            var data = json[0].data[0].values;
-            renderer.lineChart(json[0].title, data);
+            renderer.lineChart(data);
             break;
           default:
             console.log('No such type implemented: ' + json.type);
+            renderer.noData();
         }
       };
 
       try{
         render(json[0].type);
       }catch(ex){
+        console.log(ex);
         renderer.noData();
       }
 

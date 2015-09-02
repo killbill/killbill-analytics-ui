@@ -14,7 +14,9 @@
       .value(function(d) { return d.value; });
 
     return {
-      render: function(svg, title, data){
+      render: function(svg, json){
+        var data = json.data;
+
         svg.attr('transform', "translate(" + self.width / 2 + "," + self.height / 2 + ")");
 
         data.forEach(function(d){

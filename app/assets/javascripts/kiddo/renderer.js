@@ -13,14 +13,14 @@
         .attr('transform', 'translate(' + settings.margin_left + ',' + settings.margin_top + ')');
 
     return {
-      lineChart: function(title, data){
+      lineChart: function(data){
         var chart = Kiddo.LineChart.apply(settings);
-        chart.render(svg, title, data);
+        chart.render(svg, data);
       },
 
-      pieChart: function(title, data){
+      pieChart: function(data){
         var chart = Kiddo.PieChart.apply(settings);
-        chart.render(svg, title, data);
+        chart.render(svg, data);
       },
 
       noData: function(){
