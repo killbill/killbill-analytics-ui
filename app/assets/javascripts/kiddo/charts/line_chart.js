@@ -56,6 +56,10 @@
             .attr("transform", "translate(" + self.margin_left + ",0)")
             .style("stroke", function() { return color(name); });
 
+          svg.append('text')
+            .attr('class', 'chart-label')
+            .attr('transform', 'translate(' + x(data.slice(-1)[0].x) + ',' + y(data.slice(-1)[0].y) + ')')
+            .text(name);
         });
 
         self.datasets = datasets;
