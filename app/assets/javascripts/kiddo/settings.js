@@ -3,7 +3,7 @@
     var margin_top =  30,
       margin_bottom = 40,
       margin_left = 30,
-      margin_right = 100,
+      margin_right = 150,
       raw_width = parseInt(this.element.node().getBoundingClientRect().width, 10),
       raw_height = 500;
 

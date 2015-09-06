@@ -11,21 +11,32 @@
             .attr("class", "focus")
             .style("display", "none");
 
-        var canvas = svg.append("g");
+        var canvas = svg.append("g")
+          .style("display", "none");
 
         var info = canvas.append("rect")
           .attr("class", "information")
           .attr("width", self.width / 2)
-          .attr("height", self.height / 3)
-          .attr("transform", "translate(200,0)");
+          .attr("height", 10);
+
+        var addInfoDimensions = function(element){
+          var box = element.node().getBBox();
+          var infoBox = info.node().getBBox();
+          var margin = 20;
+
+          info.attr("height", infoBox.height + box.height + margin);
+          if(infoBox.width < box.width){
+            info.attr("width", box.width + margin);
+          }
+        };
 
         svg.append("rect")
           .attr("class", "overlay")
           .attr("width", self.width)
           .attr("height", self.height)
           .attr('transform', 'translate(' + self.margin_left + ',0)')
-          .on("mouseover", function() { focus.style("display", null); })
-          .on("mouseout", function() { focus.style("display", "none"); })
+          .on("mouseover", function() { focus.style("display", null); canvas.style("display", null); })
+          .on("mouseout", function() { focus.style("display", "none"); canvas.style("display", "none"); })
           .on("mousemove", mousemove);
 
         self.datasets.forEach(function(element, index){
@@ -34,13 +45,16 @@
             .attr("id", "circle_" + index)
             .attr("transform", "translate(" + self.margin_left + ",0)");
 
-          canvas.append("text")
-            .attr("y", -20)
+          var text = canvas.append("text")
+            .attr("y", (index + 1) * 30)
+            .attr("x", 20)
             .attr("cx", 20)
             .attr("dy", ".35em")
             .attr("class", "chart_values")
             .attr("id", "label_" + index)
-            .attr("transform", "translate(230," + (index + 1) * 30 + ")");
+            .text(element.name);
+
+          addInfoDimensions(text);
         });
 
         function mousemove() {
@@ -58,10 +72,16 @@
 
             focus.select("#circle_" + index)
               .attr("cx", x(d.x))
-              .attr("cy", y(d.y));
-              //.attr("transform", "translate(" + x(d.x) + "," + y(d.y) + ")");
+              .attr("cy", y(d.y))
+              .style("fill", self.color(name));
 
-            canvas.select("#label_" + index).text(helper.formatValueDisplay(name, d));
+            var infoWidth = info.node().getBBox().width
+            var canvasPosition = x(x0) > self.width / 2 ? 50 : self.width - infoWidth;
+
+            canvas
+              .attr("transform", "translate(" + canvasPosition + ",0)");
+
+            text = canvas.select("#label_" + index).text(helper.formatValueDisplay(name, d));
           });
         }
       }

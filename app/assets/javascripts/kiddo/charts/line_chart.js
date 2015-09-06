@@ -12,7 +12,7 @@
     var axes = Kiddo.Axes(x, y);
     var helper = new Kiddo.Helper();
 
-    var color = d3.scale.category10();
+    self.color = d3.scale.category10();
 
     return {
       render: function(svg, json){
@@ -20,9 +20,11 @@
           datasets = json.data;
 
         // Scale the range of the data before rendering axes
-        var x_domain = d3.extent(datasets.reduce(function(self, other){
-          return self.values.concat(other.values);
-        }), function(d){
+        var allValues = datasets.reduce(function(result, element){
+          return result.concat(element.values);
+        }, []);
+
+        var x_domain = d3.extent(allValues, function(d){
           return new Date(d.x);
         });
 
@@ -38,7 +40,7 @@
 
         axes.render(svg, self.height, self.margin_left, title);
 
-        color.domain(d3.keys(datasets));
+        self.color.domain(d3.keys(datasets));
 
         datasets.forEach(function(dataset){
           var data = dataset.values,
@@ -54,7 +56,7 @@
             .attr('class', 'line')
             .attr('d', valueline(data))
             .attr("transform", "translate(" + self.margin_left + ",0)")
-            .style("stroke", function() { return color(name); });
+            .style("stroke", function() { return self.color(name); });
 
           svg.append('text')
             .attr('class', 'chart-label')
