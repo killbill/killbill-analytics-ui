@@ -3,7 +3,7 @@
     var xAxis = d3.svg.axis()
       .scale(x)
       .orient("bottom")
-      .ticks(10);
+      .ticks(6);
 
     var yAxis = d3.svg.axis()
       .scale(y)
