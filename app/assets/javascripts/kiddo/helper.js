@@ -9,7 +9,7 @@
       formatCurrency: formatCurrency,
       formatValue: formatValue,
       formatValueDisplay: function(name, d) {
-        return name + ": " + d.date + ": " + formatValue(d.y); // Add currency boolean on backend later -- formatCurrency(d.y); }
+        return name + ": " + formatValue(d.y); // Add currency boolean on backend later -- formatCurrency(d.y); }
       }
     }
   };

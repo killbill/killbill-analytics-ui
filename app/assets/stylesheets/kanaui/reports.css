@@ -45,6 +45,7 @@
 .chart_values{
   font-size: 16px;
   font-weight: bold;
+  fill: #202020;
 }
 
 .chart-title{
@@ -57,5 +58,16 @@
 }
 
 .information{
-  fill: rgba(100,100,220,0.8);
+  fill: rgba(180,180,220,0.8);
+  stroke: #343434;
+}
+
+.info-title__bg{
+  fill: rgba(230, 230, 250, 0.9);
+  stroke: #A4A4A4;
+}
+
+.info-title{
+  font-size: 22px;
+  fill: #5F5C5C;
 }

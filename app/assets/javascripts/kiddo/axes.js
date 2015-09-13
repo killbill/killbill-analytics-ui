@@ -16,7 +16,7 @@
       render: function(svg, xTranslateY, yTranslateX, yTitle){
         svg.append("g")
           .attr("class", "x axis")
-          .attr("transform", "translate(0," + xTranslateY + ")")
+          .attr("transform", "translate(" + yTranslateX + "," + xTranslateY + ")")
           .call(xAxis);
 
         svg.append("g")

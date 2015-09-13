@@ -16,13 +16,12 @@
 
         var info = canvas.append("rect")
           .attr("class", "information")
-          .attr("width", self.width / 2)
-          .attr("height", 10);
+          .attr("width", self.width / 2);
 
         var addInfoDimensions = function(element){
           var box = element.node().getBBox();
           var infoBox = info.node().getBBox();
-          var margin = 20;
+          var margin = 10;
 
           info.attr("height", infoBox.height + box.height + margin);
           if(infoBox.width < box.width){
@@ -30,6 +29,7 @@
           }
         };
 
+        // The magic:
         svg.append("rect")
           .attr("class", "overlay")
           .attr("width", self.width)
@@ -39,14 +39,34 @@
           .on("mouseout", function() { focus.style("display", "none"); canvas.style("display", "none"); })
           .on("mousemove", mousemove);
 
+        var infoTitleBg = canvas.append("rect")
+          .attr("class", "info-title__bg")
+          .attr("width", self.width / 2)
+          .attr("height", 30);
+
+        canvas.append("text")
+          .attr("dy", ".85em")
+          .attr("dx", 100)
+          .attr("class", "info-title")
+          .attr("id", "info-title");
+
+        addInfoDimensions(infoTitleBg);
+
         self.datasets.forEach(function(element, index){
           focus.append("circle")
             .attr("r", 4.5)
             .attr("id", "circle_" + index)
             .attr("transform", "translate(" + self.margin_left + ",0)");
 
+          canvas.append("circle")
+            .attr("r", 5.5)
+            .attr("cx", 10)
+            .attr("cy", (index + 2) * 25)
+            .style("fill", self.color(element.name))
+            .style("stroke", "black")
+
           var text = canvas.append("text")
-            .attr("y", (index + 1) * 30)
+            .attr("y", (index + 2) * 25)
             .attr("x", 20)
             .attr("cx", 20)
             .attr("dy", ".35em")
@@ -80,6 +100,9 @@
 
             canvas
               .attr("transform", "translate(" + canvasPosition + ",0)");
+
+            canvas.select("#info-title")
+              .text(d.date);
 
             text = canvas.select("#label_" + index).text(helper.formatValueDisplay(name, d));
           });
