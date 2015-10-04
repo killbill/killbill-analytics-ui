@@ -2,8 +2,7 @@
   Kiddo.PieChart = function(){
     var self = this;
     var radius = Math.min(this.width, this.height) / 2;
-    var color = d3.scale.ordinal()
-      .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+    var color = d3.scale.category10();
 
     var arc = d3.svg.arc()
       .outerRadius(radius - 10)
@@ -32,11 +31,20 @@
           .attr("d", arc)
           .style("fill", function(d) { return color(d.data.value); });
 
-        g.append("text")
-          .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
+        var colorCircle = function(value){
+          return(
+            '<span class="colored-dot" style="background-color:' + color(value) + ';"></span>'
+          );
+        }
+
+        g.append("foreignObject")
+          .attr("width", 200)
+          .attr("height", 150)
           .attr("dy", ".35em")
-          .style("text-anchor", "middle")
-          .text(function(d) { return d.data.label + ": " + d.data.value; })
+          .attr("x", 250)
+          .attr("y", function(d, i) { return 50 * i - 200; })
+          .append("xhtml:body")
+          .html(function(d) { return  colorCircle(d.data.value) + d.data.label + ": " + d.data.value; })
           .attr("class", "chart_values");
       }
     }
