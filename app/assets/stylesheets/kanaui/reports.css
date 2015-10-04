@@ -79,3 +79,12 @@
   display: inline-block;
   margin-right: 5px;
 }
+
+.grid .tick{
+  stroke: lightgrey;
+  opacity: 0.6;
+}
+
+.grid path{
+  stroke-width: 0;
+}

@@ -12,6 +12,7 @@
       var renderer = new Kiddo.Renderer('#chartAnchor');
 
       var render = function(type){
+        if(data.data.length == 0) { return renderer.noData(); }
         switch(type){
           case 'COUNTERS':
             renderer.pieChart(data)

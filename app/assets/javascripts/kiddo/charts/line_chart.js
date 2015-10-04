@@ -2,14 +2,14 @@
   Kiddo.LineChart = function(){
     var self = this;
 
-    var x = d3.time.scale().range([0, this.width]);
-    var y = d3.scale.linear().range([this.height, 0]);
+    this.x = d3.time.scale().range([0, this.width]);
+    this.y = d3.scale.linear().range([this.height, 0]);
 
     var valueline = d3.svg.line()
-      .x(function(d) { return x(d.x); })
-      .y(function(d) { return y(d.y); });
+      .x(function(d) { return self.x(d.x); })
+      .y(function(d) { return self.y(d.y); });
 
-    var axes = Kiddo.Axes(x, y);
+    var axes = Kiddo.Axes.apply(this);
     var helper = new Kiddo.Helper();
 
     self.color = d3.scale.category10();
@@ -28,7 +28,7 @@
           return new Date(d.x);
         });
 
-        x.domain(x_domain);
+        self.x.domain(x_domain);
 
         var y_domain = [0, d3.max(datasets, function(datum){
           return d3.max(datum.values, function(d){
@@ -36,9 +36,9 @@
           });
         })];
 
-        y.domain(y_domain);
+        self.y.domain(y_domain);
 
-        axes.render(svg, self.height, self.margin_left, title);
+        axes.render(svg, title);
 
         self.color.domain(d3.keys(datasets));
 
@@ -60,7 +60,7 @@
         });
 
         self.datasets = datasets;
-        Kiddo.Utils.MouseOver.apply(self).render(svg, x, y);
+        Kiddo.Utils.MouseOver.apply(self).render(svg, self.x, self.y);
       }
     }
   };
