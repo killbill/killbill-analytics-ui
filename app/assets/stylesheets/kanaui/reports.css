@@ -1,0 +1,90 @@
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+  display: none;
+}
+
+.line {
+  fill: none;
+  stroke-width: 2.5px;
+}
+
+.reports-options{
+  overflow-y: scroll;
+  max-height: 90vh;
+}
+
+.nav-element{
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  padding-left: 0;
+}
+
+.overlay {
+  fill: none;
+  pointer-events: all;
+}
+
+.focus circle {
+  fill: steelblue;
+  stroke: blue;
+}
+
+@media (max-width: 1000px){
+  .reports-options{
+    max-height: 25vh;
+    border-bottom: 2px solid rgba(0,0,0,0.3);
+  }
+}
+
+.chart_values{
+  font-size: 16px;
+  font-weight: bold;
+  fill: #202020;
+}
+
+.chart-title{
+  padding: 20px;
+  text-indent: 30px;
+}
+
+.nav-element.current{
+  background-color: rgba(100,100,200,0.2);
+}
+
+.information{
+  fill: rgba(180,180,220,0.8);
+  stroke: #343434;
+}
+
+.info-title__bg{
+  fill: rgba(230, 230, 250, 0.9);
+  stroke: #A4A4A4;
+}
+
+.info-title{
+  font-size: 22px;
+  fill: #5F5C5C;
+}
+
+.colored-dot{
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.grid .tick{
+  stroke: lightgrey;
+  opacity: 0.6;
+}
+
+.grid path{
+  stroke-width: 0;
+}

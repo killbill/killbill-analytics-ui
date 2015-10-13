@@ -7,5 +7,4 @@ Kanaui::Engine.routes.draw do
     match "/reports" => "dashboard#reports", :via => :get, :as => "reports"
   end
 
-
 end

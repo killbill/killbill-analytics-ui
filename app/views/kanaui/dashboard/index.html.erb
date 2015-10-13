@@ -1,48 +1,71 @@
+<%= content_for :scripts do %>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
+<% end %>
 <div class="row">
-  <!--             MENU        -->
-  <div class="col-md-2">
-    <h4>Available Reports:</h4>
-    <ul class="nav nav-tabs nav-stacked">
-      <% @reports.each do |r| %>
-          <li><%= link_to r['reportName'], kanaui_engine.dashboard_index_path(:params => {'startDate' => @startDate, 'endDate' => @endDate, 'report1' => r['reportName']}), :class => "truncate-text" %></li>
-      <% end %>
-    </ul>
-  </div>
-
-  <!--             DASHBOARD        -->
-  <div class="col-md-7">
-    <div class="row">
-      <div id='loading-spinner'></div>
-      <div id="chartAnchor"></div>
+<!--             MENU        -->
+<div class="col-md-3 col-sm-12 col-lg-4 reports-options">
+  <div class="row">
+    <% if params['report1'] %>
+      <div class="col-md-12 col-sm-4">
+        <h4>Filter by date:</h4>
+        <%= form_tag kanaui_engine.dashboard_index_path(params), method: :get, class: 'form-horizontal' do %>
+          <input name="report1" type="hidden" value="<%= params['report1'] %>">
+          <div class="control-group">
+            <label class="control-label">End date</label>
+            <div class="controls">
+              <input name="endDate" type="date" value="<%= @endDate %>">
+            </div>
+            <br>
+            <div class="controls">
+              <%= submit_tag 'Refresh' %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+    <div class="col-md-12 col-sm-8">
+      <h4>Available Reports:</h4>
+        <ul class="nav nav-tabs nav-stacked">
+          <% if Rails.env.development? %>
+            <li class="nav-element">
+              <%= link_to "Fake pie", kanaui_engine.dashboard_index_path('report1' => 'fake_pie', 'fake' => 1, 'type' => 'pie') %>
+            </li>
+            <li class="nav-element">
+              <%= link_to "Fake line", kanaui_engine.dashboard_index_path('report1' => 'fake_line', 'fake' => 1, 'type' => 'line') %>
+            </li>
+          <% end %>
+        <% @reports.each do |r| %>
+          <% link = kanaui_engine.dashboard_index_path(:params => {'startDate' => @startDate, 'endDate' => @endDate, 'report1' => r['reportName']}) %>
+          <li class="nav-element <%= params['report1'] == r['reportName'] ? 'current' : '' %>">
+            <%= link_to r['reportName'], link, :class => "truncate-text", title: r['reportName'].titleize %>
+          </li>
+        <% end %>
+      </ul>
     </div>
   </div>
-  <div class="col-md-3">
-    <div class="row">
-      <form class="form-horizontal">
-        <div class="control-group">
-          <label class="control-label" for="start-date">Start date</label>
+</div>
 
-          <div class="controls">
-            <input type="text" class="input-sm" id="start-date"
-                   data-date-format="yyyy-mm-dd">
-          </div>
-        </div>
-        <div class="control-group">
-          <label class="control-label" for="end-date">End date</label>
-
-          <div class="controls">
-            <input type="text" class="input-sm" id="end-date"
-                   data-date-format="yyyy-mm-dd">
-          </div>
-        </div>
-        <div class="control-group">
-          <div class="controls">
-            <button type="button" class="btn btn-default btn-sm" id="refresh-graphs">
-              <span class="glyphicon glyphicon-refresh"></span>
-            </button>
-          </div>
-        </div>
-      </form>
-    </div>
+<!--             DASHBOARD        -->
+<div class="col-md-9 col-sm-12 col-lg-8">
+  <div class="row">
+    <% if params['report1'] %>
+      <h2 class="chart-title">
+        <%= params['report1'].titleize %>
+      </h2>
+      <div id="loading-spinner"></div>
+      <div id="chartAnchor" data-reports-path="<%= kanaui_engine.reports_path(params.merge!(name: params['report1'])) %>"></div>
+      <div id="date-controls">
+        <ul class="nav nav-pills nav-justified">
+          <% @available_start_dates.each do |key, value| %>
+            <li><%= link_to key, kanaui_engine.dashboard_index_path(params.merge!(startDate: value)) %></li>
+          <% end %>
+        </ul>
+      </div>
+      <hr>
+      <div class="pull-right">
+        <%= link_to 'Download raw data', kanaui_engine.reports_path(params.merge!(name: params['report1'])), class: 'btn btn-default' %>
+      </div>
+    <% end %>
   </div>
+</div>
 </div>

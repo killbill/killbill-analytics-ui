@@ -2,24 +2,12 @@
 <html>
 <head>
   <title>Kanaui</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>
+  <%= yield :scripts %>
+  <%= stylesheet_link_tag    "kanaui", :media => "all" %>
+  <%= javascript_include_tag "kanaui" %>
   <%= csrf_meta_tags %>
 </head>
-<div class="navbar navbar-inverse">
-  <div class="navbar-inner">
-    <div class="container">
-      <ul class="nav">
-        <li class="active"><a href="#">Menu 1</a></li>
-        <li class="active"><a href="#">Menu 2</a></li>
-        <li class="active"><a href="#">Menu 3</a></li>
-      </ul>
-      <ul class="nav pull-right">
-      </ul>
-    </div>
-  </div>
-</div>
-<div class="container">
+<div class="container-fluid">
   <%- # :alert used by devise -%>
   <% [:error, :alert].each do |key| %>
       <% if flash[key] %>

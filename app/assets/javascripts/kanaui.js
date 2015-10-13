@@ -15,5 +15,6 @@
 //= require bootstrap
 //= require jquery.dataTables.min
 //= require jquery.spin
-//= require d3
 //= require_tree ./kanaui
+//= require_tree ./kiddo
+//= require ./kiddo_initialize
