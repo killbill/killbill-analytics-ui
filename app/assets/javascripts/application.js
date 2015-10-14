@@ -10,10 +10,10 @@
 //= require spin
 //= require jquery
 //= require jquery_ujs
+//= require twitter/bootstrap
 //= require dataTables/jquery.dataTables
 //= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
 //= require d3
-//= require twitter/bootstrap
 //= require bootstrap-datepicker
 //= require jquery.spin
 //= require kanaui/kanaui
