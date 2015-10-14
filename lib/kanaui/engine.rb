@@ -4,6 +4,7 @@
 # We need to explicitly require all of our dependencies listed in kaui.gemspec
 #
 # See also https://github.com/carlhuda/bundler/issues/49
+require 'bootstrap-datepicker-rails'
 require 'spinjs-rails'
 require 'killbill_client'
 

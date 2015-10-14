@@ -43,7 +43,6 @@
           .attr("dy", ".35em")
           .attr("x", 250)
           .attr("y", function(d, i) { return 50 * i - 200; })
-          .append("xhtml:body")
           .html(function(d) { return  colorCircle(d.data.value) + d.data.label + ": " + d.data.value; })
           .attr("class", "chart_values");
       }
