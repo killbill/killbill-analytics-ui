@@ -24,6 +24,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'twitter-bootstrap-rails', '~> 3.2.0'
   s.add_dependency 'spinjs-rails', '~> 1.4'
   s.add_dependency 'bootstrap-datepicker-rails', '~> 1.4.0'
+  s.add_dependency 'momentjs-rails', '~> 2.10.6'
   s.add_dependency 'killbill-client', '~> 0.21.0'
   s.add_dependency 'devise', '~> 3.4.1'
   s.add_dependency 'cancan', '~> 1.6.10'

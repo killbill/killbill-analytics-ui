@@ -6,7 +6,7 @@
 //
 //= require js-routes
 //= require log4javascript
-//= require moment.min
+//= require moment
 //= require spin
 //= require jquery
 //= require jquery_ujs

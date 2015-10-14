@@ -5,6 +5,7 @@
 #
 # See also https://github.com/carlhuda/bundler/issues/49
 require 'bootstrap-datepicker-rails'
+require 'momentjs-rails'
 require 'spinjs-rails'
 require 'killbill_client'
 
