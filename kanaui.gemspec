@@ -1,23 +1,23 @@
-$:.push File.expand_path("../lib", __FILE__)
+$:.push File.expand_path('../lib', __FILE__)
 
 # Maintain your gem's version:
-require "kanaui/version"
+require 'kanaui/version'
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
-  s.name        = "kanaui"
+  s.name        = 'kanaui'
   s.version     = Kanaui::VERSION
   s.authors     = 'Killbill core team'
   s.email       = 'killbilling-users@googlegroups.com'
   s.homepage    = 'http://www.killbill.io'
   s.summary     = 'Killbill Analytics UI mountable engine'
-  s.description = "Rails UI plugin for Killbill analytics."
+  s.description = 'Rails UI plugin for Killbill analytics.'
 
-  s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.md"]
-  s.test_files = Dir["test/**/*"]
+  s.files = Dir['{app,config,db,lib}/**/*'] + %w(MIT-LICENSE Rakefile README.md)
+  s.test_files = Dir['test/**/*']
 
-  s.add_dependency "rails", "~> 4.2.1"
-  s.add_dependency "js-routes", "~> 1.0.0"
+  s.add_dependency 'rails', '~> 4.2.1'
+  s.add_dependency 'js-routes', '~> 1.0.0'
   s.add_dependency 'jquery-rails', '~> 3.0.4'
   s.add_dependency 'money-rails', '~> 1.3.0'
   s.add_dependency 'd3_rails', '~> 3.2.8'
