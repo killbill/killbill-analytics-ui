@@ -7,7 +7,7 @@
 //= require js-routes
 //= require log4javascript
 //= require moment.min
-//= require spin.min
+//= require spin
 //= require jquery
 //= require jquery_ujs
 //= require twitter/bootstrap
