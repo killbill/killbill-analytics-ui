@@ -10,6 +10,7 @@
 //= require spin
 //= require jquery
 //= require jquery_ujs
+//= require d3
 //= require twitter/bootstrap
 //= require bootstrap-datepicker
 //= require jquery.spin
