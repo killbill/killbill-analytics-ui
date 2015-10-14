@@ -6,25 +6,24 @@
 <div class="col-md-3 col-sm-12 col-lg-4 reports-options">
   <div class="row">
     <% if params['report1'] %>
-      <div class="col-md-12 col-sm-4">
-        <h4>Filter by date:</h4>
-        <%= form_tag kanaui_engine.dashboard_index_path(params), method: :get, class: 'form-horizontal' do %>
-          <input name="report1" type="hidden" value="<%= params['report1'] %>">
-          <div class="control-group">
-            <label class="control-label">End date</label>
-            <div class="controls">
-              <input name="endDate" type="date" value="<%= @endDate %>">
+      <div id="date-picker" class="col-md-12">
+        <h4>End date</h4>
+        <%= form_tag kanaui_engine.dashboard_index_path(params), :method => :get do %>
+            <input name="report1" type="hidden" value="<%= params['report1'] %>">
+
+            <div class="form-group">
+              <div class="col-md-6">
+                <input class="form-control" name="endDate" type="date" value="<%= @endDate %>">
+              </div>
             </div>
-            <br>
-            <div class="controls">
-              <%= submit_tag 'Refresh' %>
+            <div class="form-group">
+                <%= submit_tag 'Refresh', :class => 'btn btn-default' %>
             </div>
-          </div>
         <% end %>
       </div>
     <% end %>
     <div class="col-md-12 col-sm-8">
-      <h4>Available Reports:</h4>
+      <h4>Available Reports</h4>
         <ul class="nav nav-tabs nav-stacked">
           <% if Rails.env.development? %>
             <li class="nav-element">
