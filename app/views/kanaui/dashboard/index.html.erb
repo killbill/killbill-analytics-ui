@@ -33,7 +33,7 @@
         <% @reports.each do |r| %>
           <% link = kanaui_engine.dashboard_index_path(:params => {'startDate' => @startDate, 'endDate' => @endDate, 'report1' => r['reportName']}) %>
           <li class="nav-element <%= params['report1'] == r['reportName'] ? 'current' : '' %>">
-            <%= link_to r['reportName'], link, :class => "truncate-text", title: r['reportName'].titleize %>
+            <%= link_to r['reportPrettyName'], link, :class => "truncate-text", title: r['reportName'].titleize %>
           </li>
         <% end %>
       </ul>
