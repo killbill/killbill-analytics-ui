@@ -7,11 +7,11 @@ require 'kanaui/version'
 Gem::Specification.new do |s|
   s.name        = 'kanaui'
   s.version     = Kanaui::VERSION
-  s.authors     = 'Killbill core team'
+  s.authors     = 'Kill Bill core team'
   s.email       = 'killbilling-users@googlegroups.com'
   s.homepage    = 'http://www.killbill.io'
-  s.summary     = 'Killbill Analytics UI mountable engine'
-  s.description = 'Rails UI plugin for Killbill analytics.'
+  s.summary     = 'Kill Bill Analytics UI mountable engine'
+  s.description = 'Rails UI plugin for the Analytics plugin.'
 
   s.files = Dir['{app,config,db,lib}/**/*'] + %w(MIT-LICENSE Rakefile README.md)
   s.test_files = Dir['test/**/*']

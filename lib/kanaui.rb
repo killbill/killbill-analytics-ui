@@ -3,7 +3,6 @@ require "kanaui/engine"
 module Kanaui
 
   mattr_accessor :current_tenant_user
-  mattr_accessor :kanaui_current_user
   mattr_accessor :layout
 
   self.current_tenant_user = lambda { |session, user|
