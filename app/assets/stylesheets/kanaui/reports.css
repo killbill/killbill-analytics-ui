@@ -92,3 +92,7 @@
 .grid path{
   stroke-width: 0;
 }
+
+.btn-refresh{
+  margin-top: 1rem;
+}
