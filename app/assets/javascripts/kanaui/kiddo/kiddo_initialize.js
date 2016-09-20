@@ -9,19 +9,23 @@
 
       $('#loading-spinner').remove();
 
-      var renderer = new Kiddo.Renderer('#chartAnchor');
-
       var render = function(type){
         if(data.data.length == 0) { return renderer.noData(); }
         switch(type){
           case 'COUNTERS':
+            var renderer = new Kiddo.Renderer('#chartAnchor');
             renderer.pieChart(data)
             break;
           case 'TIMELINE':
+            var renderer = new Kiddo.Renderer('#chartAnchor');
             renderer.lineChart(data);
             break;
+          case 'TABLE':
+            new ReportsDataTables(null).buildTable(data['data'][0], $('#chartAnchor'));
+            break;
           default:
-            console.log('No such type implemented: ' + json.type);
+            console.log('No such type implemented: ' + type);
+            var renderer = new Kiddo.Renderer('#chartAnchor');
             renderer.noData();
         }
       };

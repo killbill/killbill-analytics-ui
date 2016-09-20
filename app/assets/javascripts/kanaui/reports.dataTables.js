@@ -26,6 +26,30 @@ ReportsDataTables.prototype.build = function(data, id, wrapper) {
     });
 }
 
+ReportsDataTables.prototype.buildTable = function(data, wrapper) {
+    var id = data['name'];
+    var dataTableWrapper = $('<div class="dataTableWrapper" id="dataTableWrapper-' + id + '"></h3></div>');
+    wrapper.append(dataTableWrapper);
+
+    var dataTable = $('<table cellpadding="0" cellspacing="0" border="0" class="display" id="dataTable-' + id + '"></table>');
+    dataTableWrapper.append(dataTable);
+
+    var aaData = [];
+    for (var i in data['values']) {
+        aaData.push(data['values'][i])
+    }
+
+    var aoColumns = [];
+    for (var i in data['header']) {
+        aoColumns.push({ "sTitle": data['header'][i] })
+    }
+
+    dataTable.dataTable({
+        "aaData": aaData,
+        "aoColumns": aoColumns
+    });
+}
+
 ReportsDataTables.prototype.buildCSVURL = function(position) {
     return this.reports.buildDataURL(position, 'csv');
 }
