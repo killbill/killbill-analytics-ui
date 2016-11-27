@@ -1,25 +1,26 @@
 <div class="row">
 <!--             MENU        -->
-<div class="col-md-3 col-sm-12 col-lg-4 reports-options">
+<div class="col-md-3 col-sm-12 reports-options">
   <div class="row">
     <% if params['report1'] %>
-      <div id="date-picker" class="col-md-12">
+      <div id="date-picker" class="col-xs-4 col-md-12">
         <h4>End date</h4>
         <%= form_tag kanaui_engine.dashboard_index_path(params), :method => :get do %>
             <input name="report1" type="hidden" value="<%= params['report1'] %>">
 
-            <div class="form-group">
-              <div class="col-md-5">
-                <input class="form-control" name="endDate" type="text" data-provide="datepicker" data-date-format="yyyy-mm-dd" data-date-today-highlight="true" value="<%= @endDate %>">
+            <div class="container">
+              <div class="row">
+                  <input class="form-control" name="endDate" type="text" data-provide="datepicker" data-date-format="yyyy-mm-dd" data-date-today-highlight="true" value="<%= @endDate %>">
               </div>
-            </div>
-            <div class="form-group">
-                <%= submit_tag 'Refresh', :class => 'btn btn-default' %>
+
+              <div class="row">
+                <%= submit_tag 'Refresh', :class => 'btn btn-default btn-refresh' %>
+              </div>
             </div>
         <% end %>
       </div>
     <% end %>
-    <div class="col-md-12 col-sm-8">
+    <div class="col-xs-8 col-md-12">
       <h4>Available Reports</h4>
         <ul class="nav nav-tabs nav-stacked">
           <% if Rails.env.development? %>
@@ -42,7 +43,7 @@
 </div>
 
 <!--             DASHBOARD        -->
-<div class="col-md-9 col-sm-12 col-lg-8">
+<div class="col-md-9 col-sm-12">
   <div class="row">
     <% if params['report1'] %>
       <h2 class="chart-title">
