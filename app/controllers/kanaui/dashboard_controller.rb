@@ -6,7 +6,7 @@ module Kanaui
     # the reports and available_reports endpoints below.
     #
     def index
-      raw_reports = Kanaui::DashboardHelper::DashboardApi.available_reports(options)
+      raw_reports = Kanaui::DashboardHelper::DashboardApi.available_reports(options_for_klient)
 
       @endDate = params['endDate'] || Date.today.to_s
 
@@ -19,7 +19,7 @@ module Kanaui
 
     # Not used anymore as reports are pulled from index
     def available_reports
-      available_reports = Kanaui::DashboardHelper::DashboardApi.available_reports(options)
+      available_reports = Kanaui::DashboardHelper::DashboardApi.available_reports(options_for_klient)
       render json: available_reports
     end
 
@@ -30,17 +30,6 @@ module Kanaui
     end
 
     private
-
-    def options
-      user = current_tenant_user
-      {
-        :username => user[:username],
-        :password => user[:password],
-        :session_id => user[:session_id],
-        :api_key => user[:api_key],
-        :api_secret => user[:api_secret]
-      }
-    end
 
     def start_date_options
       end_date = @endDate.to_date
@@ -57,7 +46,7 @@ module Kanaui
         type = params.fetch('type', 'pie')
         File.read(Kanaui::Engine.root.join('lib', 'sample_data', "#{type}.json"))
       else
-        Kanaui::DashboardHelper::DashboardApi.reports(params['startDate'], params['endDate'], params['name'], params['smooth'], format, options)
+        Kanaui::DashboardHelper::DashboardApi.reports(params['startDate'], params['endDate'], params['name'], params['smooth'], format, options_for_klient)
       end
     end
 

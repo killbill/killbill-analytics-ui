@@ -1,0 +1,60 @@
+<table id="reports-table" class="table table-condensed table-striped mobile-data">
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Pretty name</th>
+    <th>Type</th>
+    <th>Source</th>
+    <th>Refresh procedure</th>
+    <th>Refresh frequency</th>
+    <th>Refresh hour (GMT)</th>
+    <th>Fields</th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% reports.each do |report| %>
+      <tr>
+        <td><%= report[:reportName] %></td>
+        <td><%= report[:reportPrettyName] %></td>
+        <td><%= report[:reportType] %></td>
+        <td><%= report[:sourceTableName] %></td>
+        <td><%= report[:refreshProcedureName] %></td>
+        <td><%= report[:refreshFrequency] %></td>
+        <td><%= report[:refreshHourOfDayGmt] %></td>
+        <td>
+          <ul>
+            <% report[:schema][:fields].each do |field| %>
+                <li><%= field[:name] %> (<%= field[:dataType] %>)</li>
+            <% end %>
+          </ul>
+        </td>
+        <td>
+          <%= link_to '<i class="fa fa-refresh"></i>'.html_safe, refresh_report_path(report[:reportName]), :method => :put %>
+          <%= link_to '<i class="fa fa-pencil"></i>'.html_safe, edit_report_path(report[:reportName]) %>
+          <%= link_to '&nbsp;<i class="fa fa-times"></i>'.html_safe, report_path(report[:reportName]), :method => :delete %>
+        </td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<%= javascript_tag do %>
+  $(document).ready(function() {
+    $('#reports-table').dataTable({
+      "dom": "t",
+      "paging": false,
+      "columns": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        { "orderable": false },
+        { "orderable": false }
+      ]
+    });
+  });
+<% end %>

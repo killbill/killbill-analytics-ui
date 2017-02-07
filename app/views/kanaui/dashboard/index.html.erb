@@ -20,7 +20,7 @@
       </div>
     <% end %>
     <div class="col-md-12 col-sm-8">
-      <h4>Available Reports</h4>
+      <h4><%= link_to 'Available Reports', kanaui_engine.url_for(:controller => :reports) %></h4>
         <ul class="nav nav-tabs nav-stacked">
           <% if Rails.env.development? %>
             <li class="nav-element">
