@@ -45,8 +45,8 @@
           .attr("height", 30);
 
         canvas.append("text")
-          .attr("dy", ".85em")
-          .attr("dx", 100)
+          .attr("dy", "1em")
+          .attr("dx", 90)
           .attr("class", "info-title")
           .attr("id", "info-title");
 
@@ -60,15 +60,15 @@
 
           canvas.append("circle")
             .attr("r", 5.5)
-            .attr("cx", 10)
+            .attr("cx", 15)
             .attr("cy", (index + 2) * 25)
             .style("fill", self.color(element.name))
             .style("stroke", "black")
 
           var text = canvas.append("text")
             .attr("y", (index + 2) * 25)
-            .attr("x", 20)
-            .attr("cx", 20)
+            .attr("x", 25)
+            .attr("cx", 25)
             .attr("dy", ".35em")
             .attr("class", "chart_values")
             .attr("id", "label_" + index)
