@@ -13,7 +13,7 @@
       return d3.svg.axis()
         .scale(self.y)
         .orient("left")
-        .tickFormat(d3.format('d'));
+        .tickFormat(d3.format(',d'));
     }
 
     var xAxis = makeXAxis();
