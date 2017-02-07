@@ -14,7 +14,7 @@ module Kanaui
         end
 
         def reports(start_date, end_date, name, smooth, format, options = {})
-          path = "#{KILLBILL_ANALYTICS_PREFIX}/reports?format=json&startDate=#{start_date}&endDate=#{end_date}&name=#{name}"
+          path = "#{KILLBILL_ANALYTICS_PREFIX}/reports?format=#{format}&startDate=#{start_date}&endDate=#{end_date}&name=#{name}"
           path = "#{path}&smooth=#{smooth}" if smooth
           response = KillBillClient::API.get path, {}, options
           response.body
