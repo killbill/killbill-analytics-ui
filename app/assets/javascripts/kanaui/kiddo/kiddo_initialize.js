@@ -8,9 +8,14 @@
       var data = json[0];
 
       $('#loading-spinner').remove();
+      if (data === undefined ||
+          data.data === undefined ||
+          data.data.length == 0) {
+        var renderer = new Kiddo.Renderer('#chartAnchor');
+        return renderer.noData();
+      }
 
       var render = function(type){
-        if(data.data.length == 0) { return renderer.noData(); }
         switch(type){
           case 'COUNTERS':
             var renderer = new Kiddo.Renderer('#chartAnchor');
