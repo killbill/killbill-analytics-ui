@@ -47,8 +47,8 @@
             name = dataset.name;
 
           data.forEach(function(d) {
-            d.date = d.x;
-            d.x = helper.parseDate(d.x);
+            d.date = d.x.split('T')[0]; // Support both date and date/times
+            d.x = helper.parseDate(d.date);
             d.y = +d.y;
           });
 
