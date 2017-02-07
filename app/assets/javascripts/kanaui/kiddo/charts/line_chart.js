@@ -30,11 +30,16 @@
 
         self.x.domain(x_domain);
 
-        var y_domain = [0, d3.max(datasets, function(datum){
-          return d3.max(datum.values, function(d){
-            return d.y;
-          });
-        })];
+        var y_domain = [d3.min(datasets, function (datum) {
+                            return d3.min(datum.values, function (d) {
+                                return d.y;
+                            });
+                        }),
+                        d3.max(datasets, function (datum) {
+                            return d3.max(datum.values, function (d) {
+                                return d.y;
+                            });
+                        })];
 
         self.y.domain(y_domain);
 
