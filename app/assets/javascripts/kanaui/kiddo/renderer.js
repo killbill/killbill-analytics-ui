@@ -18,9 +18,13 @@
         chart.render(svg, data);
       },
 
-      pieChart: function(data){
-        var chart = Kiddo.PieChart.apply(settings);
+      pieChart: function(data){var chart = Kiddo.PieChart.apply(settings);
         chart.render(svg, data);
+      },
+
+      table: function(data){
+        svg.node().parentNode.remove();
+        new ReportsDataTables(null).buildTable(data['data'][0], $(selector));
       },
 
       noData: function(){
