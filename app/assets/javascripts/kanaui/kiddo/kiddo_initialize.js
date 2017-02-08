@@ -27,6 +27,8 @@
             break;
           case 'TIMELINE':
             renderer.lineChart(data);
+            // Date controls only make sense for timelines
+            $('#date-controls').show();
             break;
           case 'TABLE':
             renderer.table(data);

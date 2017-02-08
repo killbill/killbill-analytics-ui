@@ -50,7 +50,7 @@
       </h2>
       <div id="loading-spinner"></div>
       <div id="chartAnchor" data-reports-path="<%= kanaui_engine.reports_path(params.merge!(name: params['report1'])) %>"></div>
-      <div id="date-controls">
+      <div id="date-controls" style="display: none;">
         <ul class="nav nav-pills nav-justified">
           <% @available_start_dates.each do |key, value| %>
             <li><%= link_to key, kanaui_engine.dashboard_index_path(params.merge!(startDate: value)) %></li>
