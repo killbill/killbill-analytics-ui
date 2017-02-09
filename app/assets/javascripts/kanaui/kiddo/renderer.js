@@ -9,6 +9,7 @@
       .append('svg')
         .attr('width', settings.raw_width)
         .attr('height', settings.raw_height)
+        .attr('style', 'overflow: visible')
       .append('g')
         .attr('transform', 'translate(' + settings.margin_left + ',' + settings.margin_top + ')');
 
