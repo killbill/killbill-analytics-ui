@@ -46,7 +46,13 @@ module Kanaui
         type = params.fetch('type', 'pie')
         File.read(Kanaui::Engine.root.join('lib', 'sample_data', "#{type}.json"))
       else
-        Kanaui::DashboardHelper::DashboardApi.reports(params['startDate'], params['endDate'], params['name'], params['smooth'], format, options_for_klient)
+        Kanaui::DashboardHelper::DashboardApi.reports(params['startDate'],
+                                                      params['endDate'],
+                                                      params['name'],
+                                                      params['smooth'],
+                                                      params['sqlOnly'],
+                                                      format,
+                                                      options_for_klient)
       end
     end
 

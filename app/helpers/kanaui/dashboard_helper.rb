@@ -13,9 +13,10 @@ module Kanaui
           response.body
         end
 
-        def reports(start_date, end_date, name, smooth, format, options = {})
+        def reports(start_date, end_date, name, smooth, sql_only, format, options = {})
           path = "#{KILLBILL_ANALYTICS_PREFIX}/reports?format=#{format}&startDate=#{start_date}&endDate=#{end_date}&name=#{name}"
           path = "#{path}&smooth=#{smooth}" if smooth
+          path = "#{path}&sqlOnly=true" unless sql_only.blank?
           response = KillBillClient::API.get path, {}, options
           response.body
         end

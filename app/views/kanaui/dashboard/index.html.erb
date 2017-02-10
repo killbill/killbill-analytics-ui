@@ -2,12 +2,10 @@
 <!--             MENU        -->
 <div class="col-md-3 col-sm-12 col-lg-4 reports-options">
   <div class="row">
-    <% if params['report1'] %>
+    <% if params['reportName'] %>
       <div id="date-picker" class="col-md-12">
         <h4>End date</h4>
         <%= form_tag kanaui_engine.dashboard_index_path(params), :method => :get do %>
-            <input name="report1" type="hidden" value="<%= params['report1'] %>">
-
             <div class="form-group">
               <div class="col-md-5">
                 <input class="form-control" name="endDate" type="text" data-provide="datepicker" data-date-format="yyyy-mm-dd" data-date-today-highlight="true" value="<%= @endDate %>">
@@ -24,15 +22,15 @@
         <ul class="nav nav-tabs nav-stacked">
           <% if Rails.env.development? %>
             <li class="nav-element">
-              <%= link_to "Fake pie", kanaui_engine.dashboard_index_path('report1' => 'fake_pie', 'fake' => 1, 'type' => 'pie') %>
+              <%= link_to "Fake pie", kanaui_engine.dashboard_index_path('fake' => 1, 'type' => 'pie') %>
             </li>
             <li class="nav-element">
-              <%= link_to "Fake line", kanaui_engine.dashboard_index_path('report1' => 'fake_line', 'fake' => 1, 'type' => 'line') %>
+              <%= link_to "Fake line", kanaui_engine.dashboard_index_path('fake' => 1, 'type' => 'line') %>
             </li>
           <% end %>
         <% @reports.each do |r| %>
-          <% link = kanaui_engine.dashboard_index_path(:params => {'startDate' => @startDate, 'endDate' => @endDate, 'report1' => r['reportName']}) %>
-          <li class="nav-element <%= params['report1'] == r['reportName'] ? 'current' : '' %>">
+          <% link = kanaui_engine.dashboard_index_path(:params => {'startDate' => @startDate, 'endDate' => @endDate, 'name' => r['reportName']}) %>
+          <li class="nav-element <%= params['name'] == r['reportName'] ? 'current' : '' %>">
             <%= link_to r['reportPrettyName'], link, :class => "truncate-text", title: r['reportName'].titleize %>
           </li>
         <% end %>
@@ -44,22 +42,36 @@
 <!--             DASHBOARD        -->
 <div class="col-md-9 col-sm-12 col-lg-8">
   <div class="row">
-    <% if params['report1'] %>
+    <% if params['name'] %>
       <h2 class="chart-title">
-        <%= params['report1'].titleize %>
+        <%= params['name'].titleize %>
       </h2>
       <div id="loading-spinner"></div>
-      <div id="chartAnchor" data-reports-path="<%= kanaui_engine.reports_path(params.merge!(name: params['report1'])) %>"></div>
+      <div id="chartAnchor" data-reports-path="<%= kanaui_engine.reports_path(params) %>"></div>
       <div id="date-controls" style="display: none;">
         <ul class="nav nav-pills nav-justified">
           <% @available_start_dates.each do |key, value| %>
-            <li><%= link_to key, kanaui_engine.dashboard_index_path(params.merge!(startDate: value)) %></li>
+            <li><%= link_to key, kanaui_engine.dashboard_index_path(params.merge(startDate: value)) %></li>
           <% end %>
         </ul>
       </div>
       <hr>
       <div class="pull-right">
-        <%= link_to 'Download raw data', kanaui_engine.reports_path(params.merge!(name: params['report1'])), class: 'btn btn-default' %>
+        <%= link_to 'Download raw data', kanaui_engine.reports_path(params.merge(:format => 'csv')), class: 'btn btn-default' %>
+      </div>
+      <a class="btn btn-default" role="button" data-toggle="collapse" href="#advanced-controls" aria-expanded="false" aria-controls="advanced-controls">
+        Advanced controls
+      </a>
+      <div class="collapse" id="advanced-controls">
+        <div class="well">
+          <ul>
+            <li><%= link_to 'Weekly average', kanaui_engine.dashboard_index_path(params.merge(:smooth => 'AVERAGE_WEEKLY')) %></li>
+            <li><%= link_to 'Monthly average', kanaui_engine.dashboard_index_path(params.merge(:smooth => 'AVERAGE_MONTHLY')) %></li>
+            <li><%= link_to 'Weekly sum', kanaui_engine.dashboard_index_path(params.merge(:smooth => 'SUM_WEEKLY')) %></li>
+            <li><%= link_to 'Monthly sum', kanaui_engine.dashboard_index_path(params.merge(:smooth => 'SUM_MONTHLY')) %></li>
+            <li><%= link_to 'SQL query', kanaui_engine.reports_path(params.merge(:sqlOnly => true)) %></li>
+          </ul>
+        </div>
       </div>
     <% end %>
   </div>
