@@ -22,15 +22,17 @@
         <ul class="nav nav-tabs nav-stacked">
           <% if Rails.env.development? %>
             <li class="nav-element">
-              <%= link_to "Fake pie", kanaui_engine.dashboard_index_path('fake' => 1, 'type' => 'pie') %>
+              <%= link_to "Fake pie", kanaui_engine.dashboard_index_path(:fake => 1, :name => 'fake_pie', :type => 'pie') %>
             </li>
             <li class="nav-element">
-              <%= link_to "Fake line", kanaui_engine.dashboard_index_path('fake' => 1, 'type' => 'line') %>
+              <%= link_to "Fake line", kanaui_engine.dashboard_index_path(:fake => 1, :name => 'fake_line', :type => 'line') %>
             </li>
           <% end %>
         <% @reports.each do |r| %>
-          <% link = kanaui_engine.dashboard_index_path(:params => {'startDate' => @startDate, 'endDate' => @endDate, 'name' => r['reportName']}) %>
-          <li class="nav-element <%= params['name'] == r['reportName'] ? 'current' : '' %>">
+          <% link = kanaui_engine.dashboard_index_path(:params => {:startDate => @startDate,
+                                                                   :endDate => @endDate,
+                                                                   :name => r['reportName']}) %>
+          <li class="nav-element <%= params[:name] == r['reportName'] ? 'current' : '' %>">
             <%= link_to r['reportPrettyName'], link, :class => "truncate-text", title: r['reportName'].titleize %>
           </li>
         <% end %>
@@ -42,16 +44,16 @@
 <!--             DASHBOARD        -->
 <div class="col-md-9 col-sm-12 col-lg-8">
   <div class="row">
-    <% if params['name'] %>
+    <% if params[:name] %>
       <h2 class="chart-title">
-        <%= params['name'].titleize %>
+        <%= @raw_name.titleize %>
       </h2>
       <div id="loading-spinner"></div>
       <div id="chartAnchor" data-reports-path="<%= kanaui_engine.reports_path(params) %>"></div>
       <div id="date-controls" style="display: none;">
         <ul class="nav nav-pills nav-justified">
           <% @available_start_dates.each do |key, value| %>
-            <li><%= link_to key, kanaui_engine.dashboard_index_path(params.merge(startDate: value)) %></li>
+            <li><%= link_to key, kanaui_engine.dashboard_index_path(params.merge(:startDate => value)) %></li>
           <% end %>
         </ul>
       </div>
@@ -65,10 +67,43 @@
       <div class="collapse" id="advanced-controls">
         <div class="well">
           <ul>
-            <li><%= link_to 'Weekly average', kanaui_engine.dashboard_index_path(params.merge(:smooth => 'AVERAGE_WEEKLY')) %></li>
-            <li><%= link_to 'Monthly average', kanaui_engine.dashboard_index_path(params.merge(:smooth => 'AVERAGE_MONTHLY')) %></li>
-            <li><%= link_to 'Weekly sum', kanaui_engine.dashboard_index_path(params.merge(:smooth => 'SUM_WEEKLY')) %></li>
-            <li><%= link_to 'Monthly sum', kanaui_engine.dashboard_index_path(params.merge(:smooth => 'SUM_MONTHLY')) %></li>
+            <% if @report['reportType'] == 'TIMELINE' %>
+              <li><%= link_to 'Weekly average', kanaui_engine.dashboard_index_path(params.merge(:smooth => 'AVERAGE_WEEKLY')) %></li>
+              <li><%= link_to 'Monthly average', kanaui_engine.dashboard_index_path(params.merge(:smooth => 'AVERAGE_MONTHLY')) %></li>
+              <li><%= link_to 'Weekly sum', kanaui_engine.dashboard_index_path(params.merge(:smooth => 'SUM_WEEKLY')) %></li>
+              <li><%= link_to 'Monthly sum', kanaui_engine.dashboard_index_path(params.merge(:smooth => 'SUM_MONTHLY')) %></li>
+            <% end %>
+            <% filter_fields = ((@report['schema'] || {})['fields'] || []).select { |field| !field['distinctValues'].blank? && field['dataType'] =~ /char/ } # To ignore tenant_record_id %>
+            <% unless filter_fields.empty? %>
+              <li>Filter:
+                <%= form_tag kanaui_engine.dashboard_index_path(params), :method => :get, :class => 'form-horizontal' do %>
+                    <input name="startDate" type="hidden" value="<%= params[:startDate] %>">
+                    <input name="endDate" type="hidden" value="<%= params[:endDate] %>">
+                    <input name="name" type="hidden" value="<%= @raw_name %>">
+                    <input name="smooth" type="hidden" value="<%= params[:smooth] %>">
+                    <input name="sqlOnly" type="hidden" value="<%= params[:sqlOnly] %>">
+                    <input name="format" type="hidden" value="<%= params[:format] %>">
+
+                    <% filter_fields.each do |field| %>
+                        <div class="form-group">
+                          <%= label_tag field['name'], field['name'], :class => 'col-sm-2 control-label' %>
+                          <div class="col-sm-10">
+                            <%= select_tag field['name'], options_for_select(field['distinctValues']), :multiple => true, :class => 'form-control' %>
+                          </div>
+                        </div>
+                    <% end %>
+
+                    <div class="form-group">
+                      <div class="col-sm-offset-2 col-sm-10">
+                        <%= submit_tag 'Refresh', :class => 'btn btn-default' %>
+                      </div>
+                    </div>
+                <% end %>
+              </li>
+                <li>Current Analytics query:&nbsp;<%= link_to '<i class="fa fa-question-circle"></i>'.html_safe, 'http://docs.killbill.io/latest/userguide_analytics.html#_dashboard_api', :target => '_blank' %>
+                <pre><%= params[:name] -%></pre>
+              </li>
+          <% end %>
             <li><%= link_to 'SQL query', kanaui_engine.reports_path(params.merge(:sqlOnly => true)) %></li>
           </ul>
         </div>
