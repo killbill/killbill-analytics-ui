@@ -18,23 +18,12 @@ module Kanaui
       @reports = JSON.parse(raw_reports)
       @report = current_report(@reports) || {}
 
-      filtered_report = nil
-      ((@report['schema'] || {})['fields'] || []).each do |field|
-        next if params[field['name']].blank?
-
-        filtered_report << '%26' unless filtered_report.blank?
-        filtered_report ||= '('
-        params[field['name']].each do |filter|
-          filtered_report << '|' unless filtered_report == '('
-          filtered_report = "#{filtered_report}#{field['name']}=#{filter}"
-        end
-        filtered_report << ')'
-      end
-
-      unless filtered_report.blank?
+      query = build_slice_and_dice_query
+      unless query.blank?
         redirect_to dashboard_index_path(:startDate => params[:startDate],
                                          :endDate => params[:endDate],
-                                         :name => "#{params[:name]}^filter:#{filtered_report}^metric:count",
+                                         # TODO Make metrics configurable
+                                         :name => "#{params[:name]}#{query}^metric:count",
                                          :smooth => params[:smooth],
                                          :sqlOnly => params[:sqlOnly],
                                          :format => params[:format]) and return
@@ -86,6 +75,35 @@ module Kanaui
       return nil if @raw_name.blank?
 
       reports.find { |r| r['reportName'] == @raw_name }
+    end
+
+    def build_slice_and_dice_query
+      query = ''
+
+      filters = {}
+      groups = {}
+      ((@report['schema'] || {})['fields'] || []).each do |field|
+        field_name = field['name']
+
+        filters[field_name] = params["filter_#{field_name}"]
+        groups[field_name] = params["group_#{field_name}"]
+      end
+
+      filter_query = ''
+      filters.each do |k, v|
+        next if v.blank?
+        filter_query << '%26' unless filter_query.blank?
+        filter_query << "(#{k}=#{v.join("|#{k}=")})"
+      end
+      query << "^filter:#{filter_query}" unless filter_query.blank?
+
+      groups.each do |k, v|
+        next if v.blank?
+        # TODO Make "no other" configurable
+        query << "^dimension:#{k}(#{v.join('|')}|-)"
+      end
+
+      query
     end
   end
 end

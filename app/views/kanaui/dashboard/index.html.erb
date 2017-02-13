@@ -75,7 +75,7 @@
             <% end %>
             <% filter_fields = ((@report['schema'] || {})['fields'] || []).select { |field| !field['distinctValues'].blank? && field['dataType'] =~ /char/ } # To ignore tenant_record_id %>
             <% unless filter_fields.empty? %>
-              <li>Filter:
+              <li>Slicing & Dicing:
                 <%= form_tag kanaui_engine.dashboard_index_path(params), :method => :get, :class => 'form-horizontal' do %>
                     <input name="startDate" type="hidden" value="<%= params[:startDate] %>">
                     <input name="endDate" type="hidden" value="<%= params[:endDate] %>">
@@ -84,14 +84,28 @@
                     <input name="sqlOnly" type="hidden" value="<%= params[:sqlOnly] %>">
                     <input name="format" type="hidden" value="<%= params[:format] %>">
 
-                    <% filter_fields.each do |field| %>
-                        <div class="form-group">
-                          <%= label_tag field['name'], field['name'], :class => 'col-sm-2 control-label' %>
-                          <div class="col-sm-10">
-                            <%= select_tag field['name'], options_for_select(field['distinctValues']), :multiple => true, :class => 'form-control' %>
+                    <fieldset class="form-group">
+                      <legend>Filters</legend>
+                      <% filter_fields.each do |field| %>
+                          <div class="form-group">
+                            <%= label_tag "filter_#{field['name']}", field['name'], :class => 'col-sm-2 control-label' %>
+                            <div class="col-sm-10">
+                              <%= select_tag "filter_#{field['name']}", options_for_select(field['distinctValues']), :multiple => true, :class => 'form-control' %>
+                            </div>
                           </div>
-                        </div>
-                    <% end %>
+                      <% end %>
+                    </fieldset>
+                    <fieldset class="form-group">
+                      <legend>Dimensions to plot</legend>
+                      <% filter_fields.each do |field| %>
+                          <div class="form-group">
+                            <%= label_tag "group_#{field['name']}", field['name'], :class => 'col-sm-2 control-label' %>
+                            <div class="col-sm-10">
+                              <%= select_tag "group_#{field['name']}", options_for_select(field['distinctValues']), :multiple => true, :class => 'form-control' %>
+                            </div>
+                          </div>
+                      <% end %>
+                    </fieldset>
 
                     <div class="form-group">
                       <div class="col-sm-offset-2 col-sm-10">
