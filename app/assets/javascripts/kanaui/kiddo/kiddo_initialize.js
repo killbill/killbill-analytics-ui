@@ -40,7 +40,7 @@
       };
 
       try{
-        render(json[0].type);
+        render(data.type);
       } catch (ex){
         console.log(ex);
         renderer.noData();
