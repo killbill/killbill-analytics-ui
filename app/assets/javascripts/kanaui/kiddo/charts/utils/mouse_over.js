@@ -81,8 +81,13 @@
             var x0 = x.invert(d3.mouse(_this)[0]),
               i = helper.bisectDate(data, x0, 1),
               d0 = data[i - 1],
-              d1 = data[i],
-              d = x0 - d0.x > d1.x - x0 ? d1 : d0;
+              d1 = data[i];
+
+            if (d0 === undefined || d1 === undefined) {
+                return;
+            }
+
+            var d = x0 - d0.x > d1.x - x0 ? d1 : d0;
 
             focus.select("#circle_" + index)
               .attr("cx", x(d.x))
