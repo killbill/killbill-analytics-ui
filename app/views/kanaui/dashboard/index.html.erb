@@ -2,7 +2,7 @@
 <!--             MENU        -->
 <div class="col-md-3 col-sm-12 col-lg-4 reports-options">
   <div class="row">
-    <% if params['reportName'] %>
+    <% if params[:name] %>
       <div id="date-picker" class="col-md-12">
         <h4>End date</h4>
         <%= form_tag kanaui_engine.dashboard_index_path(params), :method => :get do %>
