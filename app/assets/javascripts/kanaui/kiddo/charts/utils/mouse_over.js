@@ -83,11 +83,15 @@
               d0 = data[i - 1],
               d1 = data[i];
 
-            if (d0 === undefined || d1 === undefined) {
+            if (d0 !== undefined && d1 !== undefined) {
+                var d = x0 - d0.x > d1.x - x0 ? d1 : d0;
+            } else if (d0 !== undefined) {
+                var d = d0;
+            } else if (d1 !== undefined) {
+                var d = d1;
+            } else {
                 return;
             }
-
-            var d = x0 - d0.x > d1.x - x0 ? d1 : d0;
 
             focus.select("#circle_" + index)
               .attr("cx", x(d.x))
