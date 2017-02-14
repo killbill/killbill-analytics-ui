@@ -68,10 +68,20 @@
         <div class="well">
           <ul>
             <% if @report['reportType'] == 'TIMELINE' %>
-              <li><%= link_to 'Weekly average', kanaui_engine.dashboard_index_path(params.merge(:smooth => 'AVERAGE_WEEKLY')) %></li>
-              <li><%= link_to 'Monthly average', kanaui_engine.dashboard_index_path(params.merge(:smooth => 'AVERAGE_MONTHLY')) %></li>
-              <li><%= link_to 'Weekly sum', kanaui_engine.dashboard_index_path(params.merge(:smooth => 'SUM_WEEKLY')) %></li>
-              <li><%= link_to 'Monthly sum', kanaui_engine.dashboard_index_path(params.merge(:smooth => 'SUM_MONTHLY')) %></li>
+              <% at_least_two_months = params[:startDate].blank? || params[:endDate].blank? || (params[:endDate].to_date.beginning_of_month - 1.month > params[:startDate].to_date) %>
+              <% at_least_two_weeks = params[:startDate].blank? || params[:endDate].blank? || (params[:endDate].to_date.beginning_of_week - 1.week > params[:startDate].to_date) %>
+              <% if params[:smooth] != 'AVERAGE_WEEKLY' && at_least_two_weeks %>
+                <li><%= link_to 'Weekly average', kanaui_engine.dashboard_index_path(params.merge(:smooth => 'AVERAGE_WEEKLY')) %></li>
+              <% end %>
+              <% if params[:smooth] != 'AVERAGE_MONTHLY' && at_least_two_months %>
+                <li><%= link_to 'Monthly average', kanaui_engine.dashboard_index_path(params.merge(:smooth => 'AVERAGE_MONTHLY')) %></li>
+              <% end %>
+              <% if params[:smooth] != 'SUM_WEEKLY' && at_least_two_weeks %>
+                <li><%= link_to 'Weekly sum', kanaui_engine.dashboard_index_path(params.merge(:smooth => 'SUM_WEEKLY')) %></li>
+              <% end %>
+              <% if params[:smooth] != 'SUM_MONTHLY' && at_least_two_months %>
+                <li><%= link_to 'Monthly sum', kanaui_engine.dashboard_index_path(params.merge(:smooth => 'SUM_MONTHLY')) %></li>
+              <% end %>
             <% end %>
             <% filter_fields = ((@report['schema'] || {})['fields'] || []).select { |field| !field['distinctValues'].blank? && field['dataType'] =~ /char/ } # To ignore tenant_record_id %>
             <% unless filter_fields.empty? %>
