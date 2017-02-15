@@ -2,10 +2,16 @@
 <!--             MENU        -->
 <div class="col-md-3 col-sm-12 col-lg-4 reports-options">
   <div class="row">
-    <% if params[:name] %>
+    <% if params[:name] && @report['reportType'] == 'TIMELINE' %>
       <div id="date-picker" class="col-md-12">
         <h4>End date</h4>
-        <%= form_tag kanaui_engine.dashboard_index_path(params), :method => :get do %>
+        <%= form_tag kanaui_engine.dashboard_index_path, :method => :get do %>
+            <input name="name" type="hidden" value="<%= @raw_name %>">
+            <input name="smooth" type="hidden" value="<%= params[:smooth] %>">
+            <input name="sqlOnly" type="hidden" value="<%= params[:sqlOnly] %>">
+            <input name="format" type="hidden" value="<%= params[:format] %>">
+            <input name="deltaDays" type="hidden" value="<%= (@end_date.to_date - @start_date.to_date).to_i %>">
+
             <div class="form-group">
               <div class="col-md-5">
                 <input class="form-control" name="endDate" type="text" data-provide="datepicker" data-date-format="yyyy-mm-dd" data-date-today-highlight="true" value="<%= @end_date %>">
