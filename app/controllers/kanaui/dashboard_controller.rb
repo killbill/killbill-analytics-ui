@@ -43,7 +43,20 @@ module Kanaui
 
     def reports
       format = params[:format] || 'json'
-      reports = fetch_reports(format)
+      raw_reports = fetch_reports(format)
+
+      if format == 'json' && params[:sqlOnly] != 'true'
+        reports = JSON.parse(raw_reports)
+
+        # Remove reports with empty data
+        reports.reject! do |report|
+          reject = false
+          (report['data'] || []).each { |data| reject = true if (data['values'] || []).empty? && data['value'].blank? }
+          reject
+        end
+      else
+        reports = raw_reports
+      end
       render :json => reports
     end
 
