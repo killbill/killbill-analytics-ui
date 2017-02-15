@@ -10,10 +10,10 @@ module Kanaui
 
       @raw_name = (params[:name] || '').split('^')[0]
 
-      @end_date = params[:endDate] || Date.today.to_s
+      @end_date = params[:end_date] || Date.today.to_s
 
       @available_start_dates = start_date_options
-      @start_date = params[:startDate] || (params[:deltaDays].present? ? (@end_date.to_date - params[:deltaDays].to_i.day).to_s : @available_start_dates['Last 6 months'])
+      @start_date = params[:start_date] || (params[:delta_days].present? ? (@end_date.to_date - params[:delta_days].to_i.day).to_s : @available_start_dates['Last 6 months'])
 
       @reports = JSON.parse(raw_reports)
       @report = current_report(@reports) || {}
@@ -21,14 +21,14 @@ module Kanaui
       query = build_slice_and_dice_query
 
       # Redirect also in case the dates have been updated to avoid any confusion in the view
-      if query.present? || params[:startDate].blank? || params[:endDate].blank?
+      if query.present? || params[:start_date].blank? || params[:end_date].blank?
         # TODO Make metrics configurable
         name = query.present? ? "#{params[:name]}#{query}^metric:count" : params[:name]
-        redirect_to dashboard_index_path(:startDate => @start_date,
-                                         :endDate => @end_date,
+        redirect_to dashboard_index_path(:start_date => @start_date,
+                                         :end_date => @end_date,
                                          :name => name,
                                          :smooth => params[:smooth],
-                                         :sqlOnly => params[:sqlOnly],
+                                         :sql_only => params[:sql_only],
                                          :format => params[:format]) and return
       end
 
@@ -45,7 +45,7 @@ module Kanaui
       format = params[:format] || 'json'
       raw_reports = fetch_reports(format)
 
-      if format == 'json' && params[:sqlOnly] != 'true'
+      if format == 'json' && params[:sql_only] != 'true'
         reports = JSON.parse(raw_reports)
 
         # Remove reports with empty data
@@ -77,11 +77,11 @@ module Kanaui
         type = params.fetch('type', 'pie')
         File.read(Kanaui::Engine.root.join('lib', 'sample_data', "#{type}.json"))
       else
-        Kanaui::DashboardHelper::DashboardApi.reports(params[:startDate],
-                                                      params[:endDate],
+        Kanaui::DashboardHelper::DashboardApi.reports(params[:start_date],
+                                                      params[:end_date],
                                                       params[:name],
                                                       params[:smooth],
-                                                      params[:sqlOnly],
+                                                      params[:sql_only],
                                                       format,
                                                       options_for_klient)
       end
