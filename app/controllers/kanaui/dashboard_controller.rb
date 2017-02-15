@@ -10,20 +10,23 @@ module Kanaui
 
       @raw_name = (params[:name] || '').split('^')[0]
 
-      @endDate = params[:endDate] || Date.today.to_s
+      @end_date = params[:endDate] || Date.today.to_s
 
       @available_start_dates = start_date_options
-      @startDate = params[:startDate] || @available_start_dates['Last 6 months']
+      @start_date = params[:startDate] || (params[:deltaDays].present? ? (@end_date.to_date - params[:deltaDays].to_i.day).to_s : @available_start_dates['Last 6 months'])
 
       @reports = JSON.parse(raw_reports)
       @report = current_report(@reports) || {}
 
       query = build_slice_and_dice_query
-      unless query.blank?
-        redirect_to dashboard_index_path(:startDate => params[:startDate],
-                                         :endDate => params[:endDate],
-                                         # TODO Make metrics configurable
-                                         :name => "#{params[:name]}#{query}^metric:count",
+
+      # Redirect also in case the dates have been updated to avoid any confusion in the view
+      if query.present? || params[:startDate].blank? || params[:endDate].blank?
+        # TODO Make metrics configurable
+        name = query.present? ? "#{params[:name]}#{query}^metric:count" : params[:name]
+        redirect_to dashboard_index_path(:startDate => @start_date,
+                                         :endDate => @end_date,
+                                         :name => name,
                                          :smooth => params[:smooth],
                                          :sqlOnly => params[:sqlOnly],
                                          :format => params[:format]) and return
@@ -47,7 +50,7 @@ module Kanaui
     private
 
     def start_date_options
-      end_date = @endDate.to_date
+      end_date = @end_date.to_date
       {
         'Last month' => (end_date - 1.month).to_s,
         'Last 3 months' => (end_date - 3.months).to_s,

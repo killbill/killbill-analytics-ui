@@ -8,7 +8,7 @@
         <%= form_tag kanaui_engine.dashboard_index_path(params), :method => :get do %>
             <div class="form-group">
               <div class="col-md-5">
-                <input class="form-control" name="endDate" type="text" data-provide="datepicker" data-date-format="yyyy-mm-dd" data-date-today-highlight="true" value="<%= @endDate %>">
+                <input class="form-control" name="endDate" type="text" data-provide="datepicker" data-date-format="yyyy-mm-dd" data-date-today-highlight="true" value="<%= @end_date %>">
               </div>
             </div>
             <div class="form-group">
@@ -29,9 +29,7 @@
             </li>
           <% end %>
         <% @reports.each do |r| %>
-          <% link = kanaui_engine.dashboard_index_path(:params => {:startDate => @startDate,
-                                                                   :endDate => @endDate,
-                                                                   :name => r['reportName']}) %>
+          <% link = kanaui_engine.dashboard_index_path(params.merge(:name => r['reportName'])) %>
           <li class="nav-element <%= params[:name] == r['reportName'] ? 'current' : '' %>">
             <%= link_to r['reportPrettyName'], link, :class => "truncate-text", title: r['reportName'].titleize %>
           </li>
@@ -87,8 +85,8 @@
             <% unless filter_fields.empty? %>
               <li>Slicing & Dicing:
                 <%= form_tag kanaui_engine.dashboard_index_path(params), :method => :get, :class => 'form-horizontal' do %>
-                    <input name="startDate" type="hidden" value="<%= params[:startDate] %>">
-                    <input name="endDate" type="hidden" value="<%= params[:endDate] %>">
+                    <input name="startDate" type="hidden" value="<%= @start_date %>">
+                    <input name="endDate" type="hidden" value="<%= @end_date %>">
                     <input name="name" type="hidden" value="<%= @raw_name %>">
                     <input name="smooth" type="hidden" value="<%= params[:smooth] %>">
                     <input name="sqlOnly" type="hidden" value="<%= params[:sqlOnly] %>">
