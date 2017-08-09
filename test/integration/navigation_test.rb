@@ -1,10 +1,12 @@
 require 'test_helper'
 
 class NavigationTest < ActionDispatch::IntegrationTest
-  fixtures :all
 
-  # test "the truth" do
-  #   assert true
-  # end
+  include Kanaui::Engine.routes.url_helpers
+
+  test 'can see the dashboard page' do
+    get '/kanaui'
+    assert_response :redirect
+  end
 end
 

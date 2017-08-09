@@ -34,15 +34,18 @@ KillBillClient.api_key = 'bob'
 KillBillClient.api_secret = 'lazar'
 ```
 
-Running Kanaui
---------------
+Testing
+-------
 
-You can run Kanaui locally by using the test/dummy app provided:
+To run the dummy app:
 
 ```
-bundle install
-cd test/dummy
-export RAILS_ENV=development
-bundle install
-rails server
+rails s
+```
+
+
+To run tests:
+
+```
+rails t
 ```

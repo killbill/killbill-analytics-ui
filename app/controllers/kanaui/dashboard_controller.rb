@@ -24,15 +24,21 @@ module Kanaui
       if query.present? || params[:start_date].blank? || params[:end_date].blank?
         # TODO Make metrics configurable
         name = query.present? ? "#{params[:name]}#{query}^metric:count" : params[:name]
-        redirect_to dashboard_index_path(:start_date => @start_date,
-                                         :end_date => @end_date,
-                                         :name => name,
-                                         :smooth => params[:smooth],
-                                         :sql_only => params[:sql_only],
-                                         :format => params[:format]) and return
+        query_params = {:start_date => @start_date,
+                        :end_date => @end_date,
+                        :name => name,
+                        :smooth => params[:smooth],
+                        :sql_only => params[:sql_only],
+                        :format => params[:format]}
+
+        # Test only
+        query_params[:fake] = params[:fake] unless params[:fake].blank?
+        query_params[:type] = params[:type] unless params[:type].blank?
+
+        redirect_to dashboard_index_path(query_params) and return
       end
 
-      render
+      params.permit!
     end
 
     # Not used anymore as reports are pulled from index
