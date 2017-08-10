@@ -16,7 +16,7 @@ kpm install_java_plugin analytics
 
 cat<<EOS >> conf/catalina.properties
 org.killbill.dao.url=jdbc:mysql://localhost:3306/killbill
-org.killbil.dao.user=root
+org.killbill.dao.user=root
 org.killbill.dao.password=root
 org.killbill.billing.osgi.dao.url=jdbc:mysql://localhost:3306/killbill
 org.killbill.billing.osgi.dao.user=root
