@@ -23,11 +23,11 @@ org.killbill.billing.osgi.dao.user=root
 org.killbill.billing.osgi.dao.password=root
 EOS
 
-jdk_switcher use openjdk8
 ./bin/catalina.sh start
 
+TIME_LIMIT=$(( $(date +%s) + 120 ))
 RET=0
-while ! [ $RET -eq 201 ]; do
+while [ $RET != 201 -a $(date +%s) -lt $TIME_LIMIT ] ; do
   RET=$(curl -s \
              -o /dev/null \
              -w "%{http_code}" \
@@ -37,7 +37,7 @@ while ! [ $RET -eq 201 ]; do
              -H 'X-Killbill-CreatedBy:admin' \
              -d '{"apiKey":"bob", "apiSecret":"lazar"}' \
              "http://127.0.0.1:8080/1.0/kb/tenants")
-
+  tail -50 logs/catalina.out
   sleep 5
 done
 
