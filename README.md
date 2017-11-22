@@ -12,7 +12,8 @@ Kill Bill compatibility
 | Kanaui version | Kill Bill version |
 | -------------: | ----------------: |
 | 0.4.y          | 0.16.z            |
-| 0.5.y          | 0.18.z            |
+| 0.5.y          | 0.18.z (Rails 4)  |
+| 0.6.y          | 0.18.z (Rails 5)  |
 
 Getting Started
 ===============
