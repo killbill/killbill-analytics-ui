@@ -92,3 +92,26 @@
 .grid path{
   stroke-width: 0;
 }
+
+button.ColVis_Button, button.ColVis_Button:hover {
+    background: inherit;
+    box-shadow: unset;
+    text-transform: none;
+    color: #333 !important;
+    border-color: #adadad;
+}
+
+ul.ColVis_collection {
+    background-color: #f3f3f3;
+}
+
+ul.ColVis_collection li, ul.ColVis_collection li:hover{
+    border: none;
+    box-shadow: unset;
+    background: transparent;
+}
+
+button.ColVis_Button:hover, ul.ColVis_collection li:hover {
+    background-color: #e6e6e6;
+    border-color: #adadad;
+}
