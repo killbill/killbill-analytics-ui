@@ -92,3 +92,7 @@
 .grid path{
   stroke-width: 0;
 }
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    padding: 0.25em 0.5em;
+}
