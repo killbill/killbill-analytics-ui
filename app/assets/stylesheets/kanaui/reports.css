@@ -90,6 +90,10 @@
   stroke-width: 0;
 }
 
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    padding: 0.25em 0.5em;
+}
+
 .flex-panel {
     display: -webkit-flex;
     display: flex;
@@ -116,4 +120,3 @@
 #date-picker .form-group {
     height: 34px;
 }
-
