@@ -1,6 +1,3 @@
-#date-picker {
-    margin-bottom: 20px;
-}
 
 .axis path,
 .axis line {
@@ -114,4 +111,34 @@ ul.ColVis_collection li, ul.ColVis_collection li:hover{
 button.ColVis_Button:hover, ul.ColVis_collection li:hover {
     background-color: #e6e6e6;
     border-color: #adadad;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    padding: 0.25em 0.5em;
+}
+
+.flex-panel {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+}
+
+.flex-inner-left-panel {
+    -ms-flex: 1 .5 0%;
+    -webkit-flex: 1 .5 0%;
+    flex: 1 .5 0%;
+}
+
+.flex-inner-left-panel ul li {
+    white-space: nowrap;
+}
+
+.flex-inner-right-panel {
+    -ms-flex: .5 1 70%;
+    -webkit-flex: .5 1 70%;
+    flex: .5 1 70%;
+}
+
+#date-picker .form-group {
+    height: 34px;
 }
