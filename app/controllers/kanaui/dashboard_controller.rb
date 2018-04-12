@@ -20,6 +20,9 @@ module Kanaui
 
       query = build_slice_and_dice_query
 
+      # get columns visibility from query parameters to be used by tables
+      @visible_columns = params[:columns]
+
       # Redirect also in case the dates have been updated to avoid any confusion in the view
       if query.present? || params[:start_date].blank? || params[:end_date].blank?
         # TODO Make metrics configurable

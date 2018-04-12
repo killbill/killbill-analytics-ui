@@ -112,6 +112,7 @@ button.ColVis_Button:hover, ul.ColVis_collection li:hover {
     background-color: #e6e6e6;
     border-color: #adadad;
 }
+
 .dataTables_wrapper .dataTables_paginate .paginate_button {
     padding: 0.25em 0.5em;
 }
