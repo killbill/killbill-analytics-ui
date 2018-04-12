@@ -59,6 +59,32 @@ ReportsDataTables.prototype.buildTable = function(data, wrapper) {
         setColumnVisible(settings.aoColumns[column].name, state);
     });
 
+    $("#copy-url").click(function(e){
+        var pathPlusParams = $(this).data("reports-path");
+        var sPageURL = decodeURIComponent(pathPlusParams.substring(1)).split('?');
+        var params = sPageURL[1].split('&');
+
+        var columnsVisible = $("#visible-table-columns").val();
+        var placeholder = $("#url-placeholder");
+
+        var urlToShare = window.location.origin + "/" + sPageURL[0] + "?";
+        for (var i in params) {
+            var keyValue = params[i].split('=');
+            if (keyValue[0] == 'columns') {
+                continue;
+            }
+            urlToShare += "&" + params[i];
+        }
+
+        placeholder.val(urlToShare + "&columns=" + columnsVisible);
+        placeholder.removeClass("hidden");
+        placeholder.select();
+
+        document.execCommand("Copy");
+        placeholder.addClass("hidden");
+        alert("URL copied into the clipboard!")
+    });
+
     $("#visible-table-columns").val(columnsVisible.join());
 }
 

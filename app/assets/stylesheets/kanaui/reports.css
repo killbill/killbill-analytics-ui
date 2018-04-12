@@ -143,3 +143,7 @@ button.ColVis_Button:hover, ul.ColVis_collection li:hover {
 #date-picker .form-group {
     height: 34px;
 }
+
+#table-tools {
+    padding-bottom: 10px;
+}
