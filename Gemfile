@@ -11,6 +11,4 @@ gemspec
 # your gem to rubygems.org.
 
 #gem 'killbill-client', :github => 'killbill/killbill-client-ruby', :ref => 'master'
-gem 'killbill-client', '3.1.0'
-
-
+#gem 'killbill-client', '3.2.0'
