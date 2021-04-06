@@ -51,6 +51,8 @@ module Kanaui
           :reportPrettyName => params[:report_pretty_name],
           :reportType => params[:report_type],
           :sourceTableName => params[:source_table_name],
+          :sourceName => params[:source_name],
+          :sourceQuery => params[:source_query],
           :refreshProcedureName => params[:refresh_procedure_name],
           :refreshFrequency => params[:refresh_frequency],
           :refreshHourOfDayGmt => params[:refresh_hour_of_day_gmt]

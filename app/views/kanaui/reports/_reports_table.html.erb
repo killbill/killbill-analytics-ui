@@ -5,6 +5,8 @@
     <th>Pretty name</th>
     <th>Type</th>
     <th>Source</th>
+    <th>Source Name</th>
+    <th>Source Query</th>
     <th>Refresh procedure</th>
     <th>Refresh frequency</th>
     <th>Refresh hour (GMT)</th>
@@ -19,6 +21,23 @@
         <td><%= report[:reportPrettyName] %></td>
         <td><%= report[:reportType] %></td>
         <td><%= report[:sourceTableName] %></td>
+        <td><%= report[:sourceName] %></td>
+        <td>
+          <% unless report[:sourceQuery].blank? %>
+            <a href="" data-toggle="modal" data-target="#<%= report[:reportName] %>-query-modal">
+              Show SQL
+            </a>
+            <div class="modal fade" id="<%= report[:reportName] %>-query-modal" tabindex="-1" role="dialog">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content column-block">
+                  <div class="modal-body">
+                    <p><pre class="sql-query"><code><%= report[:sourceQuery] %></code></pre></p>
+                  </div>
+                </div><!-- /.modal-content -->
+              </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+          <% end %>
+        </td>
         <td><%= report[:refreshProcedureName] %></td>
         <td><%= report[:refreshFrequency] %></td>
         <td><%= report[:refreshHourOfDayGmt] %></td>
@@ -42,9 +61,12 @@
 <%= javascript_tag do %>
   $(document).ready(function() {
     $('#reports-table').dataTable({
+      "scrollX": true,
       "dom": "t",
       "paging": false,
       "columns": [
+        null,
+        null,
         null,
         null,
         null,

@@ -1,3 +1,10 @@
+#reports-table th, #reports-table td {
+    white-space: nowrap;
+}
+
+.sql-query {
+    word-break: break-word;
+}
 
 .axis path,
 .axis line {

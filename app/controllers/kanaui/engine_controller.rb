@@ -24,5 +24,39 @@ module Kanaui
           :api_secret => user[:api_secret]
       }
     end
+
+    rescue_from(KillBillClient::API::ResponseError) do |killbill_exception|
+      flash[:error] = "Error while communicating with the Kill Bill server: #{as_string(killbill_exception)}"
+      redirect_to dashboard_index_path
+    end
+
+    def as_string(e)
+      if e.is_a?(KillBillClient::API::ResponseError)
+        "Error #{e.response.code}: #{as_string_from_response(e.response.body)}"
+      else
+        log_rescue_error(e)
+        e.message
+      end
+    end
+
+    def log_rescue_error(error)
+      Rails.logger.warn "#{error.class} #{error.to_s}. #{error.backtrace.join("\n")}"
+    end
+
+    def as_string_from_response(response)
+      error_message = response
+      begin
+        # BillingExceptionJson?
+        error_message = JSON.parse response
+      rescue => _
+      end
+
+      if error_message.respond_to? :[] and error_message['message'].present?
+        # Likely BillingExceptionJson
+        error_message = error_message['message']
+      end
+      # Limit the error size to avoid ActionDispatch::Cookies::CookieOverflow
+      error_message[0..1000]
+    end
   end
 end
