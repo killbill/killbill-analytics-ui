@@ -1,4 +1,5 @@
-#reports-table th, #reports-table td {
+#reports-table th, #reports-table td,
+#dataTable-api_wrapper th, #dataTable-api_wrapper td {
     white-space: nowrap;
 }
 
@@ -145,6 +146,7 @@ button.ColVis_Button:hover, ul.ColVis_collection li:hover {
     -ms-flex: .5 1 70%;
     -webkit-flex: .5 1 70%;
     flex: .5 1 70%;
+    overflow: scroll;
 }
 
 #date-picker .form-group {

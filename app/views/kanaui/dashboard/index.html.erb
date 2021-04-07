@@ -55,16 +55,6 @@
           <h2 class="chart-title">
             <%= @raw_name.titleize %>
           </h2>
-          <% if @report['reportType'] == 'TABLE' %>
-            <input type="hidden" id="visible-table-columns" value="<%= @visible_columns %>">
-
-            <div id="table-tools" class="row">
-              <div class="col-sm-2">
-                <a class="btn btn-default" id="copy-url" data-reports-path="<%= kanaui_engine.dashboard_index_path(params.to_h) %>">Copy URL</a>
-                <input id="url-placeholder" class="form-control hidden">
-              </div>
-            </div>
-          <% end %>
           <div id="loading-spinner"></div>
           <div id="chartAnchor" data-reports-path="<%= kanaui_engine.reports_path(params.to_h) %>"></div>
           <div id="date-controls" style="display: none;">
@@ -76,6 +66,11 @@
           </div>
           <hr>
           <div class="pull-right">
+            <% if @report['reportType'] == 'TABLE' %>
+              <input type="hidden" id="visible-table-columns" value="<%= @visible_columns %>">
+              <a class="btn btn-default" id="copy-url" data-reports-path="<%= kanaui_engine.dashboard_index_path(params.to_h) %>">Copy URL</a>
+              <input id="url-placeholder" class="form-control hidden">
+            <% end %>
             <%= link_to 'Download raw data', kanaui_engine.reports_path(params.to_h.merge(:format => 'csv')), class: 'btn btn-default' %>
           </div>
           <a class="btn btn-default" role="button" data-toggle="collapse" href="#advanced-controls" aria-expanded="false" aria-controls="advanced-controls">
