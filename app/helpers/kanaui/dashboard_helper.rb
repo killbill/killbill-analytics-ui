@@ -7,6 +7,11 @@ module Kanaui
 
       class << self
 
+        def refresh(account_id, options = {})
+          path = "#{KILLBILL_ANALYTICS_PREFIX}/#{account_id}"
+          KillBillClient::API.put path, {}, {}, options
+        end
+
         def available_reports(options = {})
           path = "#{KILLBILL_ANALYTICS_PREFIX}/reports"
           response = KillBillClient::API.get path, {}, options

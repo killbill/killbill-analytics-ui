@@ -11,4 +11,6 @@ Kanaui::Engine.routes.draw do
   scope "/reports" do
     match "/refresh/:id" => "reports#refresh", :via => :put, :as => "refresh_report"
   end
+
+  resources :settings, :only => [:index, :create]
 end
