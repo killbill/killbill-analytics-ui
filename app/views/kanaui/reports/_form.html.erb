@@ -1,48 +1,62 @@
 <%= form_tag @report[:reportName].blank? ? url_for(:controller => :reports, :action => :create) : report_path(@report[:reportName]), :method => (@report[:reportName].blank? ? :post : :put), :class => 'form-horizontal' do %>
     <div class="form-group">
-      <%= label_tag :report_name, 'Report name', :class => 'col-sm-2 control-label' %>
-      <div class="col-sm-10">
+      <%= label_tag :report_name, 'Report name', :class => 'col-sm-3 control-label' %>
+      <div class="col-sm-9">
         <%= text_field_tag :report_name, @report[:reportName], :class => 'form-control', :disabled => !@report[:reportName].blank?, :read_only => !@report[:reportName].blank? %>
       </div>
     </div>
     <div class="form-group">
-      <%= label_tag :report_pretty_name, 'Pretty name', :class => 'col-sm-2 control-label' %>
-      <div class="col-sm-10">
+      <%= label_tag :report_pretty_name, 'Pretty name', :class => 'col-sm-3 control-label' %>
+      <div class="col-sm-9">
         <%= text_field_tag :report_pretty_name, @report[:reportPrettyName], :class => 'form-control' %>
       </div>
     </div>
     <div class="form-group">
-      <%= label_tag :report_type, 'Type', :class => 'col-sm-2 control-label' %>
-      <div class="col-sm-10">
+      <%= label_tag :report_type, 'Type', :class => 'col-sm-3 control-label' %>
+      <div class="col-sm-9">
         <%= select_tag :report_type, options_for_select(%w(TIMELINE COUNTERS TABLE), @report[:reportType] || 'TABLE'), :class => 'form-control' %>
       </div>
     </div>
     <div class="form-group">
-      <%= label_tag :source_table_name, 'Source', :class => 'col-sm-2 control-label' %>
-      <div class="col-sm-10">
+      <%= label_tag :source_table_name, 'Source', :class => 'col-sm-3 control-label' %>
+      <div class="col-sm-9">
         <%= text_field_tag :source_table_name, @report[:sourceTableName], :class => 'form-control' %>
       </div>
     </div>
     <div class="form-group">
-      <%= label_tag :refresh_procedure_name, 'Refresh procedure', :class => 'col-sm-2 control-label' %>
-      <div class="col-sm-10">
+      <%= label_tag :source_name, 'Source name', :class => 'col-sm-3 control-label' %>
+      <div class="col-sm-9">
+        <%= text_field_tag :source_name, @report[:sourceName], :class => 'form-control' %>
+        <span>Must match a database configuration entry in the Analytics plugin</span>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= label_tag :source_query, 'SQL query', :class => 'col-sm-3 control-label' %>
+      <div class="col-sm-9">
+        <%= text_area_tag :source_query, @report[:sourceQuery], rows: 10, cols: 25, :class => 'form-control' %>
+        <span>Don't add a trailing ;</span>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= label_tag :refresh_procedure_name, 'Refresh procedure', :class => 'col-sm-3 control-label' %>
+      <div class="col-sm-9">
         <%= text_field_tag :refresh_procedure_name, @report[:refreshProcedureName], :class => 'form-control' %>
       </div>
     </div>
     <div class="form-group">
-      <%= label_tag :refresh_frequency, 'Refresh frequency', :class => 'col-sm-2 control-label' %>
-      <div class="col-sm-10">
-        <%= select_tag :refresh_frequency, options_for_select(%w(HOURLY DAILY), @report[:refreshFrequency] || 'HOURLY'), :class => 'form-control' %>
+      <%= label_tag :refresh_frequency, 'Refresh frequency', :class => 'col-sm-3 control-label' %>
+      <div class="col-sm-9">
+        <%= select_tag :refresh_frequency, options_for_select(%w(HOURLY DAILY), @report[:refreshFrequency]), :class => 'form-control', :include_blank => true %>
       </div>
     </div>
     <div class="form-group">
-      <%= label_tag :refresh_hour_of_day_gmt, 'Refresh hour (GMT)', :class => 'col-sm-2 control-label' %>
-      <div class="col-sm-10">
+      <%= label_tag :refresh_hour_of_day_gmt, 'Refresh hour (GMT)', :class => 'col-sm-3 control-label' %>
+      <div class="col-sm-9">
         <%= number_field_tag :refresh_hour_of_day_gmt, @report[:refreshHourOfDayGmt], {:min => 1, :max => 23, :class => 'form-control'} %>
       </div>
     </div>
     <div class="form-group">
-      <div class="col-sm-offset-2 col-sm-10">
+      <div class="col-sm-offset-3 col-sm-9">
         <%= submit_tag 'Save', :class => 'btn btn-default' %>
       </div>
     </div>

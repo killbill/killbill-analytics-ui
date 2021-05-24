@@ -52,6 +52,7 @@ ReportsDataTables.prototype.buildTable = function(data, wrapper) {
     dataTable.dataTable({
         "aaData": aaData,
         "aoColumns": aoColumns,
+        "scrollX": true,
         "sDom": 'C<"clear">lfrtip'
     });
 

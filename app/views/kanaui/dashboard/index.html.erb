@@ -2,33 +2,47 @@
   <!--             MENU        -->
   <div class="reports-options flex-inner-left-panel">
     <div class="row">
-      <% if params[:name] && @report['reportType'] == 'TIMELINE' %>
-        <div id="date-picker" class="col-md-12">
-          <h4>End date</h4>
-          <%= form_tag kanaui_engine.dashboard_index_path, :html => {:class => 'form-horizontal'}, :method => :get do %>
-              <input name="name" type="hidden" value="<%= @raw_name %>">
-              <input name="smooth" type="hidden" value="<%= params[:smooth] %>">
-              <input name="sql_only" type="hidden" value="<%= params[:sql_only] %>">
-              <input name="format" type="hidden" value="<%= params[:format] %>">
-              <input name="delta_days" type="hidden" value="<%= (@end_date.to_date - @start_date.to_date).to_i %>">
+      <% if params[:name] %>
+        <div class="info-wrapper">
+          <div class="tag-bar tag-bar-breathe">
+            <div class="tag-select" onclick="void(0);">
+                <span><i class="fa fa-calendar"></i><i class="fa fa-caret-down"></i></span>
 
-              <div class="form-group">
-                <div class="col-md-12">
-                  <input class="form-control" name="end_date" type="text" data-provide="datepicker" data-date-format="yyyy-mm-dd" data-date-today-highlight="true" value="<%= @end_date %>">
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-12">
-                  <%= submit_tag 'Refresh', :class => 'btn btn-default' %>
-                </div>
-              </div>
-          <% end %>
-        </div>
+                <div class="tag-select-box">
+                <%= form_tag kanaui_engine.dashboard_index_path, :class => 'form-horizontal', :method => :get do %>
+                    <input name="name" type="hidden" value="<%= @raw_name %>">
+                    <input name="smooth" type="hidden" value="<%= params[:smooth] %>">
+                    <input name="sql_only" type="hidden" value="<%= params[:sql_only] %>">
+                    <input name="format" type="hidden" value="<%= params[:format] %>">
+                    <input name="delta_days" type="hidden" value="<%= (@end_date.to_date - @start_date.to_date).to_i %>">
+
+                    <div class="form-group">
+                      <div class="col-md-7">
+                        <% # TODO datepicker breaks :hover %>
+                        From:<input class="form-control" name="start_date" type="text" data-provide="datepicker-BROKEN" data-date-format="yyyy-mm-dd" data-date-today-highlight="true" value="<%= @start_date %>">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-md-7">
+                        <% # TODO datepicker breaks :hover %>
+                        To:<input class="form-control" name="end_date" type="text" data-provide="datepicker-BROKEN" data-date-format="yyyy-mm-dd" data-date-today-highlight="true" value="<%= @end_date %>">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-sm-12">
+                        <%= submit_tag 'Refresh', :class => 'btn btn-default' %>
+                      </div>
+                    </div>
+                <% end %>
+                </div><!-- /.tag-select-box -->
+            </div><!-- /.tag-select -->
+          </div><!-- /.tag-bar -->
+        </div><!-- /.info-wrapper -->
       <% end %>
       <div class="col-md-12 col-sm-8">
         <h4><%= link_to 'Available Reports', kanaui_engine.url_for(:controller => :reports) %></h4>
           <ul class="nav nav-tabs nav-stacked">
-            <% if Rails.env.development? %>
+            <% if Rails.env.development? && @reports.empty? %>
               <li class="nav-element">
                 <%= link_to "Fake pie", kanaui_engine.dashboard_index_path(:fake => 1, :name => 'fake_pie', :type => 'pie') %>
               </li>
@@ -45,6 +59,11 @@
         </ul>
       </div>
     </div>
+    <div class="row">
+      <div class="col-md-12 col-sm-8">
+        <h5><%= link_to 'Settings', kanaui_engine.url_for(:controller => :settings) %></h5>
+      </div>
+    </div>
   </div>
 
   <!--             DASHBOARD        -->
@@ -55,16 +74,6 @@
           <h2 class="chart-title">
             <%= @raw_name.titleize %>
           </h2>
-          <% if @report['reportType'] == 'TABLE' %>
-            <input type="hidden" id="visible-table-columns" value="<%= @visible_columns %>">
-
-            <div id="table-tools" class="row">
-              <div class="col-sm-2">
-                <a class="btn btn-default" id="copy-url" data-reports-path="<%= kanaui_engine.dashboard_index_path(params.to_h) %>">Copy URL</a>
-                <input id="url-placeholder" class="form-control hidden">
-              </div>
-            </div>
-          <% end %>
           <div id="loading-spinner"></div>
           <div id="chartAnchor" data-reports-path="<%= kanaui_engine.reports_path(params.to_h) %>"></div>
           <div id="date-controls" style="display: none;">
@@ -76,6 +85,11 @@
           </div>
           <hr>
           <div class="pull-right">
+            <% if @report['reportType'] == 'TABLE' %>
+              <input type="hidden" id="visible-table-columns" value="<%= @visible_columns %>">
+              <a class="btn btn-default" id="copy-url" data-reports-path="<%= kanaui_engine.dashboard_index_path(params.to_h) %>">Copy URL</a>
+              <input id="url-placeholder" class="form-control hidden">
+            <% end %>
             <%= link_to 'Download raw data', kanaui_engine.reports_path(params.to_h.merge(:format => 'csv')), class: 'btn btn-default' %>
           </div>
           <a class="btn btn-default" role="button" data-toggle="collapse" href="#advanced-controls" aria-expanded="false" aria-controls="advanced-controls">

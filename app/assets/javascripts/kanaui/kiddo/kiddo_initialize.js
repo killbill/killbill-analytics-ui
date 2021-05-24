@@ -8,7 +8,7 @@
       var renderer = new Kiddo.Renderer('#chartAnchor');
 
       if (error) {
-        console.log(error);
+        ajaxErrorAlert(error);
         return renderer.noData();
       }
 
