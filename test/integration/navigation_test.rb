@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 class NavigationTest < ActionDispatch::IntegrationTest
-
   include Kanaui::Engine.routes.url_helpers
 
   test 'can see the dashboard page' do
@@ -9,4 +10,3 @@ class NavigationTest < ActionDispatch::IntegrationTest
     assert_response :redirect
   end
 end
-

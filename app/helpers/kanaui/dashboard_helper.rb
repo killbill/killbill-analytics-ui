@@ -1,12 +1,11 @@
+# frozen_string_literal: true
+
 module Kanaui
   module DashboardHelper
-
     class DashboardApi < KillBillClient::Model::Resource
-
-      KILLBILL_ANALYTICS_PREFIX = "/plugins/killbill-analytics"
+      KILLBILL_ANALYTICS_PREFIX = '/plugins/killbill-analytics'
 
       class << self
-
         def refresh(account_id, options = {})
           path = "#{KILLBILL_ANALYTICS_PREFIX}/#{account_id}"
           KillBillClient::API.put path, {}, {}, options
@@ -53,7 +52,5 @@ module Kanaui
         end
       end
     end
-
   end
 end
-

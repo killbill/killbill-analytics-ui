@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Dependencies
 #
 # Sigh. Rails autoloads the gems specified in the Gemfile and nothing else.

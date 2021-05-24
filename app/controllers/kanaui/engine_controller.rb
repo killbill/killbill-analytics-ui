@@ -1,6 +1,7 @@
+# frozen_string_literal: true
+
 module Kanaui
   class EngineController < ApplicationController
-
     layout :get_layout
 
     def get_layout
@@ -17,11 +18,11 @@ module Kanaui
     def options_for_klient
       user = current_tenant_user
       {
-          :username => user[:username],
-          :password => user[:password],
-          :session_id => user[:session_id],
-          :api_key => user[:api_key],
-          :api_secret => user[:api_secret]
+        username: user[:username],
+        password: user[:password],
+        session_id: user[:session_id],
+        api_key: user[:api_key],
+        api_secret: user[:api_secret]
       }
     end
 
@@ -40,7 +41,7 @@ module Kanaui
     end
 
     def log_rescue_error(error)
-      Rails.logger.warn "#{error.class} #{error.to_s}. #{error.backtrace.join("\n")}"
+      Rails.logger.warn "#{error.class} #{error}. #{error.backtrace.join("\n")}"
     end
 
     def as_string_from_response(response)
@@ -48,10 +49,10 @@ module Kanaui
       begin
         # BillingExceptionJson?
         error_message = JSON.parse response
-      rescue => _
+      rescue StandardError => _e
       end
 
-      if error_message.respond_to? :[] and error_message['message'].present?
+      if error_message.respond_to?(:[]) && error_message['message'].present?
         # Likely BillingExceptionJson
         error_message = error_message['message']
       end

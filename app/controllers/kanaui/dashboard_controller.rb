@@ -1,6 +1,7 @@
+# frozen_string_literal: true
+
 module Kanaui
   class DashboardController < Kanaui::EngineController
-
     #
     # Load the dashboard by rendering the view and executing the javascript that will call
     # the reports and available_reports endpoints below.
@@ -25,14 +26,14 @@ module Kanaui
 
       # Redirect also in case the dates have been updated to avoid any confusion in the view
       if query.present? || params[:start_date].blank? || params[:end_date].blank?
-        # TODO Make metrics configurable
+        # TODO: Make metrics configurable
         name = query.present? ? "#{params[:name]}#{query}^metric:count" : params[:name]
-        query_params = {:start_date => @start_date,
-                        :end_date => @end_date,
-                        :name => name,
-                        :smooth => params[:smooth],
-                        :sql_only => params[:sql_only],
-                        :format => params[:format]}
+        query_params = { start_date: @start_date,
+                         end_date: @end_date,
+                         name: name,
+                         smooth: params[:smooth],
+                         sql_only: params[:sql_only],
+                         format: params[:format] }
 
         # Test only
         query_params[:fake] = params[:fake] unless params[:fake].blank?
@@ -47,7 +48,7 @@ module Kanaui
     # Not used anymore as reports are pulled from index
     def available_reports
       available_reports = Kanaui::DashboardHelper::DashboardApi.available_reports(options_for_klient)
-      render :json => available_reports
+      render json: available_reports
     end
 
     def reports
@@ -66,7 +67,7 @@ module Kanaui
       else
         reports = raw_reports
       end
-      render :json => reports
+      render json: reports
     end
 
     private
@@ -117,6 +118,7 @@ module Kanaui
       filter_query = ''
       filters.each do |k, v|
         next if v.blank?
+
         filter_query << '%26' unless filter_query.blank?
         filter_query << "(#{k}=#{v.join("|#{k}=")})"
       end
@@ -124,7 +126,8 @@ module Kanaui
 
       groups.each do |k, v|
         next if v.blank?
-        # TODO Make "no other" configurable
+
+        # TODO: Make "no other" configurable
         query << "^dimension:#{k}(#{v.join('|')}|-)"
       end
 
