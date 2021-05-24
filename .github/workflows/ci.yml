@@ -104,6 +104,61 @@ jobs:
                -H 'X-Killbill-CreatedBy: GitHub' \
                -d '{"apiKey": "bob", "apiSecret": "lazar"}' \
                "http://${KB_ADDRESS}:${KB_PORT}/1.0/kb/tenants"
+      - name: Install plugin
+        run: |
+          curl --connect-timeout 10 --max-time 30 -v \
+               -X POST \
+               -u admin:password \
+               -H 'Content-Type: application/json' \
+               -H 'X-Killbill-CreatedBy: GitHub' \
+               -d '{
+                   "nodeCommandProperties": [
+                       {
+                           "key": "pluginKey",
+                           "value": "analytics"
+                       }
+                   ],
+                   "nodeCommandType": "INSTALL_PLUGIN",
+                   "isSystemCommandType": "true"
+               }' \
+               "http://${KB_ADDRESS}:${KB_PORT}/1.0/kb/nodesInfo"
+
+          sudo snap install yq
+
+          count=0
+          until [[ "$(curl -s -uadmin:password http://${KB_ADDRESS}:${KB_PORT}/1.0/kb/nodesInfo | jq -r '.[].pluginsInfo[] | select(.pluginKey == "analytics").state')" == "STOPPED" ]]; do
+            if [[ "$count" == "180" ]]; then
+              exit 64
+            fi
+            count=$(( count + 1 ))
+            sleep 1
+          done
+
+          curl --connect-timeout 10 --max-time 30 -v \
+               -X POST \
+               -u admin:password \
+               -H 'Content-Type: application/json' \
+               -H 'X-Killbill-CreatedBy: GitHub' \
+               -d '{
+                   "nodeCommandProperties": [
+                       {
+                           "key": "pluginKey",
+                           "value": "analytics"
+                       }
+                   ],
+                   "nodeCommandType": "START_PLUGIN",
+                   "isSystemCommandType": "true"
+               }' \
+               "http://${KB_ADDRESS}:${KB_PORT}/1.0/kb/nodesInfo"
+
+          count=0
+          until [[ "$(curl -s -uadmin:password http://${KB_ADDRESS}:${KB_PORT}/1.0/kb/nodesInfo | jq -r '.[].pluginsInfo[] | select(.pluginKey == "analytics").state')" == "RUNNING" ]]; do
+            if [[ "$count" == "180" ]]; then
+              exit 65
+            fi
+            count=$(( count + 1 ))
+            sleep 1
+          done
       - name: Run tests
         env:
           DB_ADAPTER: ${{ matrix.database-adapter }}
