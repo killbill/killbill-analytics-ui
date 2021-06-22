@@ -67,7 +67,18 @@ module Kanaui
       else
         reports = raw_reports
       end
-      render json: reports
+      respond_to do |fmt|
+        fmt.csv do
+          filename = params[:name]
+          unless params[:start_date].blank?
+            filename += "_#{params[:start_date]}"
+            filename += "-#{params[:end_date]}" unless params[:end_date].blank?
+          end
+          filename += '.csv'
+          send_data(raw_reports, filename: filename)
+        end
+        fmt.all { render json: reports }
+      end
     end
 
     private
