@@ -28,6 +28,20 @@
                         To:<input class="form-control" name="end_date" type="text" data-provide="datepicker-BROKEN" data-date-format="yyyy-mm-dd" data-date-today-highlight="true" value="<%= @end_date %>">
                       </div>
                     </div>
+                    <% ((@report['variables'] || {})['fields']).each do |definition| %>
+                      <div class="form-group">
+                        <div class="col-md-7">
+                          <%= definition['name'].titleize %>:
+                          <% # TODO Not fully implemented server side %>
+                          <% if definition['dataType'] == 'date' %>
+                            <% # TODO datepicker breaks :hover %>
+                            <input class="form-control" name="variable_<%= definition['name'] %>" type="text" data-provide="datepicker-BROKEN" data-date-format="yyyy-mm-dd" data-date-today-highlight="true" value=""/>
+                          <% else %>
+                            <input class="form-control" name="variable_<%= definition['name'] %>" type="text" value=""/>
+                          <% end %>
+                        </div>
+                      </div>
+                    <% end %>
                     <div class="form-group">
                       <div class="col-sm-12">
                         <%= submit_tag 'Refresh', :class => 'btn btn-default' %>

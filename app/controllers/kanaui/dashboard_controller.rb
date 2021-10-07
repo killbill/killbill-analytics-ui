@@ -115,7 +115,7 @@ module Kanaui
     end
 
     def build_slice_and_dice_query
-      query = ''
+      query = +''
 
       filters = {}
       groups = {}
@@ -140,6 +140,15 @@ module Kanaui
 
         # TODO: Make "no other" configurable
         query << "^dimension:#{k}(#{v.join('|')}|-)"
+      end
+
+      # Template variables
+      params.each do |k, v|
+        next unless k.starts_with?('variable_')
+        next if v.blank?
+
+        variable_name = k.split('_')[1..-1].join('_')
+        query << "^variable:#{variable_name}=#{v}"
       end
 
       query
