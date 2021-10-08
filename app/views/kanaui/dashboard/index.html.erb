@@ -28,7 +28,7 @@
                         To:<input class="form-control" name="end_date" type="text" data-provide="datepicker-BROKEN" data-date-format="yyyy-mm-dd" data-date-today-highlight="true" value="<%= @end_date %>">
                       </div>
                     </div>
-                    <% ((@report['variables'] || {})['fields']).each do |definition| %>
+                    <% ((@report['variables'] || {})['fields'] || []).each do |definition| %>
                       <div class="form-group">
                         <div class="col-md-7">
                           <%= definition['name'].titleize %>:
