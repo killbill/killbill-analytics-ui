@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.version     = Kanaui::VERSION
   s.authors     = 'Kill Bill core team'
   s.email       = 'killbilling-users@googlegroups.com'
-  s.homepage    = 'http://www.killbill.io'
+  s.homepage    = 'https://killbill.io'
   s.summary     = 'Kill Bill Analytics UI mountable engine'
   s.description = 'Rails UI plugin for the Analytics plugin.'
   s.license     = 'MIT'
