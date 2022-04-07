@@ -22,7 +22,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'd3_rails', '>= 3.2.8', '< 4.2.0'
   s.add_dependency 'jquery-datatables-rails', '~> 3.3'
   s.add_dependency 'jquery-rails', '~> 4.3'
-  s.add_dependency 'js-routes', '~> 1.1'
+  s.add_dependency 'js-routes', '>= 1.1', '< 3.0'
   s.add_dependency 'rails', '~> 5.1'
   # See https://github.com/seyhunak/twitter-bootstrap-rails/issues/897
   s.add_dependency 'bootstrap-datepicker-rails', '~> 1.6'
