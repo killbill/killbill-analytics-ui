@@ -37,7 +37,7 @@ jobs:
             database-password: 'postgres'
             database-port: '5432'
             docker-compose-file: 'docker-compose.ci.postgresql.yml'
-          - ruby-version: 'jruby-9.2.20.1'
+          - ruby-version: 'jruby-9.3.4.0'
             database-adapter: 'postgresql'
             database-user: 'postgres'
             database-password: 'postgres'
