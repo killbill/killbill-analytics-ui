@@ -12,9 +12,14 @@ gemspec
 # Git. Remember to move these dependencies to your gemspec before releasing
 # your gem to rubygems.org.
 
-# For the dummy app
-group :development, :test do
+group :development do
+  gem 'gem-release'
+  gem 'json'
+  gem 'listen'
   gem 'puma'
+  gem 'rake'
+  gem 'rubocop'
+  gem 'simplecov'
 end
 
 # gem 'killbill-client', :github => 'killbill/killbill-client-ruby', :ref => 'master'
