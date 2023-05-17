@@ -9,7 +9,7 @@ require 'kanaui/version'
 Gem::Specification.new do |s|
   s.name        = 'kanaui'
   s.version     = Kanaui::VERSION
-  s.authors     = 'Kill Bill core team'
+  s.author      = 'Kill Bill core team'
   s.email       = 'killbilling-users@googlegroups.com'
   s.homepage    = 'https://killbill.io'
   s.summary     = 'Kill Bill Analytics UI mountable engine'
@@ -17,25 +17,17 @@ Gem::Specification.new do |s|
   s.license     = 'MIT'
 
   s.files = Dir['{app,config,db,lib}/**/*'] + %w[MIT-LICENSE Rakefile README.md]
-  s.test_files = Dir['test/**/*']
 
-  s.add_dependency 'd3_rails', '>= 3.2.8', '< 4.2.0'
-  s.add_dependency 'jquery-datatables-rails', '~> 3.3'
-  s.add_dependency 'jquery-rails', '~> 4.3'
-  s.add_dependency 'js-routes', '>= 1.1', '< 3.0'
-  s.add_dependency 'rails', '~> 5.1'
-  # See https://github.com/seyhunak/twitter-bootstrap-rails/issues/897
+  s.metadata['rubygems_mfa_required'] = 'true'
+
   s.add_dependency 'bootstrap-datepicker-rails', '~> 1.6'
-  s.add_dependency 'font-awesome-rails', '~> 4.7'
-  s.add_dependency 'killbill-client', '~> 3.2'
-  s.add_dependency 'sass-rails', '>= 5', '< 7'
-  s.add_dependency 'spinjs-rails', '~> 1.4'
-  s.add_dependency 'twitter-bootstrap-rails'
-
-  s.add_development_dependency 'gem-release', '~> 2.2'
-  s.add_development_dependency 'json', '>= 1.8.6'
-  s.add_development_dependency 'listen'
-  s.add_development_dependency 'rake'
-  s.add_development_dependency 'rubocop', '~> 1.39.0'
-  s.add_development_dependency 'simplecov'
+  s.add_dependency 'd3_rails', '>= 3.2.8', '< 4.2.0'
+  s.add_dependency 'font-awesome-rails'
+  s.add_dependency 'jquery-datatables-rails', '~> 3.3'
+  s.add_dependency 'jquery-rails', '~> 4.5.1'
+  s.add_dependency 'js-routes', '>= 1.1', '< 3.0'
+  s.add_dependency 'killbill-client'
+  s.add_dependency 'rails', '~> 7.0'
+  s.add_dependency 'sass-rails'
+  s.add_dependency 'spinjs-rails'
 end
