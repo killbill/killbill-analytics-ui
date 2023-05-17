@@ -12,5 +12,15 @@ gemspec
 # Git. Remember to move these dependencies to your gemspec before releasing
 # your gem to rubygems.org.
 
+group :development do
+  gem 'gem-release'
+  gem 'json'
+  gem 'listen'
+  gem 'puma'
+  gem 'rake'
+  gem 'rubocop'
+  gem 'simplecov'
+end
+
 # gem 'killbill-client', :github => 'killbill/killbill-client-ruby', :ref => 'master'
 # gem 'killbill-client', '3.2.0'

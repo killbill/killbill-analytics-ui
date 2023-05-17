@@ -147,7 +147,7 @@ module Kanaui
         next unless k.starts_with?('variable_')
         next if v.blank?
 
-        variable_name = k.split('_')[1..-1].join('_')
+        variable_name = k.split('_')[1..].join('_')
         query << "^variable:#{variable_name}=#{v}"
       end
 

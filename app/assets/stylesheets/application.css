@@ -8,6 +8,5 @@
  *= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
  *= require dataTables/extras/dataTables.colVis
  *= require font-awesome
- *= require bootstrap_and_overrides
  *= require kanaui/kanaui
 */
