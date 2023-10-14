@@ -21,13 +21,12 @@ Gem::Specification.new do |s|
   s.metadata['rubygems_mfa_required'] = 'true'
 
   s.add_dependency 'bootstrap-datepicker-rails', '~> 1.6'
-  s.add_dependency 'd3_rails', '>= 3.2.8', '< 4.2.0'
+  s.add_dependency 'd3_rails', '4.1.0'
   s.add_dependency 'font-awesome-rails'
-  s.add_dependency 'jquery-datatables-rails', '~> 3.3'
   s.add_dependency 'jquery-rails', '~> 4.5.1'
   s.add_dependency 'js-routes', '>= 1.1', '< 3.0'
+  s.add_dependency 'killbill-assets-ui'
   s.add_dependency 'killbill-client'
   s.add_dependency 'rails', '~> 7.0'
-  s.add_dependency 'sass-rails'
   s.add_dependency 'spinjs-rails'
 end
