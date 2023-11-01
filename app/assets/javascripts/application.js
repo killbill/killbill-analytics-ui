@@ -4,15 +4,12 @@
 // It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
 // the compiled file.
 //
-//= require js-routes
 //= require log4javascript
 //= require spin
 //= require jquery
 //= require jquery_ujs
-//= require dataTables/jquery.dataTables
-//= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
-//= require dataTables/extras/dataTables.colVis
 //= require d3
 //= require bootstrap-datepicker
 //= require jquery.spin
 //= require kanaui/kanaui
+//= require assets/common

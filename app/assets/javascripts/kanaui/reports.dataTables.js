@@ -17,7 +17,7 @@ ReportsDataTables.prototype.build = function(data, id, wrapper) {
         aaData.push([data.values[i]['x'], data.values[i]['y']])
     }
 
-    dataTable.dataTable({
+    dataTable.DataTable({
         "aaData": aaData,
         "aoColumns": [
             { "sTitle": "Date" },
@@ -49,7 +49,7 @@ ReportsDataTables.prototype.buildTable = function(data, wrapper) {
         }
     }
 
-    dataTable.dataTable({
+    dataTable.DataTable({
         "aaData": aaData,
         "aoColumns": aoColumns,
         "scrollX": true,

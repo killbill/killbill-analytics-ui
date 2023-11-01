@@ -7,25 +7,28 @@
   <%= javascript_include_tag 'application' %>
   <%= csrf_meta_tags %>
 </head>
-<div class="container-fluid">
-  <%- # :alert used by devise -%>
-  <% [:error, :alert].each do |key| %>
-      <% if flash[key] %>
+<body>
+  <div class="container">
+    <div class="container-fluid">
+      <%- # :alert used by devise -%>
+      <% [:error, :alert].each do |key| %>
+          <% if flash[key] %>
+              <div class="row">
+                <div class="col-md-10 col-md-offset-2">
+                  <div class="alert alert-error"><%= flash[key] %></div>
+                </div>
+              </div>
+          <% end %>
+      <% end %>
+      <% if flash[:notice] %>
           <div class="row">
             <div class="col-md-10 col-md-offset-2">
-              <div class="alert alert-error"><%= flash[key] %></div>
+              <div class="alert alert-info"><%= flash[:notice] %></div>
             </div>
           </div>
       <% end %>
-  <% end %>
-  <% if flash[:notice] %>
-      <div class="row">
-        <div class="col-md-10 col-md-offset-2">
-          <div class="alert alert-info"><%= flash[:notice] %></div>
-        </div>
-      </div>
-  <% end %>
-  <%= yield %>
-</div>
+      <%= yield %>
+    <div>
+  </div>
 </body>
 </html>

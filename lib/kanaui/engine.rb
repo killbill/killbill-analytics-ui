@@ -8,7 +8,7 @@
 # See also https://github.com/carlhuda/bundler/issues/49
 require 'js-routes'
 require 'jquery-rails'
-require 'jquery-datatables-rails'
+require 'killbill-assets-ui'
 require 'font-awesome-rails'
 require 'bootstrap-datepicker-rails'
 require 'd3_rails'
