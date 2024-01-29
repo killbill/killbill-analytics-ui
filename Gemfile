@@ -26,4 +26,4 @@ end
 
 # gem 'killbill-assets-ui', github: 'killbill/killbill-assets-ui', ref: 'main'
 # gem 'killbill-assets-ui', path: '../killbill-assets-ui'
-gem killbill-assets-ui
+gem 'killbill-assets-ui'
