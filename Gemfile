@@ -15,7 +15,7 @@ gemspec
 group :development do
   gem 'gem-release'
   gem 'json'
-  gem 'killbill-client', github: 'killbill/killbill-client-ruby', ref: 'master'
+  gem 'killbill-client'
   gem 'listen'
   gem 'puma'
   gem 'rake'
