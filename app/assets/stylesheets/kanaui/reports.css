@@ -57,9 +57,23 @@
   fill: #202020;
 }
 
-.chart-title{
-  padding: 20px;
-  text-indent: 30px;
+.chart-title-container {
+  height: 31.25rem;  
+  width: 1.25rem; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.chart-title {
+  font-weight: 500;
+  font-size: 0.75rem;    
+  line-height: 1.125rem; 
+  text-align: center;
+  color: #535862;
+  white-space: nowrap;
+  transform: rotate(-90deg);
 }
 
 .nav-element.current{

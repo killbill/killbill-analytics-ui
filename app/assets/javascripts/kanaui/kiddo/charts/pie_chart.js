@@ -2,7 +2,10 @@
   Kiddo.PieChart = function(){
     var self = this;
     var radius = Math.min(this.width, this.height) / 2;
-    var color = d3.scale.category10();
+    
+    // Custom blue color theme - matching the line chart
+    var blueColors = ['#1565C0', '#1976D2', '#2196F3', '#42A5F5', '#64B5F6', '#90CAF9', '#BBDEFB', '#E3F2FD'];
+    var color = d3.scale.ordinal().range(blueColors);
 
     var arc = d3.svg.arc()
       .outerRadius(radius - 10)
@@ -29,11 +32,13 @@
 
         g.append("path")
           .attr("d", arc)
-          .style("fill", function(d) { return color(d.data.value); });
+          .style("fill", function(d, i) { return color(i); }) // Use index for consistent coloring
+          .style("stroke", "#ffffff")
+          .style("stroke-width", "1px"); // Add white borders for better separation
 
-        var colorCircle = function(value){
+        var colorCircle = function(value, index){
           return(
-            '<span class="colored-dot" style="background-color:' + color(value) + ';"></span>'
+            '<span class="colored-dot" style="background-color:' + color(index) + ';"></span>'
           );
         }
 
@@ -43,7 +48,7 @@
           .attr("dy", ".35em")
           .attr("x", 250)
           .attr("y", function(d, i) { return 50 * i - 200; })
-          .html(function(d) { return  colorCircle(d.data.value) + d.data.label + ": " + d.data.value; })
+          .html(function(d, i) { return  colorCircle(d.data.value, i) + d.data.label + ": " + d.data.value; })
           .attr("class", "chart_values");
       }
     }
