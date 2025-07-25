@@ -164,9 +164,9 @@
           </ul>
         </td>
         <td>
-          <%= link_to 'Delete'.html_safe, report_path(report[:reportName]), :method => :delete, :class => 'delete-button table-button' %>
-          <%= link_to 'Refresh'.html_safe, refresh_report_path(report[:reportName]), :method => :put, :class => 'refresh-button table-button' %>
-          <%= link_to 'Edit'.html_safe, edit_report_path(report[:reportName]), :class => 'edit-button table-button' %>
+          <%= link_to 'Delete', report_path(report[:reportName]), :method => :delete, :class => 'delete-button table-button' %>
+          <%= link_to 'Refresh', refresh_report_path(report[:reportName]), :method => :put, :class => 'refresh-button table-button' %>
+          <%= link_to 'Edit', edit_report_path(report[:reportName]), :class => 'edit-button table-button' %>
         </td>
       </tr>
   <% end %>
