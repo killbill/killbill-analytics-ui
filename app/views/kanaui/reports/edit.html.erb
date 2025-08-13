@@ -1,18 +1,5 @@
-<%
-=begin%>
- <div class="register">
-  <div class="col-md-8 col-md-offset-2">
 
-    <div class="column-block">
-      <h1>Update report</h1>
-      <%= render 'form' %>
-    </div>
-
-  </div>
-</div> 
-<%
-=end%>
-<div class="register">
+<div class="register kanaui-reports-edit">
     <div class="">
         <div class="mx-auto" style="max-width: 37.5rem;">
             <h5 class="new-report-title pb-3 mb-3 border-bottom">
@@ -28,78 +15,3 @@
         </div>
     </div>
 </div>
-
-<style>
-  .new-report-title {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-weight: 600;
-    font-size: 1.125rem;
-    line-height: 1.75rem;
-    letter-spacing: 0;
-    color: #1B1C1E;
-    padding: 1.5rem 0;
-  }
-
-  .icon-container {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    border: 0.0625rem solid #D5D7DA;
-    border-radius: 0.375rem;
-    width: 2.5rem;
-    height: 2.5rem;
-    padding: 0.25rem;
-  }
-
-  .icon-container img {
-    width: 1rem;
-    height: 1rem;
-  }
-
-  .form-control {
-    border-radius: 6px;
-  }
-
-  .form-group select.form-control {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    background-image: url('data:image/svg+xml;utf8,<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 6L8 10L12 6" stroke="%23A4A7AE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>');
-    background-repeat: no-repeat;
-    background-position: right 0.625rem center;
-    background-size: 1rem 1rem;
-    padding-right: 1.875rem;
-  }
-
-  select.form-control:focus {
-    border-color: #1570ef !important;
-    box-shadow: none;
-    outline: none;
-  }
-
-  .control-label {
-    font-size: 0.875rem !important;
-    font-weight: 500 !important;
-    line-height: 1.25rem !important;
-    color: #414651 !important;
-  }
-
-  textarea.form-control {
-    height: 10rem !important;
-  }
-
-  textarea.form-control:focus {
-    border-color: #1570ef !important;
-    outline: 0 !important;
-    box-shadow: none !important;
-  }
-
-  .form-group span {
-    font-weight: 400;
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-    color: #535862;
-  }
-</style>
