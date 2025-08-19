@@ -1,193 +1,268 @@
-<div class="flex-panel">
-  <!--             MENU        -->
-  <div class="reports-options flex-inner-left-panel">
-    <div class="row">
-    <div class="col-md-12 col-sm-8">
-    <div class="calendar-container">
-      <span class="calendar-icon"><i class="fa fa-calendar"></i><i class="fa fa-caret-down"></i></span>
-      <% if params[:name] %>
-        <div class="form-container">
-          <%= form_tag kanaui_engine.dashboard_index_path, :class => 'form-horizontal', :method => :get do %>
-              <input name="name" type="hidden" value="<%= @raw_name %>">
-              <input name="smooth" type="hidden" value="<%= params[:smooth] %>">
-              <input name="sql_only" type="hidden" value="<%= params[:sql_only] %>">
-              <input name="format" type="hidden" value="<%= params[:format] %>">
-              <input name="delta_days" type="hidden" value="<%= (@end_date.to_date - @start_date.to_date).to_i %>">
-              <div class="form-group">
-                <div id="dp1" class="col-md-7">
-                  From:<input class="form-control datepicker" name="start_date" type="text" data-provide="datepicker" data-date-format="yyyy-mm-dd" data-date-today-highlight="true" value="<%= @start_date %>">
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-md-7">
-                  To:<input class="form-control" name="end_date" type="text" data-provide="datepicker" data-date-format="yyyy-mm-dd" data-date-today-highlight="true" value="<%= @end_date %>">
-                </div>
-              </div>
-              <% ((@report['variables'] || {})['fields'] || []).each do |definition| %>
-                <div class="form-group">
-                  <div class="col-md-7">
-                    <%= definition['name'].titleize %>:
-                    <% # TODO Not fully implemented server side %>
-                    <% if definition['dataType'] == 'date' %>
-                      <% # TODO datepicker breaks :hover %>
-                      <input class="form-control" name="variable_<%= definition['name'] %>" type="text" data-provide="datepicker" data-date-format="yyyy-mm-dd" data-date-today-highlight="true" value=""/>
-                    <% else %>
-                      <input class="form-control" name="variable_<%= definition['name'] %>" type="text" value=""/>
-                    <% end %>
-                  </div>
-                </div>
+
+<div class="kaui-container kenui-analytics-dashboard-index">
+  <%= render partial: 'kaui/components/breadcrumb/breadcrumb', locals: {
+    breadcrumbs: [
+      { label: 'Settings', href: '/' },
+      { label: "Analytics", href: '#' }
+    ]
+  } %>
+
+  <div class="d-flex" style="gap: 4rem;">
+    <%= render template: 'kaui/layouts/kaui_setting_sidebar', 
+      locals: {
+        identifier: "Settings",
+        controller: params[:controller],
+        menu_items: [
+          { label: 'Account', path: kaui_engine.admin_tenant_path(session[:tenant_id]), controller_suffix: "#{session[:tenant_id]}", icon_path: 'kaui/setting/account.svg' },
+          { label: 'Tenants', path: kaui_engine.admin_tenants_path, controller_suffix: 'admin_tenants', icon_path: 'kaui/setting/tenants.svg' },
+          { label: 'Users', path: kaui_engine.admin_allowed_users_path, controller_suffix: 'admin_allowed_users', icon_path: 'kaui/setting/users.svg' },
+          { label: 'Tags', path: kaui_engine.tags_path, controller_suffix: 'tags', icon_path: 'kaui/setting/tags.svg' },
+          { label: 'Tag Definitions', path: kaui_engine.tag_definitions_path, controller_suffix: 'tag_definitions', icon_path: 'kaui/setting/tag-definitions.svg' },
+          { label: 'Custom Fields', path: kaui_engine.custom_fields_path, controller_suffix: 'custom_fields', icon_path: 'kaui/setting/custom-field.svg' },
+          { label: 'Plugin Manager', path: "/kpm", controller_suffix: 'kpm', icon_path: 'kaui/setting/plugins.svg' },
+          { label: 'E-notifications', path: "/kenui", controller_suffix: 'kenui', icon_path: 'kaui/setting/e-notifications.svg' },
+          { label: 'Analytics', path: "/analytics", controller_suffix: 'analytics', icon_path: 'kaui/setting/analytics.svg' },
+        ]
+      }
+    %>
+
+    <div class="analytics w-100">
+      <div class="d-flex flex-column">
+        <div class="analytics-header">
+          <h2>Analytics</h2>
+          <span class="d-flex">
+            
+            <div class="d-flex align-items-center me-4">
+              <b class="me-2"><%= link_to 'Available Reports', kanaui_engine.url_for(:controller => :reports) %>:</b>
+              <% if Rails.env.development? && @reports.empty? %>
+                <ul class="">
+                  <li class="nav-element">
+                    <%= link_to "Fake pie", kanaui_engine.dashboard_index_path(fake: 1, name: 'fake_pie', type: 'pie') %>
+                  </li>
+                  <li class="nav-element">
+                    <%= link_to "Fake line", kanaui_engine.dashboard_index_path(fake: 1, name: 'fake_line', type: 'line') %>
+                  </li>
+                </ul>
+              <% else %>
+                <select class="form-select" onchange="if(this.value) window.location.href = this.value;">
+                  <option disabled selected>Select a report</option>
+                  <% @reports.each do |r| %>
+                    <% report_link = kanaui_engine.dashboard_index_path(params.to_h.merge(name: r['reportName'])) %>
+                    <option value="<%= report_link %>" <%= 'selected' if params[:name] == r['reportName'] %>>
+                      <%= r['reportPrettyName'] %>
+                    </option>
+                  <% end %>
+                </select>
               <% end %>
-              <div class="form-group">
-                <div class="col-sm-12">
-                  <%= submit_tag 'Refresh', :class => 'btn btn-default' %>
-                </div>
-              </div>
-          <% end %>
-        </div>
-      <% end %>
-      </div>
-      <div class="col-md-12 col-sm-8">
-        <h4><%= link_to 'Available Reports', kanaui_engine.url_for(:controller => :reports) %></h4>
-          <ul class="nav nav-tabs nav-stacked">
-            <% if Rails.env.development? && @reports.empty? %>
-              <li class="nav-element">
-                <%= link_to "Fake pie", kanaui_engine.dashboard_index_path(:fake => 1, :name => 'fake_pie', :type => 'pie') %>
-              </li>
-              <li class="nav-element">
-                <%= link_to "Fake line", kanaui_engine.dashboard_index_path(:fake => 1, :name => 'fake_line', :type => 'line') %>
-              </li>
-            <% end %>
-          <% @reports.each do |r| %>
-            <% link = kanaui_engine.dashboard_index_path(params.to_h.merge(:name => r['reportName'])) %>
-            <li class="nav-element <%= params[:name] == r['reportName'] ? 'current' : '' %>">
-              <%= link_to r['reportPrettyName'], link, :class => "truncate-text", title: r['reportName'].titleize %>
-            </li>
-          <% end %>
-        </ul>
-      </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12 col-sm-8">
-        <h5><%= link_to 'Settings', kanaui_engine.url_for(:controller => :settings) %></h5>
-      </div>
-    </div>
-  </div>
 
-  <!--             DASHBOARD        -->
-  <div class="flex-inner-right-panel">
-    <div class="row">
-      <div class="col-sm-12">
-        <% if params[:name] %>
-          <h2 class="chart-title">
-            <%= @raw_name.titleize %>
-          </h2>
-          <div id="loading-spinner"></div>
-          <div id="chartAnchor" data-reports-path="<%= kanaui_engine.reports_path(params.to_h) %>"></div>
-          <div id="date-controls" style="display: none;">
-            <ul class="nav nav-pills nav-justified">
-              <% @available_start_dates.each do |key, value| %>
-                <li><%= link_to key, kanaui_engine.dashboard_index_path(params.to_h.merge(:start_date => value)) %></li>
-              <% end %>
-            </ul>
-          </div>
-          <hr>
-          <div class="pull-right">
-            <% if @report['reportType'] == 'TABLE' %>
-              <input type="hidden" id="visible-table-columns" value="<%= @visible_columns %>">
-              <a class="btn btn-default" id="copy-url" data-reports-path="<%= kanaui_engine.dashboard_index_path(params.to_h) %>">Copy URL</a>
-              <input id="url-placeholder" class="form-control hidden">
-            <% end %>
-            <%= link_to 'Download raw data', kanaui_engine.reports_path(params.to_h.merge(:format => 'csv')), class: 'btn btn-default' %>
-          </div>
-          <a class="btn btn-default" role="button" data-toggle="collapse" href="#advanced-controls" aria-expanded="false" aria-controls="advanced-controls">
-            Advanced controls
-          </a>
-          <div class="collapse" id="advanced-controls">
-            <div class="well">
-              <ul>
-                <% if @report['reportType'] == 'TIMELINE' %>
-                  <% at_least_two_months = params[:start_date].blank? || params[:end_date].blank? || (params[:end_date].to_date.beginning_of_month - 1.month > params[:start_date].to_date) %>
-                  <% at_least_two_weeks = params[:start_date].blank? || params[:end_date].blank? || (params[:end_date].to_date.beginning_of_week - 1.week > params[:start_date].to_date) %>
-                  <% if params[:smooth] != 'AVERAGE_WEEKLY' && at_least_two_weeks %>
-                    <li><%= link_to 'Weekly average', kanaui_engine.dashboard_index_path(params.to_h.merge(:smooth => 'AVERAGE_WEEKLY')) %></li>
-                  <% end %>
-                  <% if params[:smooth] != 'AVERAGE_MONTHLY' && at_least_two_months %>
-                    <li><%= link_to 'Monthly average', kanaui_engine.dashboard_index_path(params.to_h.merge(:smooth => 'AVERAGE_MONTHLY')) %></li>
-                  <% end %>
-                  <% if params[:smooth] != 'SUM_WEEKLY' && at_least_two_weeks %>
-                    <li><%= link_to 'Weekly sum', kanaui_engine.dashboard_index_path(params.to_h.merge(:smooth => 'SUM_WEEKLY')) %></li>
-                  <% end %>
-                  <% if params[:smooth] != 'SUM_MONTHLY' && at_least_two_months %>
-                    <li><%= link_to 'Monthly sum', kanaui_engine.dashboard_index_path(params.to_h.merge(:smooth => 'SUM_MONTHLY')) %></li>
-                  <% end %>
-                <% end %>
-                <% filter_fields = ((@report['schema'] || {})['fields'] || []).select { |field| !field['distinctValues'].blank? && field['dataType'] =~ /char/ } # To ignore tenant_record_id %>
-                <% unless filter_fields.empty? %>
-                  <li>Slicing & Dicing:
-                    <%= form_tag kanaui_engine.dashboard_index_path(params.to_h), :method => :get, :class => 'form-horizontal' do %>
-                        <input name="start_date" type="hidden" value="<%= @start_date %>">
-                        <input name="end_date" type="hidden" value="<%= @end_date %>">
-                        <input name="name" type="hidden" value="<%= @raw_name %>">
-                        <input name="smooth" type="hidden" value="<%= params[:smooth] %>">
-                        <input name="sql_only" type="hidden" value="<%= params[:sql_only] %>">
-                        <input name="format" type="hidden" value="<%= params[:format] %>">
+            </div>
+            
 
-                        <fieldset class="form-group">
-                          <legend>Filters</legend>
-                          <% filter_fields.each do |field| %>
-                              <div class="form-group">
-                                <%= label_tag "filter_#{field['name']}", field['name'], :class => 'col-sm-2 control-label' %>
-                                <div class="col-sm-10">
-                                  <%= select_tag "filter_#{field['name']}", options_for_select(field['distinctValues']), :multiple => true, :class => 'form-control' %>
-                                </div>
-                              </div>
-                          <% end %>
-                        </fieldset>
-                        <fieldset class="form-group">
-                          <legend>Dimensions to plot</legend>
-                          <% filter_fields.each do |field| %>
-                              <div class="form-group">
-                                <%= label_tag "group_#{field['name']}", field['name'], :class => 'col-sm-2 control-label' %>
-                                <div class="col-sm-10">
-                                  <%= select_tag "group_#{field['name']}", options_for_select(field['distinctValues']), :multiple => true, :class => 'form-control' %>
-                                </div>
-                              </div>
-                          <% end %>
-                        </fieldset>
+            <div class="calendar-container">
+              <% if params[:name] %>
+                <div class="form-container d-flex">
+                  <%= form_tag kanaui_engine.dashboard_index_path, :class => 'form-vertical d-flex', :method => :get do %>
+                    <div class="trigger-invoice-box form-group">
+                      <input name="name" type="hidden" value="<%= @raw_name %>">
+                      <input name="smooth" type="hidden" value="<%= params[:smooth] %>">
+                      <input name="sql_only" type="hidden" value="<%= params[:sql_only] %>">
+                      <input name="format" type="hidden" value="<%= params[:format] %>">
+                      <input name="delta_days" type="hidden" value="<%= (@end_date.to_date - @start_date.to_date).to_i %>">
+                      <div class="d-flex align-items-center">
+                        <div class="d-flex gap-2">
+                          <div class="form-group d-flex align-items-center gap-2"  id="dp1">
+                            <b>From:</b>
+                            <div class="custom-date-input-wrapper kaui-button custom-hover">
+                              <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M14.9167 12.5V18.3333M17.8333 15.4167H12" stroke="#A4A7AE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M14.0833 1.66675V5.00008M6.58325 1.66675V5.00008" stroke="#A4A7AE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M17.8333 10.8333V4.99992C17.8333 4.07944 17.0871 3.33325 16.1666 3.33325H4.49992C3.57944 3.33325 2.83325 4.07944 2.83325 4.99992V16.6666C2.83325 17.5871 3.57944 18.3333 4.49992 18.3333H10.3333" stroke="#A4A7AE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M2.83325 8.33325H17.8333" stroke="#A4A7AE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                              </svg>
 
-                        <div class="form-group">
-                          <div class="col-sm-offset-2 col-sm-10">
-                            <%= submit_tag 'Refresh', :class => 'btn btn-default' %>
+                              <input class="form-control datepicker" name="start_date" type="text" data-provide="datepicker" data-date-format="yyyy-mm-dd" data-date-today-highlight="true" value="<%= @start_date %>">
+                            </div>
                           </div>
+                          <div class="form-group d-flex align-items-center gap-2">
+                            <b>To:</b>
+                            <div class="custom-date-input-wrapper kaui-button custom-hover">
+                              <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M14.9167 12.5V18.3333M17.8333 15.4167H12" stroke="#A4A7AE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M14.0833 1.66675V5.00008M6.58325 1.66675V5.00008" stroke="#A4A7AE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M17.8333 10.8333V4.99992C17.8333 4.07944 17.0871 3.33325 16.1666 3.33325H4.49992C3.57944 3.33325 2.83325 4.07944 2.83325 4.99992V16.6666C2.83325 17.5871 3.57944 18.3333 4.49992 18.3333H10.3333" stroke="#A4A7AE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M2.83325 8.33325H17.8333" stroke="#A4A7AE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                              </svg>
+
+                              <input class="form-control datepicker" name="end_date" type="text" data-provide="datepicker" data-date-format="yyyy-mm-dd" data-date-today-highlight="true" value="<%= @end_date %>">
+                            </div>
+                          </div>
+                          <% ((@report['variables'] || {})['fields'] || []).each do |definition| %>
+                            <div class="form-group">
+                              <div class="col-md-7">
+                                <%= definition['name'].titleize %>:
+                                <% # TODO Not fully implemented server side %>
+                                <% if definition['dataType'] == 'date' %>
+                                  <% # TODO datepicker breaks :hover %>
+                                  <input class="form-control" name="variable_<%= definition['name'] %>" type="text" data-provide="datepicker" data-date-format="yyyy-mm-dd" data-date-today-highlight="true" value=""/>
+                                <% else %>
+                                  <input class="form-control" name="variable_<%= definition['name'] %>" type="text" value=""/>
+                                <% end %>
+                              </div>
+                            </div>
+                          <% end %>
                         </div>
-                    <% end %>
-                  </li>
-                    <li>Current Analytics query:&nbsp;<%= link_to '<i class="fa fa-question-circle"></i>'.html_safe, 'http://docs.killbill.io/latest/userguide_analytics.html#_dashboard_api', :target => '_blank' %>
-                    <pre><%= params[:name] -%></pre>
-                  </li>
+                        
+
+                        <%= render "kaui/components/button/button", {
+                          label: "Refresh",
+                          icon: "kaui/setting/reset.svg",
+                          variant: "outline-secondary d-inline-flex align-items-center gap-1",
+                          type: "submit",
+                          html_class: "btn btn-xs kaui-dropdown custom-hover py-2 px-3 refresh-button",
+                        } %>
+                      </div>
+                    </div>
+                  <% end %>
+                </div>
               <% end %>
-                <li><%= link_to 'SQL query', kanaui_engine.reports_path(params.to_h.merge(:sql_only => true)) %></li>
-              </ul>
+            </div>
+          </span>
+        </div>
+
+        <div class="analytics w-100">
+          <div class="flex-panel kaui-container w-100">
+
+            <div class="w-100">
+              <div class="row">
+                <div class="">
+                  <% if params[:name] %>
+                    
+                    <div id="date-controls" style="display: none;">
+                      <div class="custom-tabs my-4">
+                        <% @available_start_dates.each do |key, value| %>
+                          <%= link_to key, kanaui_engine.dashboard_index_path(params.to_h.merge(:start_date => value)), class: "custom-tab #{'activelink' if params[:start_date] == value}" %>
+                        <% end %>
+                      </div>
+                    </div>
+                    <div id="loading-spinner"></div>
+                    <div class="d-flex w-100 align-items-center">
+                      <div class="chart-title-container">
+                        <h2 class="chart-title" id="chart-title">
+                          <%= @raw_name.titleize %>
+                        </h2>
+                      </div>
+                      <div id="chartAnchor" data-reports-path="<%= kanaui_engine.reports_path(params.to_h) %>" class="w-100 h-100"></div>
+                    </div>
+                    
+                    <hr>
+
+                    <div class="pull-right">
+                      <%= link_to kanaui_engine.url_for(controller: :settings), class: 'text-decoration-none' do %>
+                        <%= render "kaui/components/button/button", {
+                          label: "Settings",
+                          variant: "outline-secondary d-inline-flex align-items-center gap-1",
+                          type: "button",
+                          html_class: "btn btn-xs kaui-dropdown custom-hover py-2 px-3 refresh-button"
+                        } %>
+                      <% end %>
+                      <% if @report['reportType'] == 'TABLE' %>
+                        <input type="hidden" id="visible-table-columns" value="<%= @visible_columns %>">
+                        <a class="btn btn-default" id="copy-url" data-reports-path="<%= kanaui_engine.dashboard_index_path(params.to_h) %>">Copy URL</a>
+                        <input id="url-placeholder" class="form-control hidden">
+                      <% end %>
+                      <%= link_to kanaui_engine.reports_path(params.to_h.merge(:format => 'csv')), class: 'text-decoration-none' do %>
+                        <%= render "kaui/components/button/button", {
+                          label: "Download raw data",
+                          variant: "outline-secondary d-inline-flex align-items-center gap-1",
+                          type: "button",
+                          html_class: "btn btn-xs kaui-dropdown custom-hover py-2 px-3 refresh-button"
+                        } %>
+                      <% end %>
+                    </div>
+                    <a class="" role="button" data-bs-toggle="collapse" href="#advanced-controls" aria-expanded="false" aria-controls="advanced-controls">
+                      <%= render "kaui/components/button/button", {
+                        label: "Advanced controls",
+                        variant: "outline-secondary d-inline-flex align-items-center gap-1",
+                        type: "button",
+                        html_class: "btn btn-xs kaui-dropdown custom-hover py-2 px-3 refresh-button"
+                      } %>
+                    </a>
+                    <div class="collapse" id="advanced-controls">
+                      <div class="well">
+                        <ul class="">
+                          <% if @report['reportType'] == 'TIMELINE' %>
+                            <% at_least_two_months = params[:start_date].blank? || params[:end_date].blank? || (params[:end_date].to_date.beginning_of_month - 1.month > params[:start_date].to_date) %>
+                            <% at_least_two_weeks = params[:start_date].blank? || params[:end_date].blank? || (params[:end_date].to_date.beginning_of_week - 1.week > params[:start_date].to_date) %>
+                            <% if params[:smooth] != 'AVERAGE_WEEKLY' && at_least_two_weeks %>
+                              <li><%= link_to 'Weekly average', kanaui_engine.dashboard_index_path(params.to_h.merge(:smooth => 'AVERAGE_WEEKLY')) %></li>
+                            <% end %>
+                            <% if params[:smooth] != 'AVERAGE_MONTHLY' && at_least_two_months %>
+                              <li><%= link_to 'Monthly average', kanaui_engine.dashboard_index_path(params.to_h.merge(:smooth => 'AVERAGE_MONTHLY')) %></li>
+                            <% end %>
+                            <% if params[:smooth] != 'SUM_WEEKLY' && at_least_two_weeks %>
+                              <li><%= link_to 'Weekly sum', kanaui_engine.dashboard_index_path(params.to_h.merge(:smooth => 'SUM_WEEKLY')) %></li>
+                            <% end %>
+                            <% if params[:smooth] != 'SUM_MONTHLY' && at_least_two_months %>
+                              <li><%= link_to 'Monthly sum', kanaui_engine.dashboard_index_path(params.to_h.merge(:smooth => 'SUM_MONTHLY')) %></li>
+                            <% end %>
+                          <% end %>
+                          <% filter_fields = ((@report['schema'] || {})['fields'] || []).select { |field| !field['distinctValues'].blank? && field['dataType'] =~ /char/ } # To ignore tenant_record_id %>
+                          <% unless filter_fields.empty? %>
+                            <li>Slicing & Dicing:
+                              <%= form_tag kanaui_engine.dashboard_index_path(params.to_h), :method => :get, :class => 'form-horizontal' do %>
+                                  <input name="start_date" type="hidden" value="<%= @start_date %>">
+                                  <input name="end_date" type="hidden" value="<%= @end_date %>">
+                                  <input name="name" type="hidden" value="<%= @raw_name %>">
+                                  <input name="smooth" type="hidden" value="<%= params[:smooth] %>">
+                                  <input name="sql_only" type="hidden" value="<%= params[:sql_only] %>">
+                                  <input name="format" type="hidden" value="<%= params[:format] %>">
+
+                                  <fieldset class="form-group">
+                                    <legend>Filters</legend>
+                                    <% filter_fields.each do |field| %>
+                                        <div class="form-group">
+                                          <%= label_tag "filter_#{field['name']}", field['name'], :class => 'col-sm-2 control-label' %>
+                                          <div class="col-sm-10">
+                                            <%= select_tag "filter_#{field['name']}", options_for_select(field['distinctValues']), :multiple => true, :class => 'form-control' %>
+                                          </div>
+                                        </div>
+                                    <% end %>
+                                  </fieldset>
+                                  <fieldset class="form-group">
+                                    <legend>Dimensions to plot</legend>
+                                    <% filter_fields.each do |field| %>
+                                        <div class="form-group">
+                                          <%= label_tag "group_#{field['name']}", field['name'], :class => 'col-sm-2 control-label' %>
+                                          <div class="col-sm-10">
+                                            <%= select_tag "group_#{field['name']}", options_for_select(field['distinctValues']), :multiple => true, :class => 'form-control' %>
+                                          </div>
+                                        </div>
+                                    <% end %>
+                                  </fieldset>
+
+                                  <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                      <%= submit_tag 'Refresh', :class => 'btn btn-default' %>
+                                    </div>
+                                  </div>
+                              <% end %>
+                            </li>
+                              <li>Current Analytics query:&nbsp;<%= link_to '<i class="fa fa-question-circle"></i>'.html_safe, 'http://docs.killbill.io/latest/userguide_analytics.html#_dashboard_api', :target => '_blank' %>
+                              <pre><%= params[:name] -%></pre>
+                            </li>
+                        <% end %>
+                          <li><%= link_to 'SQL query', kanaui_engine.reports_path(params.to_h.merge(:sql_only => true)) %></li>
+                        </ul>
+                      </div>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
             </div>
           </div>
-        <% end %>
+
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-
-<%= javascript_tag do %>
-  $(document).ready(function() {
-    $('.calendar-icon').click(function() {
-      $('.form-container').toggle();
-    });
-  });
-<% end %>
-
-<style type="text/css">
-  .form-container {
-    display: none;
-  }
-</style>

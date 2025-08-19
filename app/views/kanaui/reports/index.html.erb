@@ -1,17 +1,33 @@
-<div class="search">
-
-  <div class="column-block">
-
-    <h1>Configured reports
-      <%= link_to '&nbsp;<i class="fa fa-plus-square"></i>'.html_safe, new_report_path %>
-    </h1>
-
-    <%= render :partial => 'kanaui/reports/reports_table', :locals => {:reports => @reports} %>
-
+<div class="kaui-container kanaui-reports-index">
+  <div class="d-flex " style="gap: 4rem;">
+    <div class="configured-reports">
+      <div class="d-flex flex-column ">
+        <div class="configured-reports-header mb-4">
+          <div class="d-flex align-items-center">
+          <h2>Configured reports</h2>
+          </div>
+          <span>
+            <%= link_to dashboard_index_path, class: 'text-decoration-none' do %>
+              <%= render "kaui/components/button/button", {
+                label: "Dashboard",
+                variant: "outline-secondary d-inline-flex align-items-center gap-1",
+                type: "button",
+                html_class: "btn btn-xs kaui-button custom-hover py-2 px-3"
+              } %>
+            <% end %>
+            <%= link_to new_report_path, class: 'text-decoration-none' do %>
+              <%= render "kaui/components/button/button", {
+                label: "New Report",
+                icon: "kaui/plus.svg",
+                variant: "outline-secondary d-inline-flex align-items-center gap-1",
+                type: "button",
+                html_class: "btn btn-xs kaui-dropdown custom-hover py-2 px-3"
+              } %>
+            <% end %>
+          </span>
+        </div>
+        <%= render :partial => 'kanaui/reports/reports_table', :locals => {:reports => @reports} %>
+      </div>
+    </div>
   </div>
-
-  <hr/>
-
-  <h1><%= link_to 'Dashboard', dashboard_index_path %></h1>
-
 </div>
