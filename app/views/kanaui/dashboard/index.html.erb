@@ -44,7 +44,7 @@
                   </li>
                 </ul>
               <% else %>
-                <select class="form-select" onchange="if(this.value) window.location.href = this.value;">
+                <select class="form-select" id="report-select" onchange="goToReport(this.value);">
                   <% @reports.each_with_index do |r, idx| %>
                     <% report_link = kanaui_engine.dashboard_index_path(params.to_h.merge(name: r['reportName'])) %>
                     <option value="<%= report_link %>" <%= 'selected' if @raw_name == r['reportName'] || (@raw_name.blank? && idx == 1) %>>
@@ -276,3 +276,41 @@
     </div>
   </div>
 </div>
+
+<%= javascript_tag do %>
+  function goToReport(url) {
+    if (!url) {
+      return;
+    }
+
+    // Remove leading/trailing whitespace
+    url = url.trim();
+
+    // Only allow relative URLs (starting with '/')
+    // Reject absolute URLs (starting with http://, https://, //, etc.)
+    // Reject dangerous schemes (javascript:, data:, vbscript:, etc.)
+    if (!url.match(/^\/[^\/]/) && url !== '/') {
+      console.error('Invalid URL: only relative paths starting with "/" are allowed');
+      return;
+    }
+
+    // Additional check: reject any URL containing dangerous schemes
+    var lowerUrl = url.toLowerCase();
+    if (lowerUrl.indexOf('javascript:') !== -1 || 
+        lowerUrl.indexOf('data:') !== -1 ||
+        lowerUrl.indexOf('vbscript:') !== -1 ||
+        lowerUrl.indexOf('file:') !== -1) {
+      console.error('Invalid URL: dangerous scheme detected');
+      return;
+    }
+
+    // Reject URLs starting with // (protocol-relative URLs)
+    if (url.indexOf('//') === 0) {
+      console.error('Invalid URL: protocol-relative URLs are not allowed');
+      return;
+    }
+
+    // Safe to navigate
+    window.location.href = url;
+  }
+<% end %>
