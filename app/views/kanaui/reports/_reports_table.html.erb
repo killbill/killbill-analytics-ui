@@ -1,4 +1,4 @@
-<table id="reports-table" class="table table-condensed table-striped mobile-data">
+<table id="reports-table">
   <thead>
   <tr>
     <th>Name</th>
@@ -15,7 +15,7 @@
   </tr>
   </thead>
   <tbody>
-  <% reports.each do |report| %>
+    <% reports.each do |report| %>
       <tr>
         <td><%= report[:reportName] %></td>
         <td><%= report[:reportPrettyName] %></td>
@@ -24,18 +24,45 @@
         <td><%= report[:sourceName] %></td>
         <td>
           <% unless report[:sourceQuery].blank? %>
-            <a href="" data-toggle="modal" data-target="#<%= report[:reportName] %>-query-modal">
+            <a href="" data-bs-toggle="modal" data-bs-target="#<%= report[:reportName] %>-query-modal">
               Show SQL
             </a>
+
             <div class="modal fade" id="<%= report[:reportName] %>-query-modal" tabindex="-1" role="dialog">
               <div class="modal-dialog" role="document">
-                <div class="modal-content column-block">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title d-flex align-items-center gap-3" id="advanceSearchModalLabel">
+                      <span class="icon-container">
+                        <%= image_tag("kaui/modal/search.svg", width: 20, height: 20) %>
+                      </span>
+                      Source Query
+                    </h5>
+                    <button type="button" class="close close-button custom-hover" data-bs-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">
+                        <%= image_tag("kaui/modal/close.svg", width: 20, height: 20) %>
+                      </span>
+                    </button>
+                  </div>
                   <div class="modal-body">
                     <p><pre class="sql-query"><code><%= report[:sourceQuery] %></code></pre></p>
                   </div>
-                </div><!-- /.modal-content -->
-              </div><!-- /.modal-dialog -->
-            </div><!-- /.modal -->
+                  <div class="modal-footer">
+                    <%= render "kaui/components/button/button", {
+                      label: 'Close',
+                      variant: "outline-secondary d-inline-flex align-items-center gap-1",
+                      type: "button",
+                      html_class: "kaui-button custom-hover",
+                      html_options: {
+                        data: {
+                          bs_dismiss: "modal"
+                        },
+                      }
+                    } %>
+                  </div>
+                </div>
+              </div>
+            </div>
           <% end %>
         </td>
         <td><%= report[:refreshProcedureName] %></td>
@@ -49,12 +76,12 @@
           </ul>
         </td>
         <td>
-          <%= link_to '<i class="fa fa-refresh"></i>'.html_safe, refresh_report_path(report[:reportName]), :method => :put %>
-          <%= link_to '<i class="fa fa-pencil"></i>'.html_safe, edit_report_path(report[:reportName]) %>
-          <%= link_to '&nbsp;<i class="fa fa-times"></i>'.html_safe, report_path(report[:reportName]), :method => :delete %>
+          <%= link_to 'Delete', report_path(report[:reportName]), :method => :delete, :class => 'delete-button table-button' %>
+          <%= link_to 'Refresh', refresh_report_path(report[:reportName]), :method => :put, :class => 'refresh-button table-button' %>
+          <%= link_to 'Edit', edit_report_path(report[:reportName]), :class => 'edit-button table-button' %>
         </td>
       </tr>
-  <% end %>
+    <% end %>
   </tbody>
 </table>
 

@@ -19,6 +19,22 @@ module Kanaui
       @reports = JSON.parse(raw_reports)
       @report = current_report(@reports) || {}
 
+      # If no report name is provided, redirect to the default (second) report
+      if @raw_name.blank? && @reports.is_a?(Array) && @reports[1].present?
+        default_name = @reports[1]['reportName']
+        query_params = { start_date: @start_date,
+                         end_date: @end_date,
+                         name: default_name,
+                         smooth: params[:smooth],
+                         sql_only: params[:sql_only],
+                         format: params[:format] }
+
+        query_params[:fake] = params[:fake] unless params[:fake].blank?
+        query_params[:type] = params[:type] unless params[:type].blank?
+
+        redirect_to dashboard_index_path(query_params) and return
+      end
+
       query = build_slice_and_dice_query
 
       # get columns visibility from query parameters to be used by tables
