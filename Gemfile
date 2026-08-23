@@ -12,6 +12,9 @@ gemspec
 # Git. Remember to move these dependencies to your gemspec before releasing
 # your gem to rubygems.org.
 
+# Lock i18n to 1.14.x for: https://github.com/ruby-i18n/i18n/issues/735
+gem 'i18n', '~> 1.14.0'
+
 # Lock minitest to 5.x until Rails 7.1+ adds Minitest 6.0 support
 # Minitest 6.0.0 was released Dec 2024 with breaking API changes
 gem 'minitest', '~> 5.0'
