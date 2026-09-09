@@ -19,9 +19,16 @@ gem 'i18n', '~> 1.14.0'
 # Minitest 6.0.0 was released Dec 2024 with breaking API changes
 gem 'minitest', '~> 5.0'
 
+# json 3.0 dropped the quirks_mode keyword that ActiveSupport::JSON.encode
+# still passes to JSON.generate, raising ArgumentError (breaks any code path
+# that calls #to_json, e.g. killbill-client's model classes). Was incidentally
+# protected by rubocop's own `json ~> 2.3` dependency, but rubocop 1.90.0
+# loosened that to `json >= 2.3` (no upper bound), so an unpinned
+# `gem 'json'` here can float to 3.x on any fresh bundle install.
+gem 'json', '~> 2.21'
+
 group :development do
   gem 'gem-release'
-  gem 'json'
   gem 'killbill-client'
   gem 'listen'
   gem 'puma'
