@@ -24,7 +24,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'font-awesome-rails'
   s.add_dependency 'jquery-rails', '~> 4.5.1'
   s.add_dependency 'js-routes', '>= 1.1', '< 3.0'
-  s.add_dependency 'killbill-assets-ui'
+  s.add_dependency 'killbill-assets-ui', '>= 1.1.0'
   s.add_dependency 'killbill-client'
   s.required_ruby_version = '>= 3.1.0'
   s.add_dependency 'rails', '~> 7.2'
