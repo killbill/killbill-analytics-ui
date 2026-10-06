@@ -25,7 +25,7 @@
   width: 22px;
   height: 22px;
   padding: 0;
-  color: #6b7280;
+  color: var(--kb-on-surface-tertiary);
   background: transparent;
   border: 0;
   box-shadow: none;
@@ -38,7 +38,7 @@
 
 .kanaui-field-help:hover,
 .kanaui-field-help:focus {
-  color: #111827;
+  color: var(--kb-neutral-800);
   background: transparent;
   outline: none;
 }
@@ -54,9 +54,9 @@
   display: none;
   max-width: 360px;
   padding: 10px 12px;
-  color: #1f2937;
-  background-color: #fff;
-  border: 1px solid #d1d5db;
+  color: var(--kb-neutral-700);
+  background-color: var(--kb-neutral-0);
+  border: 1px solid var(--kb-outline-secondary);
   border-radius: 6px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
   font-size: 14px;
@@ -74,14 +74,14 @@
   height: 0;
   border-top: 6px solid transparent;
   border-bottom: 6px solid transparent;
-  border-right: 6px solid #fff;
+  border-right: 6px solid var(--kb-neutral-0);
 }
 
 .kanaui-field-tooltip.is-flipped::before {
   left: auto;
   right: -6px;
   border-right: 0;
-  border-left: 6px solid #fff;
+  border-left: 6px solid var(--kb-neutral-0);
 }
 
 .kanaui-field-tooltip.is-visible {
@@ -95,7 +95,7 @@
 .axis path,
 .axis line {
   fill: none;
-  stroke: #000;
+  stroke: var(--kb-neutral-900);
   shape-rendering: crispEdges;
 }
 
@@ -125,8 +125,8 @@
 }
 
 .focus circle {
-  fill: steelblue;
-  stroke: blue;
+  fill: var(--kb-primary-400);
+  stroke: var(--kb-primary);
 }
 
 @media (max-width: 1000px){
@@ -139,7 +139,7 @@
 .chart_values{
   font-size: 16px;
   font-weight: bold;
-  fill: #202020;
+  fill: var(--kb-neutral-800);
 }
 
 .chart-title-container {
@@ -156,7 +156,7 @@
   font-size: 0.75rem;    
   line-height: 1.125rem; 
   text-align: center;
-  color: #535862;
+  color: var(--kb-on-surface-tertiary);
   white-space: nowrap;
   transform: rotate(-90deg);
 }
@@ -167,17 +167,17 @@
 
 .information{
   fill: rgba(180,180,220,0.8);
-  stroke: #343434;
+  stroke: var(--kb-neutral-700);
 }
 
 .info-title__bg{
   fill: rgba(230, 230, 250, 0.9);
-  stroke: #A4A4A4;
+  stroke: var(--kb-on-surface-quaternary);
 }
 
 .info-title{
   font-size: 22px;
-  fill: #5F5C5C;
+  fill: var(--kb-on-surface-secondary);
 }
 
 .colored-dot{
@@ -201,12 +201,12 @@ button.ColVis_Button, button.ColVis_Button:hover {
     background: inherit;
     box-shadow: unset;
     text-transform: none;
-    color: #333 !important;
-    border-color: #adadad;
+    color: var(--kb-neutral-700) !important;
+    border-color: var(--kb-on-surface-quaternary);
 }
 
 ul.ColVis_collection {
-    background-color: #f3f3f3;
+    background-color: var(--kb-surface-container);
 }
 
 ul.ColVis_collection li, ul.ColVis_collection li:hover{
@@ -216,8 +216,8 @@ ul.ColVis_collection li, ul.ColVis_collection li:hover{
 }
 
 button.ColVis_Button:hover, ul.ColVis_collection li:hover {
-    background-color: #e6e6e6;
-    border-color: #adadad;
+    background-color: var(--kb-outline-primary);
+    border-color: var(--kb-on-surface-quaternary);
 }
 
 .dataTables_wrapper .dataTables_paginate .paginate_button {
